@@ -4,6 +4,11 @@
   --color-primary-red: #D00000;
 }
 
-h1 {
+body {
+  font-family: var(--font-montserrat);
+}
+
+h1, h2, h3, h4 {
   font-family: var(--font-work-sans);
 }
+
