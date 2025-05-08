@@ -1,6 +1,8 @@
 import { Montserrat, Work_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -24,7 +26,9 @@ export default function RootLayout({ children }) {
         <body
           className={`${workSans.variable} ${montserrat.variable} antialiased`}
         >
-          {children}
+          <Header></Header>
+          <main>{children}</main>
+          <Footer></Footer>
         </body>
       </html>
     </ClerkProvider>
