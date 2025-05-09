@@ -35,7 +35,7 @@ const HeaderNav = () => {
     <nav className="flex items-center gap-8">
       <Link href="/events">SE EVENTS</Link>
       <SignedOut>
-        <Button variant="primary" onClick={() => openSignIn()}>
+        <Button variant="CTA" onClick={() => openSignIn()}>
           LOG IND
         </Button>
       </SignedOut>
