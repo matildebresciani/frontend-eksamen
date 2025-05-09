@@ -1,17 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-red: #D00000;
+  --color-primary-red: #d00000;
 }
 
 body {
   font-family: var(--font-montserrat);
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-work-sans);
 }
 
 a {
   color: var(--color-primary-red);
+}
+
+header {
+  font-family: var(--font-work-sans);
+  font-weight: 600;
+  font-size: 1.6rem;
 }
