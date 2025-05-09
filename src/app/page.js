@@ -2,6 +2,7 @@
 import Button from "@/components/Button";
 import IndexTextContent from "@/components/IndexTextContent";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,8 +17,11 @@ export default function Home() {
       <div className="flex flex-col items-center">
         <IndexTextContent></IndexTextContent>
         <div className="flex items-center gap-8">
-          <Button variant="primary">SE EVENTS</Button>
+          <Link href="/events">
+            <Button variant="primary">SE EVENTS</Button>
+          </Link>
           <Button variant="CTA">LOG IND</Button>
+          {/* OBS denne LOG IND BUTTON skal aktiveres! */}
         </div>
       </div>
     </div>
