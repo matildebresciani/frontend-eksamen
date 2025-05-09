@@ -12,17 +12,18 @@ const Header = () => {
   // const isHome = pathname === "/";
   // const isProducts = pathname === "/products";
   return (
-    <header className="flex items-center justify-between py-10 px-14 hover:bg-[rgba(255,255,255,0.5)]">
+    <header className="flex items-center justify-between py-5 px-8 sm:py-6 sm:px-10 md:py-8 md:px-12 lg:py-10 lg:px-14 hover:bg-[rgba(255,255,255,0.5)]">
       <Link href="/" className="flex items-center gap-4">
         <Image
           src="/imgs/logo_header.svg"
           alt="header logo"
-          width={100}
-          height={100}
+          width={70}
+          height={70}
+          className="sm:w-[100px] sm:h-[100px]"
         />
-        <p className="leading-[1.2]">
+        <div className=" leading-[1.2] hidden sm:block sm:text-lg md:text-xl">
           MODERNIA<br></br>CURATORS
-        </p>
+        </div>
       </Link>
       <HeaderNav />
     </header>
@@ -32,8 +33,10 @@ const Header = () => {
 const HeaderNav = () => {
   const { openSignIn } = useClerk();
   return (
-    <nav className="flex items-center gap-8">
-      <Link href="/events">SE EVENTS</Link>
+    <nav className="flex items-center gap-5 sm:gap-8 text-lg sm:text-xl md:text-2xl">
+      <Link href="/events" className="hover:underline">
+        SE EVENTS
+      </Link>
       <SignedOut>
         <Button variant="CTA" onClick={() => openSignIn()}>
           LOG IND

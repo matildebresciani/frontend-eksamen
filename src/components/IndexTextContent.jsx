@@ -1,7 +1,11 @@
 const IndexTextContent = () => {
   return (
-    <div className="font-medium w-[65ch] py-12">
+    <div className="font-medium">
+      {/* w-[65ch] py-12 */}
       <h1>Velkommen til Modernia Curators</h1>
+      <h2>Test/Illustration af responsivitet for H2</h2>
+      <h3>Test/Illustration af responsivitet for H3</h3>
+      <h4>Test/Illustration af responsivitet for H4</h4>
       <p>
         Modernia Curators er din digitale platform dedikeret til modernistisk
         kunst og eventskabelse. Vi forbinder passionerede kuratorer med et
