@@ -1,4 +1,5 @@
 //Matilde - Log In funktion
+//Katinka - Layout
 "use client";
 import { useClerk, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Button from "./Button";
