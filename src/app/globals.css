@@ -1,17 +1,76 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-red: #D00000;
+  --color-primary-red: #d00000;
+  --color-text-header: #292828;
+  --color-text-p: #3d3d3d;
+  --color-text-light: #9e9c9c;
+  --color-text-semi-invisible: #c9c9c9;
 }
 
 body {
   font-family: var(--font-montserrat);
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-work-sans);
+  color: var(--color-text-header);
+}
+p {
+  color: var(--color-text-p);
 }
 
 a {
   color: var(--color-primary-red);
+}
+
+header {
+  font-family: var(--font-work-sans);
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+/*Katinka - General styling text-flow*/
+/* https://fluidtypography.com */
+/* Font-size & line-height viewport width range 375-1920px */
+
+/*font-size range 32-40px, line-height range 1.5-1.3*/
+h1 {
+  font-size: clamp(2rem, 0.518vw + 1.879rem, 2.5rem);
+  line-height: clamp(3rem, 0.259vw + 2.939rem, 3.25rem);
+  padding-bottom: 0.8rem;
+}
+/*font-size range 28-36px, line-height range 1.5-1.3*/
+h2 {
+  font-size: clamp(1.75rem, 0.518vw + 1.629rem, 2.25rem);
+  line-height: clamp(2.625rem, 0.311vw + 2.552rem, 2.925rem);
+  padding-bottom: 0.7rem;
+}
+/*font-size range 24-32px, line-height range 1.5-1.3*/
+h3 {
+  font-size: clamp(1.5rem, 0.518vw + 1.379rem, 2rem);
+  line-height: clamp(2.25rem, 0.362vw + 2.165rem, 2.6rem);
+  padding-bottom: 0.6rem;
+}
+/*font-size range 20-28px, line-height range 1.5-1.3*/
+h4 {
+  font-size: clamp(1.25rem, 0.518vw + 1.129rem, 1.75rem);
+  line-height: clamp(1.875rem, 0.414vw + 1.778rem, 2.275rem);
+  padding-bottom: 0.5rem;
+}
+/*font-size range 16-20px, line-height range 1.5-1.3*/
+p {
+  font-size: clamp(1rem, 0.259vw + 0.939rem, 1.25rem);
+  line-height: clamp(1.5rem, 0.129vw + 1.47rem, 1.625rem);
+  padding-bottom: 0.3rem;
+}
+/*font-size range 8-12px, line-height range 1.5-1.3*/
+
+footer p {
+  font-size: clamp(0.5rem, 0.259vw + 0.439rem, 0.75rem);
+  line-height: clamp(0.75rem, 0.233vw + 0.695rem, 0.975rem);
+  padding-bottom: 0.2rem;
 }

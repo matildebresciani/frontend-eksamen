@@ -24,10 +24,10 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${workSans.variable} ${montserrat.variable} antialiased`}
+          className={` ${workSans.variable} ${montserrat.variable} antialiased`}
         >
           <Header></Header>
-          <main>{children}</main>
+          <main className="px-8 sm:px-12 md:px-20 lg:px-30">{children}</main>
           <Footer></Footer>
         </body>
       </html>
