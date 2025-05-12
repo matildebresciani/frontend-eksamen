@@ -1,3 +1,6 @@
+//Matilde
+//Udarbejdet med hjælp fra AI til at kunne samle de to københavn adresser under en samlet "København" checkbox
+
 import { create } from "zustand";
 
 const useCityStore = create((set) => ({

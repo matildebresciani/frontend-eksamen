@@ -1,4 +1,6 @@
 //Matilde
+//Udarbejdet ved hjælp af AI til at fetche byerne og filtrere events ud fra de byer der er valgt.
+// Derudover er det også brugt til at udarbejde "disable" funktionen ift. hvilke byer der er valgt
 
 "use client";
 
