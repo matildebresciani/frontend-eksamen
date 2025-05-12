@@ -27,7 +27,7 @@ const SelectCity = () => {
   const { selectedCities, setSelectedCities, normalizeCity } = useCityStore();
 
   useEffect(() => {
-    fetch("http://localhost:8080/locations")
+    fetch("https://server-gititgirls.onrender.com/locations")
       .then((res) => res.json())
       .then((data) => setLocations(data));
   }, []);

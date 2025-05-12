@@ -12,7 +12,7 @@ export default function Page() {
   const { selectedCities, normalizeCity } = useCityStore();
 
   useEffect(() => {
-    fetch("http://localhost:8080/events")
+    fetch("https://server-gititgirls.onrender.com/events")
       .then((res) => res.json())
       .then((data) => setEvents(data));
   }, []);
