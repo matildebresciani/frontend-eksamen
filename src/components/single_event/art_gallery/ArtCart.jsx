@@ -8,10 +8,8 @@ const ArtCart = ({ src, alt }) => {
     <div className="relative group flex items-center justify-center flex-shrink-0 snap-start overflow-hidden rounded-xl shadow-lg">
       <Image src={src} alt={alt} width={0} height={0} sizes="100vw" className="h-auto w-auto max-h-[80vh] object-contain transition-transform duration-500 group-hover:scale-105" />
 
-      {/* Overlay */}
       <div className="absolute inset-0 bg-white  opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
 
-      {/* Tekst + Pil */}
       <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white">
         <h3 className="text-lg font-bold tracking-wide">TITEL PÅ BILLEDE</h3>
         <div className="flex items-center space-x-2 mt-1 group-hover:translate-x-1 transition-transform duration-300 text-red-500 font-semibold">

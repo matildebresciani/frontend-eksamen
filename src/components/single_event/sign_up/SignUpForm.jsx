@@ -68,5 +68,5 @@ export const NoTicketsPopUp = () => {
   );
 };
 
-// export default SignUpForm;
-export default NoTicketsPopUp;
+export default SignUpForm;
+// export default NoTicketsPopUp;
