@@ -1,4 +1,5 @@
 //Katinka
+
 import Image from "next/image";
 
 const RelatedArt = () => {

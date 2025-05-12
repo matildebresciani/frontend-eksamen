@@ -1,3 +1,5 @@
+//Katinka
+
 const SingleArtTextContent = () => {
   return (
     <div className="sm:grid sm:grid-cols-3 gap-3 sm:gap-5 md:gap-8">
