@@ -6,7 +6,7 @@
   --color-text-p: #3d3d3d;
   --color-text-light: #9e9c9c;
   --color-text-semi-invisible: #c9c9c9;
-  --color-primary-red-hover: #F04F4F;
+  --color-primary-red-hover: #f04f4f;
 }
 
 body {
@@ -67,6 +67,8 @@ p {
   font-size: clamp(1rem, 0.259vw + 0.939rem, 1.25rem);
   line-height: clamp(1.5rem, 0.129vw + 1.47rem, 1.625rem);
   padding-bottom: 0.3rem;
+  text-wrap: balance;
+  max-width: 65ch;
 }
 
 footer p {
