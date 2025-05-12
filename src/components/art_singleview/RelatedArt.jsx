@@ -13,30 +13,35 @@ const RelatedArt = () => {
             alt="related art"
             width={160}
             height={120}
+            className="sm:w-50 sm:h-auto md:w-60 md:h-auto lg:w-70 lg:h-auto"
           ></Image>
           <Image
             src="/imgs/index.png"
             alt="related art"
             width={160}
             height={120}
+            className="sm:w-50 sm:h-auto md:w-60 md:h-auto lg:w-70 lg:h-auto"
           ></Image>
           <Image
             src="/imgs/index.png"
             alt="related art"
             width={160}
             height={120}
+            className="sm:w-50 sm:h-auto md:w-60 md:h-auto lg:w-70 lg:h-auto"
           ></Image>
           <Image
             src="/imgs/index.png"
             alt="related art"
             width={160}
             height={120}
+            className="sm:w-50 sm:h-auto md:w-60 md:h-auto lg:w-70 lg:h-auto"
           ></Image>
           <Image
             src="/imgs/index.png"
             alt="related art"
             width={160}
             height={120}
+            className="sm:w-50 sm:h-auto md:w-60 md:h-auto lg:w-70 lg:h-auto"
           ></Image>
         </div>
       </div>
