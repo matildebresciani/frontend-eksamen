@@ -1,4 +1,6 @@
 //Matilde
+//Udarbejdet ved hjælp af AI til at fetche byerne og filtrere events ud fra de byer der er valgt.
+// Derudover er det også brugt til at udarbejde "disable" funktionen ift. hvilke byer der er valgt
 
 "use client";
 
@@ -52,7 +54,7 @@ const SelectCity = () => {
 
   return (
     <div className="flex flex-col gap-2 max-w-1/2">
-      <h3 className="mb-4">Vælg By</h3>
+      <h4 className="!text-primary-red">Vælg By</h4>
       <City
         city="Alle Byer"
         isSelected={isAlleSelected}

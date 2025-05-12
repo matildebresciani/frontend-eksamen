@@ -8,7 +8,7 @@ const EventCard = ({event}) => {
     
     return ( 
         <Link href={`/events/${event.id}`}>
-    <div className=" group flex gap-4 my-8 pb-8 max-w-[818px] border-b-2 border-black">
+    <div className="group/card flex gap-4 pb-4 my-4 max-w-[818px] border-b-2 border-black">
         <figure className="bg-primary-red w-[159px] h-[174px] shrink-0">
         </figure>
         <div>
@@ -18,7 +18,7 @@ const EventCard = ({event}) => {
             day: "numeric",
             month: "long"
             })}</h3>
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out">
+            <div className="opacity-0 group-hover/card:opacity-100 transition-opacity duration-200 ease-in-out">
             <BtnWithArrow>SE EVENT</BtnWithArrow>
             </div>
         </div>
