@@ -1,20 +1,7 @@
-//Katinka
-
-import Image from "next/image";
-import RelatedArt from "@/components/art_singleview/RelatedArt";
-import SingleArtTextContent from "@/components/art_singleview/SingleArtTextContent";
-
-const SingleArtwork = () => {
+const SingleArtTextContent = () => {
   return (
-    <div>
-      <Image
-        src="/imgs/index.png"
-        alt="single artwork"
-        width={1500}
-        height={1000}
-      ></Image>
-      <SingleArtTextContent></SingleArtTextContent>
-      {/* <div className="pt-6 sm:col-[1/2]">
+    <div className="sm:grid sm:grid-cols-3 gap-3 sm:gap-5 md:gap-8">
+      <div className="pt-6 sm:pt-8 md:pt-12 sm:col-[1/2]">
         <h3>Claude Monet</h3>
         <p>“Indtryk, solopgang”</p>
         <p>1872</p>
@@ -28,7 +15,7 @@ const SingleArtwork = () => {
         <p>Teknik: Olie på lærred</p>
         <p>Anskaffelsesdato: 1940</p>
       </div>
-      <p className="pt-5 sm:pt-7 sm:col-[2/4]">
+      <p className="pt-5 sm:pt-8 md:pt-12 sm:col-[2/4]">
         Claude Monet var en fransk maler og en af hovedfigurerne i den
         impressionistiske bevægelse, som opstod i Frankrig i slutningen af
         1800-tallet. Han er kendt for sine landskaber og særlige brug af lys og
@@ -54,17 +41,9 @@ const SingleArtwork = () => {
         længere blot et spørgsmål om teknik, men om følelse, sansning og
         øjeblikket. Maleriet er derfor både et kunstværk og et manifest for
         impressionismen.
-      </p> */}
-      <RelatedArt></RelatedArt>
+      </p>
     </div>
   );
 };
 
-export default SingleArtwork;
-
-// export default function SingleArtwork() {
-//   return (
-//     <div>
-//     </div>
-//   );
-// }
+export default SingleArtTextContent;
