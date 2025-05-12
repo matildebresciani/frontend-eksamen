@@ -1,10 +1,10 @@
 // Maja
-import Eventinfo from "@components/single_event/Eventinfo";
+import EventInfo from "@components/single_event/Eventinfo";
 
 export default function Eventpage() {
   return (
     <div>
-      <Eventinfo />
+      <EventInfo />
     </div>
   );
 }
