@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ["iip-thumb.smk.dk"],
+  },
+};
 
 export default nextConfig;
