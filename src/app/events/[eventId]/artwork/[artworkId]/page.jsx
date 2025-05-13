@@ -2,28 +2,45 @@
 
 import Image from "next/image";
 import RelatedArt from "@/components/art_singleview/RelatedArt";
-import SingleArtTextContent from "@/components/art_singleview/SingleArtTextContent";
+import SingleArtTextContent from "@/componentart_singleview/SingleArtTextContent";
 
-const SingleArtwork = () => {
+export default async function SingleArtwork({ params }) {
+  const { id } = params;
+  const res = await fetch(`https://api.smk.dk/api/v1/art?object_number=${id}`);
+  const artwork = await res.json();
+
   return (
     <div>
       <Image
-        src="/imgs/index.png"
-        alt="single artwork"
+        src={artwork.imageUrl}
+        alt={artwork.title}
         width={1500}
         height={1000}
       ></Image>
-      <SingleArtTextContent></SingleArtTextContent>
-      <RelatedArt></RelatedArt>
+      <SingleArtTextContent data={artwork}></SingleArtTextContent>
+      <RelatedArt artworkId={id}></RelatedArt>
     </div>
   );
-};
+}
 
-export default SingleArtwork;
+//Min oprindelige statiske version:
+// import Image from "next/image";
+// import RelatedArt from "@/components/art_singleview/RelatedArt";
+// import SingleArtTextContent from "@/components/art_singleview/SingleArtTextContent";
 
-// export default function SingleArtwork() {
+// const SingleArtwork = () => {
 //   return (
 //     <div>
+//       <Image
+//         src="/imgs/index.png"
+//         alt="single artwork"
+//         width={1500}
+//         height={1000}
+//       ></Image>
+//       <SingleArtTextContent></SingleArtTextContent>
+//       <RelatedArt></RelatedArt>
 //     </div>
 //   );
-// }
+// };
+
+// export default SingleArtwork;
