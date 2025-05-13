@@ -1,7 +1,7 @@
 //Matilde
 
 const EventForm = () => {
-    return ( <div></div> );
+    return ( <div>Input form</div> );
 }
  
 export default EventForm;
