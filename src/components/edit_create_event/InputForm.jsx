@@ -32,7 +32,7 @@ const Input = ({ label, register, required, placeholder, name }) => (
 
   const Textarea = ({ label, register, required, placeholder, name }) => (
     <div className="flex flex-col mb-4">
-      <label htmlFor={name} className="text-sm font-semibold mb-1">{label}</label>
+      <label htmlFor={name}>{label}</label>
       <textarea
         id={name}
         name={name}
