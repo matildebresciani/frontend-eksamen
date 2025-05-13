@@ -19,7 +19,7 @@ const Button = ({
     primary:
       "bg-transparent border-primary-red text-primary-red hover:bg-primary-red hover:text-white",
     CTA: "bg-primary-red border-primary-red text-white hover:bg-black hover:border-black hover:text-white",
-    tertiary: "",
+    tertiary: "bg-white border-text-light hover:bg-text-light hover:text-white",
   };
 
   return (
