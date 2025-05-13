@@ -4,11 +4,13 @@
 const SingleArtTextContent = ({ data }) => {
   return (
     <div className="sm:grid sm:grid-cols-3 gap-3 sm:gap-5 md:gap-8">
-      <div className="pt-6 sm:pt-8 md:pt-12 sm:col-[1/2]">
+      <div className="pt-6 sm:pt-8 md:pt-12 sm:col-[1/2] sm:self-start sm:sticky sm:top-20">
         <h3>{data.title}</h3>
         <p>{data.artist}</p>
       </div>
-      <p className="pt-5 sm:pt-8 md:pt-12 sm:col-[2/4]">{data.description}</p>
+      <div className="pt-5 sm:pt-8 md:pt-12 sm:col-[2/4]">
+        <p>{data.description}</p>
+      </div>
     </div>
   );
 };
