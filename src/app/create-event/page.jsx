@@ -8,6 +8,7 @@ export default function Page() {
     <h1>Opret Events</h1>
     <div className="grid grid-cols-[1fr_2fr]">
         <EventForm></EventForm>
+        <span className="border-l-2 border-black"></span>
         <ArtworkList></ArtworkList>
     </div>
   </div>;
