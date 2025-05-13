@@ -8,7 +8,6 @@ import SingleArtwork from "./page";
 export default function Home() {
   return (
     <div>
-      <SingleArtwork></SingleArtwork>
       <Image
         src="/imgs/index.png"
         alt="index photo"
