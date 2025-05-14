@@ -3,12 +3,12 @@ import Button from "@/components/Button";
 import IndexTextContent from "@/components/IndexTextContent";
 import Image from "next/image";
 import Link from "next/link";
-import ArtworkList from "@/components/edit_create_event/ArtworkList";
+//import ArtworkList from "@/components/edit_create_event/ArtworkList";
 
 export default function Home() {
   return (
     <div>
-      <ArtworkList></ArtworkList>
+      {/* <ArtworkList></ArtworkList> */}
       <Image
         src="/imgs/index.png"
         alt="index photo"
