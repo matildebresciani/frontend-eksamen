@@ -1,7 +1,7 @@
 //Katinka
 
 const ArtworkList = () => {
-    return ( <div>Artwork list</div> );
-}
- 
+  return <div>Artwork list</div>;
+};
+
 export default ArtworkList;
