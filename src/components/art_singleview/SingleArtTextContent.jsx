@@ -29,7 +29,7 @@ const SingleArtTextContent = ({ data }) => {
                 width: "40px",
                 height: "40px",
                 borderRadius: "50%",
-                border: "1px solid #ccc",
+                border: "1px solid var(--color-text-light)",
               }}
               title={color} // Tooltip med farvekoden/navnet
             />
