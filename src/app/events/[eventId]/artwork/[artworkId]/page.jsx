@@ -10,7 +10,7 @@ import Image from "next/image";
 import RelatedArt from "@/components/art_singleview/RelatedArt";
 import SingleArtTextContent from "@/components/art_singleview/SingleArtTextContent";
 
-// Opdateret version med hjælp fra chatGPT (OBS nu virker ikke index site)
+// Opdateret version med hjælp fra chatGPT
 export default async function SingleArtwork({ params }) {
   console.log("PARAMS:", params);
   if (!params) {
@@ -31,6 +31,9 @@ export default async function SingleArtwork({ params }) {
 
   if (!artwork) return <div>Kunstværk blev ikke fundet</div>;
 
+  // Få fat i suggested_bg_color (Ikke pænt :P)
+  // const backgroundColor = artwork.suggested_bg_color || "#ffffff"; // fallback hvis den mangler
+
   return (
     <div>
       <Image
@@ -38,6 +41,7 @@ export default async function SingleArtwork({ params }) {
         alt={artwork.title || "Artwork"}
         width={1500}
         height={1000}
+        // style={{ backgroundColor }}
       />
       <SingleArtTextContent data={artwork} />
       <RelatedArt artworkId={artworkId} />

@@ -62,10 +62,17 @@ h4 {
   line-height: clamp(1.875rem, 0.414vw + 1.778rem, 2.275rem);
   padding-bottom: 0.5rem;
 }
-/*font-size range 16-20px, line-height range 1.5-1.3*/
+/*font-size range 16-24px, line-height range 1.5-1.3*/
+
+h5 {
+  font-size: clamp(1rem, 0.518vw + 0.879rem, 1.5rem);
+  line-height: clamp(1.5rem, 0.466vw + 1.391rem, 1.95rem);
+  padding-bottom: 0.4rem;
+}
+/*font-size range 14-18px, line-height range 1.5-1.3*/
 p {
-  font-size: clamp(1rem, 0.259vw + 0.939rem, 1.25rem);
-  line-height: clamp(1.5rem, 0.129vw + 1.47rem, 1.625rem);
+  font-size: clamp(0.875rem, 0.259vw + 0.814rem, 1.125rem);
+  line-height: clamp(1.138rem, 0.57vw + 1.004rem, 1.688rem);
   padding-bottom: 0.3rem;
   text-wrap: balance;
   max-width: 65ch;
