@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="flex justify-between  gap-4 py-10 px-8 sm:py-12 sm:px-12 md:py-14 md:px-20 lg:py-16 lg:px-30 bg-primary-red ">
+    <footer className="flex justify-between  gap-4 mt-20 sm:mt-25 py-10 px-8 sm:py-12 sm:px-12 md:py-14 md:px-20 lg:py-16 lg:px-30 bg-primary-red ">
       <Image
         src="/imgs/logo_footer.svg"
         alt="footer logo"
