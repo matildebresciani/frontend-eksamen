@@ -9,10 +9,14 @@ import { IoCheckmark } from "react-icons/io5";
 import useCityStore from "@/app/store/cityStore";
 
 const City = ({ city, isSelected, onChange, disabled }) => (
-  <label className={`flex items-center gap-2 ${isSelected ? "font-bold" : ""} ${disabled ? "opacity-50" : ""}`}>
+  <label
+    className={`flex items-center gap-2 ${isSelected ? "font-bold" : ""} ${
+      disabled ? "opacity-50" : ""
+    }`}
+  >
     <div
       onClick={() => onChange(city)}
-      className="w-4 h-4 border-2 border-black bg-white rounded-xs relative cursor-pointer"
+      className="w-4 h-4 border-2 shrink-0 border-black bg-white rounded-xs relative cursor-pointer"
     >
       {isSelected && (
         <div className="absolute inset-0 flex justify-center items-center text-primary-red">
