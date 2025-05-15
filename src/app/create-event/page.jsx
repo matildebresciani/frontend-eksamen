@@ -1,17 +1,18 @@
 //Matilde og Katinka
 
 import ArtworkList from "@/components/edit_create_event/ArtworkList";
-//import EventForm from "@/components/edit_create_event/InputForm";
+//import EventForm from "@/components/edit_create_event/EventForm";
 
 export default function Page() {
   return (
-    <div>
+    <div className="grid sm:grid-cols-2">
       <h1>Opret Events</h1>
-      <ArtworkList></ArtworkList>
-      {/* <div className="grid grid-cols-[1fr_5px_2fr] gap-4">
-        <EventForm></EventForm>
+      <div>
+        {/* <div className="grid grid-cols-[1fr_5px_2fr] gap-4"> */}
+        {/* <EventForm></EventForm> */}
         <span className="border-l-2 border-black"></span>
-      </div> */}
+        <ArtworkList />
+      </div>
     </div>
   );
 }
