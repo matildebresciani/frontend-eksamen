@@ -114,7 +114,10 @@ const ArtworkList = () => {
             key={i}
             onClick={() => handlePageChange(i + 1)}
             className={`px-2 py-1 border rounded ${
-              currentPage === i + 1 ? "bg-gray-300" : "bg-white"
+              //   currentPage === i + 1 ? "bg-gray-300" : "bg-white"
+              currentPage === i + 1
+                ? "bg-primary-red text-white border-primary-red"
+                : "border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
             }`}
           >
             {i + 1}
@@ -124,11 +127,14 @@ const ArtworkList = () => {
       {selectedArtworks.length > 0 && (
         <button
           onClick={() => setSelectedArtworks([])}
-          className="self-end mb-4 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700"
+          className="self-end mb-4 px-3 py-1 border border-primary-red text-primary-red text-sm rounded hover:bg-primary-red hover:text-white"
         >
           Ryd alle valg
         </button>
       )}
+      <button className="self-end mb-4 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+        Læg til valgte værker
+      </button>
     </div>
   );
 };
