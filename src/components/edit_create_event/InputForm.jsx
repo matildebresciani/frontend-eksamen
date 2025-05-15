@@ -4,7 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "../Button";
 
-const Input = ({ label, register, required, placeholder, name }) => (
+const Input = ({ label, register, required, placeholder, name, error }) => (
     <div className="flex flex-col">
       <label>{label}</label>
       <input
@@ -12,11 +12,12 @@ const Input = ({ label, register, required, placeholder, name }) => (
       {...register(name || label, { required })}
               className="w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red"
     />
+    {error && <p className="text-sm text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
     </div>
   )
   
   // you can use React.forwardRef to pass the ref too
-  const Select = React.forwardRef(({ onChange, onBlur, name, label, placeholder }, ref) => (
+  const Select = React.forwardRef(({ onChange, onBlur, name, label, placeholder, error }, ref) => (
     <div className="flex flex-col">
       <label>{label}</label>
       <select name={name} ref={ref} onChange={onChange} onBlur={onBlur}
@@ -27,10 +28,12 @@ const Input = ({ label, register, required, placeholder, name }) => (
         <option value="20">20</option>
         <option value="30">30</option>
       </select>
+      {error && <p className="text-sm text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
     </div>
   ))
+  
 
-  const Textarea = ({ label, register, required, placeholder, name }) => (
+  const Textarea = ({ label, register, required, placeholder, name, error }) => (
     <div className="flex flex-col mb-4">
       <label htmlFor={name}>{label}</label>
       <textarea
@@ -41,22 +44,28 @@ const Input = ({ label, register, required, placeholder, name }) => (
         rows="4"
         className="w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red"
       />
+    {error && <p className="text-sm text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
     </div>
   );
 
 const EventForm = () => {
-    const { register, handleSubmit } = useForm()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm();
+      
     const onSubmit = (data) => {
         console.log("Form data:", data);
       };
     
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-fit">
-            <Select label="Dato:" name="date" {...register("date")} />
-            <Input label="Tidspunkt:" placeholder="Tidspunkt for event..." register={register} required />
-            <Select label="Lokation:" name="locationId" {...register("locationId")} />
-            <Input label="Event Navn:" name="title" placeholder="Navn på event..." register={register} required />
-            <Textarea label="Beskrivelse:" name="description" placeholder="Event beskrivelse..." register={register} required />
+            <Select label="Dato:" name="date" {...register("date", { required: "Dato skal vælges" })} error={errors.date} />
+            <Input label="Tidspunkt:" placeholder="Tidspunkt for event..." register={register} required={{ value: true, message: "Tidspunkt skal udfyldes" }} error={errors.time} />
+            <Select label="Lokation:" name="locationId" {...register("locationId", { required: "Lokation skal vælges" })} error={errors.locationId} />
+            <Input label="Event Navn:" name="title" placeholder="Navn på event..." register={register} required={{ value: true, message: "Navn skal udfyldes" }} error={errors.title} />
+            <Textarea label="Beskrivelse:" name="description" placeholder="Event beskrivelse..." register={register} required={{ value: true, message: "Beskrivelse skal udfyldes" }} error={errors.description} />
             <Button variant="tertiary" type="submit">Gem Kladde</Button>
             <Button variant="CTA" type="submit">Opret Event</Button>
         </form>
