@@ -5,6 +5,7 @@ import Image from "next/image";
 import FilterBtn from "./FilterBtn";
 import SearchBar from "./SearchBar";
 import { IoCheckmark } from "react-icons/io5";
+import { GoTrash } from "react-icons/go";
 
 const ITEMS_PER_PAGE = 12;
 const MAX_SELECTION = 10;
@@ -106,14 +107,14 @@ const ArtworkList = () => {
                     className="absolute inset-0 z-10 pointer-events-none rounded"
                     style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
                   >
-                    <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border border-red-600">
-                      <IoCheckmark className="text-red-600 text-sm" />
+                    <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border-2 border-primary-red">
+                      <IoCheckmark className="text-primary-red text-sm" />
                     </div>
                   </div>
                 )}
 
                 {!isSelected && (
-                  <div className="absolute top-1 right-1 w-5 h-5 bg-transparent rounded-sm border border-gray-300 z-10" />
+                  <div className="absolute top-1 right-1 w-5 h-5 bg-transparent rounded-sm border-white border-2 z-10" />
                 )}
 
                 <Image
@@ -135,29 +136,31 @@ const ArtworkList = () => {
           <button
             key={i}
             onClick={() => setCurrentPage(i + 1)}
-            className={`px-2 py-1 border rounded ${
+            className={`px-2 py-1 mb-5 border rounded ${
               currentPage === i + 1
                 ? "bg-primary-red text-white border-primary-red"
-                : "border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
+                : "border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white"
             }`}
           >
             {i + 1}
           </button>
         ))}
       </div>
+      <div className="flex justify-between">
+        {selectedArtworks.length > 0 && (
+          <button
+            onClick={() => setSelectedArtworks([])}
+            className="flex items-center gap-2 self-end mb-4 px-4 py-2 border border-primary-red text-primary-red text-sm rounded hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white"
+          >
+            <GoTrash />
+            Ryd alle valg
+          </button>
+        )}
 
-      {selectedArtworks.length > 0 && (
-        <button
-          onClick={() => setSelectedArtworks([])}
-          className="self-end mb-4 px-3 py-1 border border-primary-red text-primary-red text-sm rounded hover:bg-primary-red hover:text-white"
-        >
-          Ryd alle valg
+        <button className="self-end mb-4 px-4 py-2 bg-primary-red text-white text-sm rounded hover:bg-[var(--color-primary-red-hover2)] ">
+          Læg til valgte værker
         </button>
-      )}
-
-      <button className="self-end mb-4 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
-        Læg til valgte værker
-      </button>
+      </div>
     </div>
   );
 };

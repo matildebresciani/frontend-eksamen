@@ -7,6 +7,7 @@
   --color-text-light: #9e9c9c;
   --color-text-semi-invisible: #c9c9c9;
   --color-primary-red-hover: #f04f4f;
+  --color-primary-red-hover2: #9f0712;
 }
 
 body {
@@ -82,4 +83,8 @@ footer p {
   font-size: 0.8rem;
   line-height: 0.8rem;
   color: white;
+}
+
+button {
+  cursor: pointer;
 }
