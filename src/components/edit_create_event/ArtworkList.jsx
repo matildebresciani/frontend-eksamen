@@ -6,6 +6,7 @@ import FilterBtn from "./FilterBtn";
 import SearchBar from "./SearchBar";
 import { IoCheckmark } from "react-icons/io5";
 import { GoTrash } from "react-icons/go";
+import Button from "../Button";
 
 const ITEMS_PER_PAGE = 12;
 const MAX_SELECTION = 10;
@@ -133,33 +134,33 @@ const ArtworkList = () => {
 
       <div className="flex justify-center gap-2 my-4">
         {Array.from({ length: totalPages }, (_, i) => (
-          <button
+          <Button
             key={i}
             onClick={() => setCurrentPage(i + 1)}
-            className={`px-2 py-1 mb-5 border rounded ${
-              currentPage === i + 1
-                ? "bg-primary-red text-white border-primary-red"
-                : "border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white"
-            }`}
+            variant={currentPage === i + 1 ? "CTA" : "transparent"}
+            className="mb-5"
           >
             {i + 1}
-          </button>
+          </Button>
         ))}
       </div>
       <div className="flex justify-between">
         {selectedArtworks.length > 0 && (
-          <button
+          <Button
             onClick={() => setSelectedArtworks([])}
-            className="flex items-center gap-2 self-end mb-4 px-4 py-2 border border-primary-red text-primary-red text-sm rounded hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white"
+            variant="transparent_w_icon"
+            className=" self-end mb-4 "
+            // px-4 py-2 border border-primary-red text-primary-red text-sm rounded hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white
           >
             <GoTrash />
             Ryd alle valg
-          </button>
+          </Button>
         )}
 
-        <button className="self-end mb-4 px-4 py-2 bg-primary-red text-white text-sm rounded hover:bg-[var(--color-primary-red-hover2)] ">
+        <Button variant="CTA" className="self-end mb-4">
+          {/* px-4 py-2 bg-primary-red text-white text-sm rounded hover:bg-[var(--color-primary-red-hover2)]  */}
           Læg til valgte værker
-        </button>
+        </Button>
       </div>
     </div>
   );

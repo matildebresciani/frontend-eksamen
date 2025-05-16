@@ -1,6 +1,7 @@
 //Katinka - Layout
 import Button from "@/components/Button";
 import IndexTextContent from "@/components/IndexTextContent";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,12 +17,17 @@ export default function Home() {
       ></Image>
       <div className="flex flex-col items-center">
         <IndexTextContent></IndexTextContent>
-        <div className="flex items-center gap-8">
+        <div className="flex flex-col sm:flex-row items-center sm:gap-8 text-lg sm:text-xl md:text-2xl">
           <Link href="/events">
-            <Button variant="primary">SE EVENTS</Button>
+            <Button variant="transparent">SE EVENTS</Button>
           </Link>
-          <Button variant="CTA">LOG IND</Button>
-          {/* OBS denne LOG IND BUTTON skal aktiveres! */}
+          <SignedOut>
+            <Button variant="CTA">LOG IND</Button>
+            {/* OBS denne LOG IND BUTTON skal aktiveres! */}
+          </SignedOut>
+          <SignedIn>
+            <Button variant="CTA">OPRET EVENT</Button>
+          </SignedIn>
         </div>
       </div>
     </div>

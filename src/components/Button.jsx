@@ -9,24 +9,36 @@
 
 const Button = ({
   children,
-  variant = "primary",
+  variant = "transparent",
   onClick,
   type = "button",
   loading = false,
   loadingText,
 }) => {
   const variants = {
-    primary:
-      "bg-transparent border-primary-red text-primary-red hover:bg-primary-red hover:text-white",
-    CTA: "bg-primary-red border-primary-red text-white hover:bg-black hover:border-black hover:text-white",
+    // primary:
+    //   "bg-transparent border-primary-red text-primary-red hover:bg-primary-red hover:text-white",
+    // red: "bg-primary-red border-primary-red text-white hover:bg-black hover:border-black hover:text-white",
     tertiary: "bg-white border-text-light hover:bg-text-light hover:text-white",
+    transparent:
+      "border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
+    transparent_w_icon:
+      "flex items-center gap-2 border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
+    CTA: "border-primary-red bg-primary-red text-white hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
   };
 
   return (
+    // <button
+    //   type={type}
+    //   onClick={onClick}
+    //   className={`border-2 px-4 py-2 w-fit font-medium rounded-xs ${variants[variant]}`}
+    // >
+    //   {loading ? loadingText : children}
+    // </button>
     <button
       type={type}
       onClick={onClick}
-      className={`border-2 px-4 py-2 w-fit font-medium rounded-xs ${variants[variant]}`}
+      className={`px-4 py-1 mb-5 border-2 rounded font-medium text-md  ${variants[variant]}`}
     >
       {loading ? loadingText : children}
     </button>

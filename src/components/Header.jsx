@@ -29,7 +29,7 @@ const Header = () => {
       className={`${headerBaseClasses} ${headerPositionClass} ${headerBgClass}`}
     >
       <nav className={`${navBaseClasses} ${navHoverClass}`}>
-        <Link href="/" className="flex items-center gap-4">
+        <Link href="/" className="flex  items-center gap-4">
           <Image
             src="/imgs/logo_header.svg"
             alt="header logo"
@@ -81,21 +81,23 @@ const Header = () => {
 const HeaderNav = () => {
   const { openSignIn } = useClerk();
   return (
-    <div className="flex items-center gap-5 sm:gap-8 text-lg sm:text-xl md:text-2xl">
-      <Link href="/events" className="hover:underline">
-        SE EVENTS
-      </Link>
+    <div className="flex items-center gap-2 sm:gap-8 text-lg sm:text-xl md:text-2xl">
+      <div className="hidden sm:block ">
+        <Link href="/events">
+          <Button variant="transparent">SE EVENTS</Button>
+        </Link>
+      </div>
       <SignedOut>
-        <Button variant="CTA" onClick={() => openSignIn()}>
-          LOG IND
-        </Button>
+        <div>
+          <Button variant="CTA" onClick={() => openSignIn()}>
+            LOG IND
+          </Button>
+        </div>
       </SignedOut>
       <SignedIn>
-        <div className="flex items-center gap-4">
+        <div className="flex gap-4">
           <Link href="/create-event">
-            <Button variant="primary" className="">
-              OPRET EVENT
-            </Button>
+            <Button variant="CTA">OPRET EVENT</Button>
           </Link>
           <UserButton />
         </div>
