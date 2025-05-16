@@ -23,9 +23,10 @@ export default async function SingleArtwork({ params }) {
     return <div>Ugyldige parametre</div>;
   }
 
-  const res = await fetch(
-    `https://api.smk.dk/api/v1/art?object_number=${artworkId}`
-  );
+  console.log("artworkId:", artworkId);
+  console.log("eventId:", eventId);
+  console.log(params);
+  const res = await fetch(`https://api.smk.dk/api/v1/art?object_number=${artworkId}`);
   const data = await res.json();
   const artwork = data.items?.[0];
 
