@@ -3,6 +3,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "../Button";
+import { fetchDates, fetchLocations, createEvent } from "@/api-mappe/EventsApiKald";
 
 const Input = ({ label, register, required, placeholder, name, error }) => (
     <div className="flex flex-col">
@@ -55,8 +56,14 @@ const EventForm = () => {
         formState: { errors },
       } = useForm();
       
-    const onSubmit = (data) => {
-        console.log("Form data:", data);
+      const onSubmit = async (data) => {
+        try {
+          const result = await createEvent(data);
+          console.log("Event oprettet:", result);
+          // fx reset form eller vis besked
+        } catch (error) {
+          console.error("Fejl ved oprettelse:", error);
+        }
       };
     
     return (
