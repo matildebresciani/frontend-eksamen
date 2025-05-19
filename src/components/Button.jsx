@@ -38,7 +38,7 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={`px-4 py-1 mb-5 border-2 rounded font-medium text-md min-w-20 font-(family-name:--font-work-sans) ${variants[variant]}`}
+      className={`px-4 py-1 mb-5 border-2 rounded font-medium text-md min-w-20 font-(family-name:--font-work-sans) ease-in-out duration-200 ${variants[variant]}`}
     >
       {loading ? loadingText : children}
     </button>
