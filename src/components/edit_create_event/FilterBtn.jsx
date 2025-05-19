@@ -1,7 +1,7 @@
 //Katinka
 //Filtrere imellem kunstnere fra API?
 import { useState } from "react";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoFilter } from "react-icons/io5";
 import Button from "../Button";
 import { GoTrash } from "react-icons/go";
 
@@ -10,9 +10,14 @@ const FilterDropdown = ({ title, options, selected, onToggle, icon: Icon }) => {
 
   return (
     <div className="relative mb-3">
-      <Button onClick={() => setOpen(!open)} type="button" variant="black">
+      <Button
+        onClick={() => setOpen(!open)}
+        type="button"
+        variant="black"
+        className="flex items-center"
+      >
+        {Icon && <IoFilter />}
         <span>{title}</span>
-        {Icon && <Icon className="ml-2" />}
       </Button>
       {open && (
         <div className="absolute z-10 bg-white border mt-1 rounded shadow max-h-60 overflow-auto w-full">
@@ -55,21 +60,21 @@ const FilterBtn = ({
         options={artists}
         selected={selectedArtists}
         onToggle={onSelectArtist}
-        icon={IoIosArrowDown}
-      ></FilterDropdown>
+        icon={IoFilter}
+      />
       <FilterDropdown
         title="Teknikker"
         options={techniques}
         selected={selectedTechniques}
         onToggle={onSelectTechnique}
-        icon={IoIosArrowDown}
+        icon={IoFilter}
       />
       <FilterDropdown
         title="Materialer"
         options={materials}
         selected={selectedMaterials}
         onToggle={onSelectMaterial}
-        icon={IoIosArrowDown}
+        icon={IoFilter}
       />
 
       <Button variant="transparent_w_icon" onClick={onClearFilters}>
