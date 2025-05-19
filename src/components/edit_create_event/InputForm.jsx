@@ -7,6 +7,7 @@ import { fetchDates, fetchLocations, fetchEvents, createEvent } from "@/api-mapp
 import Link from "next/link";
 import BtnWithArrow from "../BtnWithArrow";
 import { RxCross2 } from "react-icons/rx";
+import PopUpBase from "../PopUpBaseLayout";
 
 
 const Input = ({ label, register, required, placeholder, name, error }) => (
@@ -149,17 +150,20 @@ const EventForm = () => {
             <Button variant="CTA" type="submit">Opret Event</Button>
         </form>
         {showPopup && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-100">
-          <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full text-center">
-            <button onClick={closePopup} className="flex end">
+            <PopUpBase>
+            <div className="flex justify-end">
+            <button onClick={closePopup}>
               <RxCross2></RxCross2>
             </button>
+            </div>
             <p>Event oprettet!</p>
-            <Link href={eventLink} className="w-fit">
-            <BtnWithArrow>Gå til event</BtnWithArrow>
+            <div className="flex justify-center">
+            <Link href={eventLink}>
+                <BtnWithArrow>Gå til event</BtnWithArrow>
             </Link>
-          </div>
-        </div>
+            </div>
+ 
+        </PopUpBase>
       )}
         </>
       )
