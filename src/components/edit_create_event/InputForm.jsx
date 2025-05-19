@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../Button";
 import { fetchDates, fetchLocations, fetchEvents, createEvent } from "@/api-mappe/EventsApiKald";
+import Link from "next/link";
+import BtnWithArrow from "../BtnWithArrow";
+import { RxCross2 } from "react-icons/rx";
 
 
 const Input = ({ label, register, required, placeholder, name, error }) => (
@@ -14,7 +17,7 @@ const Input = ({ label, register, required, placeholder, name, error }) => (
       {...register(name || label, { required })}
               className="w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red"
     />
-    {error && <p className="text-sm text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
+    {error && <p className="text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
     </div>
   )
   
@@ -37,7 +40,7 @@ const Input = ({ label, register, required, placeholder, name, error }) => (
         );
       })}
       </select>
-      {error && <p className="text-sm text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
+      {error && <p className="text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
     </div>
   ))
   
@@ -53,7 +56,7 @@ const Input = ({ label, register, required, placeholder, name, error }) => (
         rows="4"
         className="w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red"
       />
-    {error && <p className="text-sm text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
+    {error && <p className="text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
     </div>
   );
 
@@ -69,6 +72,8 @@ const EventForm = () => {
   const [dates, setDates] = useState([]);
   const [locations, setLocations] = useState([]);
   const [events, setEvents] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [eventLink, setEventLink] = useState("");
 
   const selectedDate = watch("date");
   const selectedLocation = watch("locationId");
@@ -119,14 +124,21 @@ const EventForm = () => {
         try {
           const result = await createEvent(data);
           console.log("Event oprettet:", result);
+          setEventLink(`/events/${result.id}`);
+          setShowPopup(true);
           // fx reset form eller vis besked
         } catch (error) {
           console.error("Fejl ved oprettelse:", error);
           console.log("SENDES TIL API:", data);
         }
       };
+
+      const closePopup = () => {
+        setShowPopup(false);
+      };
     
     return (
+        <>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-fit">
             <Select label="Dato:" name="date" options={dateOptions} placeholder="Vælg en dato" {...register("date", { required: "Dato skal vælges" })} error={errors.date} />
             {/* <Input label="Tidspunkt:" placeholder="Tidspunkt for event..." register={register} required={{ value: true, message: "Tidspunkt skal udfyldes" }} error={errors.time} /> */}
@@ -136,6 +148,20 @@ const EventForm = () => {
             <Button variant="tertiary" type="submit">Gem Kladde</Button>
             <Button variant="CTA" type="submit">Opret Event</Button>
         </form>
+        {showPopup && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-100">
+          <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm w-full text-center">
+            <button onClick={closePopup} className="flex end">
+              <RxCross2></RxCross2>
+            </button>
+            <p>Event oprettet!</p>
+            <Link href={eventLink} className="w-fit">
+            <BtnWithArrow>Gå til event</BtnWithArrow>
+            </Link>
+          </div>
+        </div>
+      )}
+        </>
       )
 };
 
