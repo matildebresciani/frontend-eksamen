@@ -34,6 +34,7 @@ const Button = ({
       className={`px-4 py-1 mb-5 border-2 rounded font-medium text-md font-(family-name:--font-work-sans) ${variants[variant]}`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
+      transition={{ duration: 0.3 }}
       onHoverStart={() => console.log("hover started!")}
     >
       {loading ? loadingText : children}
