@@ -17,26 +17,17 @@ const Button = ({
   loadingText,
 }) => {
   const variants = {
-    // primary:
-    //   "bg-transparent border-primary-red text-primary-red hover:bg-primary-red hover:text-white",
-    // red: "bg-primary-red border-primary-red text-white hover:bg-black hover:border-black hover:text-white",
     tertiary: "bg-white border-text-light hover:bg-text-light hover:text-white",
     transparent:
       "border-primary-red text-primary-red bg-[rgba(255,255,255,0.8)] hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
     transparent_w_icon:
       "flex items-center gap-2 border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
     CTA: "border-primary-red bg-primary-red text-white hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
+    black:
+      "flex justify-between items-center w-full font-medium text-white px-3 py-2 rounded-md bg-black border-2 text-left hover:bg-[var(--color-text-p)]",
   };
 
   return (
-    // <button
-    //   type={type}
-    //   onClick={onClick}
-    //   className={`border-2 px-4 py-2 w-fit font-medium rounded-xs ${variants[variant]}`}
-    // >
-    //   {loading ? loadingText : children}
-    // </button>
-
     <motion.button
       type={type}
       onClick={onClick}
