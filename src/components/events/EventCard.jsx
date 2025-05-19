@@ -3,14 +3,7 @@ import Link from "next/link";
 import BtnWithArrow from "../BtnWithArrow";
 import { SignedIn } from "@clerk/nextjs";
 import EditIcon from "../edit_create_event/EditIcon";
-
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString("da-DK", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  });
-};
+import { formatDate } from "@/utils/formatDate";
 
 const EventCard = ({ event }) => {
   const formattedDate = formatDate(event.date);
@@ -35,7 +28,7 @@ const EventCard = ({ event }) => {
         <div className="flex flex-row-reverse sm:flex-row cq-[min-width:640px]:grid cq-[min-width:640px]:grid-cols-[159px_1fr] gap-4 mt-2 items-start">
           <figure className="bg-primary-red w-[119px] h-[134px] shrink-0 cq-[min-width:640px]:w-[159px] cq-[min-width:640px]:h-[174px]"></figure>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 w-full">
             <p className="italic font-medium">"{event.title}"</p>
             <p className="font-bold">Kl. 10.00</p>
 
