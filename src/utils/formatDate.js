@@ -1,4 +1,5 @@
 //Formaterring af dato så det står skrevet pænere
+//Med hjælp fra AI for at sætte det korrekt funktionelt op
 
 export const formatDate = (date) => {
   const d = new Date(date);
