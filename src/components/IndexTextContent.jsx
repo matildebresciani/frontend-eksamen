@@ -1,8 +1,12 @@
-const IndexTextContent = () => {
+const IndexTextContent = ({ children }) => {
   return (
-    <div className="font-medium mb-7 sm:mb-10">
-      {/* w-[65ch] py-12 */}
-      <h1>Velkommen til Modernia Curators</h1>
+    <div className=" text-center font-medium mb-7 sm:mb-10 bg-[rgba(255,255,255,0.9)] py-4 sm:py-8 px-5 rounded-md">
+      <h1>
+        Velkommen til <br></br>
+        <span className="text-primary-red font-[var(--text-work-sans)] uppercase">
+          Modernia Curators
+        </span>
+      </h1>
       <p>
         Modernia Curators er din digitale platform dedikeret til modernistisk
         kunst og eventskabelse. Vi forbinder passionerede kuratorer med et
@@ -21,6 +25,7 @@ const IndexTextContent = () => {
         Vi tror på modernismens vedvarende relevans – og på, at god formidling
         starter med et godt system.
       </p>
+      {children}
     </div>
   );
 };
