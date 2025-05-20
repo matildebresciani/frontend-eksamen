@@ -4,6 +4,7 @@
 
 import { useEffect, useState } from "react";
 import Button from "@/components/Button";
+import { IoIosArrowDown } from "react-icons/io";
 import IndexTextContent from "@/components/IndexTextContent";
 import { useClerk, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
@@ -49,7 +50,7 @@ export default function Home() {
   const { scrollY } = useScroll();
   const topButtonOpacity = useTransform(scrollY, [0, 150, 350], [1, 1, 0]);
   const topButtonTranslateY = useTransform(scrollY, [0, 400], [0, -50]);
-  const contentOpacity = useTransform(scrollY, [300, 700, 1200], [0, 1, 0]);
+  const contentOpacity = useTransform(scrollY, [400, 800, 1300], [0, 1, 0]);
   const contentTranslateY = useTransform(scrollY, [400, 800], [50, 0]);
   const { openSignIn } = useClerk();
   return (
@@ -78,15 +79,37 @@ export default function Home() {
               UDFORSK MODERNISMENS VÆRKER
             </Button>
           </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: 1,
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              opacity: { duration: 0.4 },
+              scale: {
+                delay: 0.4, // starter pulse efter opacity er færdig
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeInOut",
+              },
+            }}
+            className="my-60"
+          >
+            <div className="flex justify-center items-center gap-3 text-primary-red font-semibold text-2xl">
+              Læs mere <IoIosArrowDown />
+            </div>
+          </motion.div>
         </motion.div>
       </div>
       <motion.div
         // style={{ opacity, y: translateY }}
         style={{ opacity: contentOpacity, y: contentTranslateY }}
-        className="flex justify-center items-center w-full mt-100"
+        className="flex justify-center items-center w-full mt-20"
       >
         <IndexTextContent>
-          <div className="flex flex-col sm:flex-row items-center sm:gap-8 text-lg sm:text-xl md:text-2xl mt-5 sm:mt-8 justify-center">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-lg sm:text-xl md:text-2xl mt-5 sm:mt-8 justify-center">
             <Link href="/events">
               <Button variant="transparent">SE EVENTS</Button>
             </Link>
