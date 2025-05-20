@@ -152,7 +152,7 @@ const ArtworkList = () => {
 
       <SearchBar />
 
-      <div className="sm:flex sm:justify-between sm:items-center mr-5 mt-5">
+      <div className="sm:flex sm:justify-between sm:items-center  mt-5">
         <FilterBtn
           artists={artists}
           techniques={techniques}
