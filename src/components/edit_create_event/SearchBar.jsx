@@ -3,7 +3,7 @@ import { CiSearch } from "react-icons/ci";
 
 const SearchBar = () => {
   return (
-    <div className="relative mt-8 sm:mt-3 pb-3 w-full sm:ml-17">
+    <div className="relative left-0 mt-8 sm:mt-3 pb-3 w-full ">
       <input
         type="text"
         placeholder="Søg"
