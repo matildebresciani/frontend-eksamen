@@ -16,7 +16,98 @@ const ArtworkList = () => {
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [selectedArtworks, setSelectedArtworks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedArtist, setSelectedArtist] = useState("");
+  //Filtrering
+  const [selectedArtists, setSelectedArtists] = useState([]);
+  const [selectedTechniques, setSelectedTechniques] = useState([]);
+  const [selectedMaterials, setSelectedMaterials] = useState([]);
+
+  // Udtrækker kunstnere alfabetisk
+  const artists = Array.from(
+    new Set(
+      artworks
+        .map((item) => item.production?.[0]?.creator)
+        .filter((name) => typeof name === "string" && name.length > 0)
+    )
+  ).sort();
+
+  // Udtrækker teknikker
+  const techniques = Array.from(
+    new Set(
+      artworks
+        .flatMap((item) => item.techniques || [])
+        .filter((t) => typeof t === "string" && t.length > 0)
+    )
+  ).sort();
+
+  // Udtrækker materialer
+  const materials = Array.from(
+    new Set(
+      artworks
+        .flatMap((item) => item.materials || [])
+        .filter((m) => typeof m === "string" && m.length > 0)
+    )
+  ).sort();
+
+  //Filtreringsfunktion
+  const applyFilters = (artists, techniques, materials) => {
+    let filtered = [...artworks];
+
+    if (artists.length > 0) {
+      filtered = filtered.filter((art) =>
+        artists.includes(art.production?.[0]?.creator)
+      );
+    }
+
+    if (techniques.length > 0) {
+      filtered = filtered.filter((art) =>
+        (art.techniques || []).some((t) => techniques.includes(t))
+      );
+    }
+
+    if (materials.length > 0) {
+      filtered = filtered.filter((art) =>
+        (art.materials || []).some((m) => materials.includes(m))
+      );
+    }
+
+    setFilteredArtworks(filtered);
+    setCurrentPage(1);
+  };
+
+  const handleSelectArtist = (artist) => {
+    const updated = selectedArtists.includes(artist)
+      ? selectedArtists.filter((a) => a !== artist)
+      : [...selectedArtists, artist];
+
+    setSelectedArtists(updated);
+    applyFilters(updated, selectedTechniques, selectedMaterials);
+  };
+
+  const handleSelectTechnique = (technique) => {
+    const updated = selectedTechniques.includes(technique)
+      ? selectedTechniques.filter((t) => t !== technique)
+      : [...selectedTechniques, technique];
+
+    setSelectedTechniques(updated);
+    applyFilters(selectedArtists, updated, selectedMaterials);
+  };
+
+  const handleSelectMaterial = (material) => {
+    const updated = selectedMaterials.includes(material)
+      ? selectedMaterials.filter((m) => m !== material)
+      : [...selectedMaterials, material];
+
+    setSelectedMaterials(updated);
+    applyFilters(selectedArtists, selectedTechniques, updated);
+  };
+
+  const toggleSelect = (id) => {
+    if (selectedArtworks.includes(id)) {
+      setSelectedArtworks(selectedArtworks.filter((aid) => aid !== id));
+    } else if (selectedArtworks.length < MAX_SELECTION) {
+      setSelectedArtworks([...selectedArtworks, id]);
+    }
+  };
 
   useEffect(() => {
     const fetchArtworks = async () => {
@@ -37,40 +128,18 @@ const ArtworkList = () => {
     fetchArtworks();
   }, []);
 
-  // Udtræk unikke kunstnere
-  const artists = Array.from(
-    new Set(
-      artworks
-        .map((item) => item.artist)
-        .filter((name) => typeof name === "string" && name.length > 0)
-    )
-  );
-
-  const handleSelectArtist = (artist) => {
-    setSelectedArtist(artist);
-    setCurrentPage(1);
-
-    if (artist === "") {
-      setFilteredArtworks(artworks);
-    } else {
-      const filtered = artworks.filter((art) => art.artist === artist);
-      setFilteredArtworks(filtered);
-    }
-  };
-
-  const toggleSelect = (id) => {
-    if (selectedArtworks.includes(id)) {
-      setSelectedArtworks(selectedArtworks.filter((aid) => aid !== id));
-    } else if (selectedArtworks.length < MAX_SELECTION) {
-      setSelectedArtworks([...selectedArtworks, id]);
-    }
-  };
-
   const totalPages = Math.ceil(filteredArtworks.length / ITEMS_PER_PAGE);
   const displayedArtworks = filteredArtworks.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+
+  const handleClearFilters = () => {
+    setSelectedArtists([]);
+    setSelectedTechniques([]);
+    setSelectedMaterials([]);
+    applyFilters([], [], []);
+  };
 
   return (
     <div className="flex flex-col max-w-[350px] sm:max-w-[500px]">
@@ -81,14 +150,22 @@ const ArtworkList = () => {
         </p>
       </div>
 
+      <SearchBar />
+
       <div className="sm:flex sm:justify-between sm:items-center mr-5 mt-5">
         <FilterBtn
           artists={artists}
-          selectedArtist={selectedArtist}
+          techniques={techniques}
+          materials={materials}
+          selectedArtists={selectedArtists}
+          selectedTechniques={selectedTechniques}
+          selectedMaterials={selectedMaterials}
           onSelectArtist={handleSelectArtist}
-          artworks={artworks}
+          onSelectTechnique={handleSelectTechnique}
+          onSelectMaterial={handleSelectMaterial}
+          onClearFilters={handleClearFilters}
+          //   artworks={artworks}
         />
-        <SearchBar />
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-5">
@@ -134,14 +211,17 @@ const ArtworkList = () => {
 
       <div className="flex justify-center gap-2 my-4">
         {Array.from({ length: totalPages }, (_, i) => (
-          <Button
+          <button
             key={i}
             onClick={() => setCurrentPage(i + 1)}
-            variant={currentPage === i + 1 ? "CTA" : "transparent"}
-            className="mb-5"
+            className={`px-2 py-1 mb-5 border rounded ${
+              currentPage === i + 1
+                ? "bg-primary-red text-white border-primary-red"
+                : "border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white"
+            }`}
           >
             {i + 1}
-          </Button>
+          </button>
         ))}
       </div>
       <div className="flex justify-between">
@@ -149,18 +229,12 @@ const ArtworkList = () => {
           <Button
             onClick={() => setSelectedArtworks([])}
             variant="transparent_w_icon"
-            className=" self-end mb-4 "
-            // px-4 py-2 border border-primary-red text-primary-red text-sm rounded hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white
           >
             <GoTrash />
             Ryd alle valg
           </Button>
         )}
-
-        <Button variant="CTA" className="self-end mb-4">
-          {/* px-4 py-2 bg-primary-red text-white text-sm rounded hover:bg-[var(--color-primary-red-hover2)]  */}
-          Læg til valgte værker
-        </Button>
+        <Button variant="CTA">Læg til valgte værker</Button>
       </div>
     </div>
   );

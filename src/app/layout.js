@@ -32,7 +32,9 @@ export default function RootLayout({ children }) {
           className={` ${workSans.variable} ${montserrat.variable} antialiased`}
         >
           <Header></Header>
-          <main className="px-8 sm:px-12 md:px-20 lg:px-30">{children}</main>
+          <main className="scroll-smooth px-8 sm:px-12 md:px-20 lg:px-30">
+            {children}
+          </main>
           <Footer></Footer>
         </body>
       </html>
