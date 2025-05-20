@@ -29,6 +29,12 @@ export default function Page() {
     setEvents((prevEvents) => prevEvents.filter(event => event.id !== deletedEventId));
   };
 
+  const handleEdit = (updatedEvent) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
+    );
+  };
+
   const filteredEvents = selectedCities.includes("Alle Byer") || selectedCities.length === 0 ? events : events.filter((event) => selectedCities.includes(normalizeCity(event.location.address)));
 
   return (
@@ -43,7 +49,7 @@ export default function Page() {
         <SelectCity />
         <div className="flex flex-col gap-4">
           {filteredEvents.map((event) => (
-            <EventCard key={event.id} event={event} onDeleted={() => handleDeleted(event.id)} />
+            <EventCard key={event.id} event={event} onDeleted={() => handleDeleted(event.id)} onEdit={handleEdit} />
           ))}
         </div>
       </div>

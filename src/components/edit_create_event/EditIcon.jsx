@@ -1,8 +1,8 @@
 import { FiEdit3 } from "react-icons/fi";
-import EditEventPopUp from "./EditPopUp";
+import EditEventPopUp from "./forms/EditPopUp";
 import { useState } from "react";
 
-const EditIcon = () => {
+const EditIcon = ({event, onEdit}) => {
 const [showPopup, setShowPopup] = useState(false);
 
 const closePopup = () => {
@@ -16,7 +16,13 @@ const closePopup = () => {
     </button>
 
     {showPopup && (
-        <EditEventPopUp closePopup={closePopup}></EditEventPopUp>
+        <EditEventPopUp
+        eventToEdit={event}
+        closePopup={closePopup}
+        onEditSuccess={(updatedEvent) => {
+            onEdit(updatedEvent);
+            closePopup();
+          }}></EditEventPopUp>
     )}
     </>
   );

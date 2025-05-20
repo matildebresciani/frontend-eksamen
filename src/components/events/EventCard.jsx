@@ -8,7 +8,7 @@ import DeleteBtn from "../edit_create_event/Delete";
 import { useRouter } from "next/navigation";
 
 
-const EventCard = ({ event, onDeleted }) => {
+const EventCard = ({ event, onDeleted, onEdit }) => {
     
 const router = useRouter();
   const formattedDate = formatDate(event.date);
@@ -44,9 +44,11 @@ const router = useRouter();
 
             <div className="flex flex-row items-center gap-1">
               <LuMapPin className="text-primary-red" />
-              <p>
-                {event.location.name}, {event.location.address}
-              </p>
+                <p>
+                {event.location?.name && event.location?.address
+                ? `${event.location.name}, ${event.location.address}`
+                : "Lokation ikke tilgængelig"}
+                </p>
             </div>
             
 
@@ -55,7 +57,7 @@ const router = useRouter();
               <div className="flex justify-end shrink-0 items-end gap-4" onClick={(e) => e.stopPropagation()}>
                 <SignedIn>
                     <DeleteBtn eventId={event.id} onDeleted={onDeleted} />
-                    <EditIcon />
+                    <EditIcon event={event} onEdit={onEdit} />
                 </SignedIn>
               </div>
             </div>

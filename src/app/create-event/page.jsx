@@ -1,7 +1,7 @@
 //Matilde og Katinka
 
 import ArtworkList from "@/components/edit_create_event/ArtworkList";
-import EventForm from "@/components/edit_create_event/InputForm";
+import EventForm from "@/components/edit_create_event/forms/InputForm";
 
 export default function Page() {
   return (
