@@ -6,9 +6,13 @@ import Button from "../../Button";
 import PopUpBase from "../../PopUpBaseLayout";
 import { RxCross2 } from "react-icons/rx";
 import { EditEvent } from "@/api-mappe/EventsApiKald";
+import { useState } from "react";
 
 const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
     const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const {
         register,
@@ -59,9 +63,11 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
       }));
 
       const onSubmit = async (data) => {
+        setIsSubmitting(true);
         try {
-          const updatedEvent = await EditEvent(eventToEdit.id, data); // Patch kald
-          onEditSuccess(updatedEvent); // Sender opdateret event til forælder
+        await Promise.all([EditEvent(eventToEdit.id, data), wait(1000)]);
+
+         onEditSuccess(data);
           console.log("Data:", data);
         } catch (error) {
           console.error("Error updating event:", error);
@@ -107,8 +113,13 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
           required={{ value: true, message: "Beskrivelse skal udfyldes" }}
           error={errors.description}
         />
-        <Button variant="CTA" type="submit">
-          Gem ændringer
+         <Button
+        variant="CTA"
+        type="submit"
+        loading={isSubmitting}
+        loadingText="Gemmer ændringer..."
+        >
+        Gem ændringer
         </Button>
       </form>
     </PopUpBase> );

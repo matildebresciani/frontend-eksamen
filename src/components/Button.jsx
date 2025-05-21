@@ -35,11 +35,32 @@ const Button = ({
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       transition={{ duration: 0.3 }}
-      onHoverStart={() => console.log("hover started!")}
     >
-      {loading ? loadingText : children}
+    {loading ? (
+        <span className="flex justify-center items-center gap-2">
+        <Spinner />
+        {loadingText}
+        </span>
+    ) : (
+        children
+    )}
     </motion.button>
   );
 };
 
 export default Button;
+
+const Spinner = () => {
+    return ( <div className="flex justify-center items-center rounded">
+                <motion.div
+                className="w-4 h-4 rounded-full border-2 border-gray-300 border-t-gray-500 will-change-transform"
+                animate={{ rotate: 360 }}
+                transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                }}
+            />
+    </div> );
+}
+
