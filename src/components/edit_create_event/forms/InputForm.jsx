@@ -21,6 +21,7 @@ const EventForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm();
 
   const { dates, locations, isLocationOccupied, isDateOccupied, createNewEvent } = useEventFormLogic();
@@ -52,6 +53,7 @@ const EventForm = () => {
       const [createdEvent] = await Promise.all([createNewEvent(data), wait(1000)]);
       setEventLink(`/events/${createdEvent.id}`);
       setShowPopup(true);
+      reset();
       console.log("Nyt event:", data)
     } catch (error) {
       console.log("SENDES TIL API:", data);
