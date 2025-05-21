@@ -1,3 +1,7 @@
+//Matilde
+//Med hjælp fra AI til at få loading effekt og til først at vise warning pop up
+//og derefter til at vise en event slettet popup
+
 import { deleteEvent } from "@/api-mappe/EventsApiKald";
 import PopUpBase from "../PopUpBaseLayout";
 import Button from "../Button";
@@ -8,6 +12,7 @@ import { motion } from "motion/react";
 const DeleteBtn = ({ eventId, onDeleted }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [hasDeleted, setHasDeleted] = useState(false);
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -15,12 +20,18 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
     setIsDeleting(true);
     try {
       await Promise.all([deleteEvent(eventId), wait(1000)]);
-      setShowPopup(false);
-      if (onDeleted) onDeleted(); // fx opdater UI
+      setHasDeleted(true);
     } catch (error) {
       console.error("Kunne ikke slette eventet:", error);
-      setIsDeleting(false); // nulstil hvis fejl
-    }
+    } finally {
+        setIsDeleting(false);
+      }
+  };
+
+  const handleClose = () => {
+    setShowPopup(false);
+    setHasDeleted(false);
+    if (hasDeleted && onDeleted) onDeleted(); // Kun hvis slettet
   };
 
   return (
@@ -38,26 +49,41 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
 
       {showPopup && (
         <PopUpBase>
-          <p>Er du sikker på at du vil slette dette event?</p>
-          <div className="flex gap-4 justify-center mt-4">
-            <Button
-              variant="CTA"
-              onClick={handleDelete}
-              loading={isDeleting}
-              loadingText="Sletter event..."
-              className={`transition-all duration-300 ${
-                isDeleting ? "flex-1" : "w-auto"
-              }`}
-            >
-              {isDeleting ? "Sletter event..." : "JA"}
-            </Button>
+           {!hasDeleted ? (
+            <>
+              <p>Er du sikker på at du vil slette dette event?</p>
+              <div className="flex gap-4 justify-center mt-4">
+                <Button
+                  variant="CTA"
+                  onClick={handleDelete}
+                  loading={isDeleting}
+                  loadingText="Sletter event..."
+                  className={`transition-all duration-300 ${
+                    isDeleting ? "flex-1" : "w-auto"
+                  }`}
+                >
+                  {isDeleting ? "Sletter event..." : "JA"}
+                </Button>
 
-            {!isDeleting && (
-              <Button variant="tertiary" onClick={() => setShowPopup(false)}>
-                NEJ
-              </Button>
-            )}
-          </div>
+                {!isDeleting && (
+                  <Button variant="tertiary" onClick={handleClose}>
+                    NEJ
+                  </Button>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="text-center">
+                Event blev slettet.
+              </p>
+              <div className="flex justify-center mt-4">
+                <Button variant="tertiary" onClick={handleClose}>
+                  Luk
+                </Button>
+              </div>
+            </>
+          )}
         </PopUpBase>
       )}
     </>
