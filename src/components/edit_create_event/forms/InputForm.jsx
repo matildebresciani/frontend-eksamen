@@ -66,7 +66,7 @@ const EventForm = () => {
       {showPopup && (
         <PopUpBase>
           <div className="flex justify-end">
-            <button onClick={closePopup}>
+            <button onClick={closePopup} className="hover:text-gray-500 ease-in-out duration-300">
               <RxCross2 />
             </button>
           </div>
