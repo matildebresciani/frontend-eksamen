@@ -1,23 +1,103 @@
+"use client";
 //Maja
-import { IoMailOutline } from "react-icons/io5";
-import Image from "next/image";
-import Button from "@/components/Button";
+import { useRouter, useParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import transferReservationInformation from "@/app/store/reservationInformation";
+import { useEffect, useRef, useState } from "react";
+import { FiMinus, FiPlus } from "react-icons/fi";
+import { fetchEventById, bookTickets } from "../../../api-mappe/EventsApiKald";
 
 const SignUpForm = () => {
+  const { eventId } = useParams();
+  const router = useRouter();
+  const { register, getValues, trigger, setValue, formState } = useForm();
+  const { errors } = formState;
+  const setReservation = transferReservationInformation((state) => state.setReservation);
+  const formRef = useRef();
+  const [shake, setShake] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [billetter, setBilletter] = useState(1);
+  const [totalTickets, setTotalTickets] = useState(null);
+  const [bookedTickets, setBookedTickets] = useState(null);
+
+  // Henter event data fra api-mappen
+  useEffect(() => {
+    const fetchEvent = async () => {
+      const data = await fetchEventById(eventId);
+      setTotalTickets(data.totalTickets);
+      setBookedTickets(data.bookedTickets);
+    };
+    if (eventId) fetchEvent();
+  }, [eventId]);
+
+  // Opdaterer react hook form når antal billetter ændres
+  const handleChange = (val) => {
+    if (val < 1) return;
+    setBilletter(val);
+    setValue("billetter", val, { shouldValidate: true });
+  };
+
+  // Funktionen når "bekræft reservation" trykkes
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+    const valid = await trigger();
+    if (!valid) {
+      setShowError(true);
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+      return;
+    }
+    setShowError(false);
+    const values = getValues();
+
+    try {
+      await bookTickets(eventId, {
+        navn: values.navn,
+        email: values.email,
+        billetter: billetter,
+      });
+      setReservation(values);
+      router.push(`/events/${eventId}/tickets`);
+    } catch (error) {
+      setShowError(true);
+      // evt. vis en fejlbesked til brugeren
+    }
+  };
+
   return (
-    <div className="bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-xl px-8 py-6 m-8 max-w-sm w-full mx-auto">
+    <form ref={formRef} className="bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-xl px-8 py-6 m-8 max-w-sm w-full mx-auto" onSubmit={handleConfirm}>
       <h3 className="font-semibold text-center text-lg mb-6">Tilmeld dig</h3>
 
+      {/*input felt der har plus og minus til billet antal fungerer lidt bedre */}
       <div className="mb-4">
         <label htmlFor="billetter" className="block text-sm mb-1">
           Antal billetter:
         </label>
-        <input
-          type="number"
-          id="billetter"
-          placeholder="Dine billetter..."
-          className="w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-red-500"
-        />
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="minus"
+            onClick={() => handleChange(billetter - 1)}
+            className="p-3 text-primary-red rounded-md bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)]  hover:bg-primary-red hover:text-white transition"
+          >
+            <FiMinus />
+          </button>
+          <span
+            className={`w-60 text-center rounded-md p-2 bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] ${errors.billetter && "border-primary-red"} ${shake && errors.billetter ? "animate-shake" : ""}`}
+            style={{ minWidth: "3rem", display: "inline-block" }}
+          >
+            {billetter}
+          </span>
+          <button
+            type="button"
+            aria-label="plus"
+            onClick={() => handleChange(billetter + 1)}
+            disabled={totalTickets !== null && bookedTickets !== null && billetter >= totalTickets - bookedTickets}
+            className="p-3 text-primary-red rounded-md bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] hover:bg-primary-red hover:text-white transition"
+          >
+            <FiPlus />
+          </button>
+        </div>
       </div>
 
       <div className="mb-4">
@@ -28,7 +108,10 @@ const SignUpForm = () => {
           type="text"
           id="navn"
           placeholder="Dit navn..."
-          className="w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-red-500"
+          {...register("navn", { required: true })}
+          className={`w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-primary-red ${errors.navn && "border-primary-red"} ${
+            shake && errors.navn ? "animate-shake" : ""
+          }`}
         />
       </div>
 
@@ -40,66 +123,37 @@ const SignUpForm = () => {
           type="email"
           id="email"
           placeholder="Din mail..."
-          className="w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-red-500"
+          {...register("email", {
+            required: true,
+          })}
+          className={`w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-primary-red ${errors.email && "border-primary-red"} ${
+            shake && errors.email ? "animate-shake" : ""
+          }`}
         />
       </div>
 
+      {showError && <div className="text-primary-red text-center text-xs mb-2">Udfyld alle felter korrekt</div>}
+
+      {/* Her vises hvor mange billetter der er tilbage */}
       <div className="text-center text-sm text-gray-600 mb-4">
-        39/50 billetter er allerede booket
+        {totalTickets !== null && bookedTickets !== null ? (
+          <>
+            {`Der er ${totalTickets - bookedTickets} `}
+            {totalTickets - bookedTickets === 1 ? "billet" : "billetter"} tilbage
+          </>
+        ) : (
+          "Indlæser antal billetter..."
+        )}
       </div>
 
-      <button className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition">
+      <button type="submit" className="w-full bg-primary-red text-white py-2 rounded-md hover:bg-red-700 transition block text-center">
         Bekræft reservation
       </button>
-    </div>
+    </form>
   );
 };
 
-export const NoTicketsPopUp = () => {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40">
-      <div className="bg-white rounded-xl shadow-lg max-w-sm w-full p-6 text-center">
-        {/* Scream illustration */}
-        <div className="mb-4 flex justify-center">
-          <Image
-            src="/screamLineart.png"
-            alt="Skrigende figur"
-            width={100}
-            height={100}
-          />
-        </div>
-
-        <h2 className="text-lg font-semibold mb-2 text-gray-800">
-          Øv… det ser ud til at der ikke er nok billetter
-        </h2>
-
-        <p className="text-sm text-gray-600 mb-6">
-          Du kan tjekke nogle af vores andre events,
-          <br />
-          eller tilmelde dig med mail så får du en besked hvis der kommer flere
-          billetter tilgængelige.
-        </p>
-
-        {/* mangler lige hurtig den knap som fortæller at mail er blevet godtaget + et kryds til at lukke siden ned hvis man bare vil lukke pop up.*/}
-        <div className="relative mb-6">
-          <IoMailOutline className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            type="email"
-            placeholder="Din mail..."
-            className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* bare lige placeholder knap indtil jeg har pull så den rigtige kn indsættes */}
-        <Button variant="CTA">
-          {/* className="border border-red-600 text-red-600 px-6 py-2 rounded-md hover:bg-red-50 hover:border-red-700 transition flex items-center justify-center mx-auto" */}
-          Se andre events
-          <span className="ml-2 animate-pulse">→</span>
-        </Button>
-      </div>
-    </div>
-  );
-};
+//billet antal i bunden vises ikke pludselig
+//mangler at billet antal overføres til ticket siden, men ticket skal styles først
 
 export default SignUpForm;
-// export default NoTicketsPopUp;
