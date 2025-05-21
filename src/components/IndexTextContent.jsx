@@ -1,3 +1,5 @@
+//Katinka
+
 const IndexTextContent = ({ children }) => {
   return (
     <div className=" text-center font-medium mb-7 sm:mb-10 bg-[rgba(255,255,255,0.9)] py-4 sm:py-8 px-5 rounded-md">

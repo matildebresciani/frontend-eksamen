@@ -26,7 +26,9 @@ export default async function SingleArtwork({ params }) {
   console.log("artworkId:", artworkId);
   console.log("eventId:", eventId);
   console.log(params);
-  const res = await fetch(`https://api.smk.dk/api/v1/art?object_number=${artworkId}`);
+  const res = await fetch(
+    `https://api.smk.dk/api/v1/art?object_number=${artworkId}`
+  );
   const data = await res.json();
   const artwork = data.items?.[0];
 
@@ -49,25 +51,3 @@ export default async function SingleArtwork({ params }) {
     </div>
   );
 }
-
-//Min oprindelige statiske version:
-// import Image from "next/image";
-// import RelatedArt from "@/components/art_singleview/RelatedArt";
-// import SingleArtTextContent from "@/components/art_singleview/SingleArtTextContent";
-
-// const SingleArtwork = () => {
-//   return (
-//     <div>
-//       <Image
-//         src="/imgs/index.png"
-//         alt="single artwork"
-//         width={1500}
-//         height={1000}
-//       ></Image>
-//       <SingleArtTextContent></SingleArtTextContent>
-//       <RelatedArt></RelatedArt>
-//     </div>
-//   );
-// };
-
-// export default SingleArtwork;
