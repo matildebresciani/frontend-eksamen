@@ -1,4 +1,35 @@
 //maja
+
+//GET: til at hente datoer
+async function fetchDates() {
+  try {
+    const response = await fetch("https://server-gititgirls.onrender.com/dates");
+    if (!response.ok) {
+      throw new Error("Failed to fetch dates");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching dates:", error);
+    throw error;
+  }
+}
+
+async function fetchLocations() {
+  try {
+    const response = await fetch("https://server-gititgirls.onrender.com/locations");
+    if (!response.ok) {
+      throw new Error("Failed to fetch locations");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching locations:", error);
+    throw error;
+  }
+}
+
+
 //GET: til hente flere events
 async function fetchEvents() {
   try {
@@ -124,4 +155,4 @@ async function resetEvents() {
   }
 }
 
-export { fetchEvents, fetchEventById, createEvent, EditEvent, deleteEvent, bookTickets, resetEvents };
+export { fetchDates, fetchLocations, fetchEvents, fetchEventById, createEvent, EditEvent, deleteEvent, bookTickets, resetEvents };
