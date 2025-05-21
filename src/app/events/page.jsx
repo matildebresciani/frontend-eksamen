@@ -5,12 +5,12 @@
 import { useEffect, useState } from "react";
 import EventCard from "@/components/events/EventCard";
 import SelectCity from "@/components/events/SelectCity";
-import useCityStore from "../store/cityStore";
+import normalizeCity from "@/utils/normalizeCity";
 import { fetchEvents } from "../../api-mappe/EventsApiKald";
 
 export default function Page() {
   const [events, setEvents] = useState([]);
-  const { selectedCities, normalizeCity } = useCityStore();
+  const [selectedCities, setSelectedCities] = useState([]);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -46,7 +46,9 @@ export default function Page() {
       </p>
       <div className="border-2 border-black w-full my-4"></div>
       <div className="grid sm:grid-cols-[1fr_2fr] gap-4">
-        <SelectCity />
+        <SelectCity
+        selectedCities={selectedCities}
+        setSelectedCities={setSelectedCities}/>
         <div className="flex flex-col gap-4">
           {filteredEvents.map((event) => (
             <EventCard key={event.id} event={event} onDeleted={() => handleDeleted(event.id)} onEdit={handleEdit} />

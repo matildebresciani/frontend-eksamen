@@ -11,8 +11,14 @@ const closePopup = () => {
 
   return (
     <>
-    <button onClick={setShowPopup} className="bg-primary-red hover:bg-primary-red-hover2 text-white rounded-full p-2 ease-in-out duration-200 w-10 h-10">
+    {/* Knap med rød cirkel baggrund og hvidt ikon*/}
+    {/* <button onClick={setShowPopup} className="bg-primary-red hover:bg-primary-red-hover2 text-white rounded-full p-2 ease-in-out duration-200 w-10 h-10">
       <FiEdit3 size={24}></FiEdit3>
+    </button> */}
+
+    {/* Knap med rødt ikon uden baggrund */}
+    <button onClick={setShowPopup} className="text-primary-red hover:text-primary-red-hover2 ease-in-out duration-200">
+      <FiEdit3 size={32}></FiEdit3>
     </button>
 
     {showPopup && (
