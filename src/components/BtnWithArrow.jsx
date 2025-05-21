@@ -1,3 +1,4 @@
+//Matilde
 //bruges til "se event" (på event card) og "læs mere" (på art card)
 //pilen og animationen er udarbejdet med hjælp fra AI
 

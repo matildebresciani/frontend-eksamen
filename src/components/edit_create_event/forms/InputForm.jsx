@@ -1,5 +1,10 @@
 "use client"
 
+//Matilde
+//Brugt AI til at få hele formularen til at hænge sammen efter det meste fra RHF var blevet sat op
+//Også gjort brug af AI til at håndtere om dato og lokation er tilgengængelig afhængigt af hinanden
+//AI til at implementere loading effekt på knap
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useEventFormLogic } from "./eventFormsLogic";

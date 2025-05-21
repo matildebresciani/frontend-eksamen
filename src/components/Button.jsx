@@ -1,3 +1,6 @@
+//Matilde: spinner og loading funktion
+//Katinka: styling af knapper og hover animationer
+
 //varianter: primary (gennemsigtigt, rød border), CTA/secondary (rød knap), tertiary (grå)
 //primary: til log-in og opret event i header
 //CTA/secondary: bruges til log-in og opret eller bekræfte ting rundt på siden
