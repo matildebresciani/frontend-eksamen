@@ -44,8 +44,8 @@ const EventForm = () => {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      const result = await Promise.all([createNewEvent(data), wait(1000)]);
-      setEventLink(`/events/${result.id}`);
+      const [createdEvent] = await Promise.all([createNewEvent(data), wait(1000)]);
+      setEventLink(`/events/${createdEvent.id}`);
       setShowPopup(true);
       console.log("Nyt event:", data)
     } catch (error) {
