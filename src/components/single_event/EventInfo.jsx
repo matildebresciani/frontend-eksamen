@@ -35,17 +35,17 @@ const Eventinfo = () => {
 
       <div className="flex flex-row justify-evenly mt-6">
         <div className="flex flex-col items-center">
-          <FiCalendar size={90} className="text-red-500" />
+          <FiCalendar size={90} className="text-primary-red" />
           <div className="font-semibold text-gray-500">{event.date}</div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuMapPin size={90} className="text-red-500" />
+          <LuMapPin size={90} className="text-primary-red" />
           <div className="font-semibold text-gray-500">{event.location?.address}</div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuClock4 size={90} className="text-red-500" />
+          <LuClock4 size={90} className="text-primary-red" />
           <div className="font-semibold text-gray-500">17:00-20:00</div>
           {/*hardcoded tid siden API ikke har*/}
         </div>
