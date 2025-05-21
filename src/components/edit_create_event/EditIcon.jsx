@@ -18,7 +18,7 @@ const closePopup = () => {
 
     {/* Knap med rødt ikon uden baggrund */}
     <button onClick={setShowPopup} className="text-primary-red hover:text-primary-red-hover2 ease-in-out duration-200">
-      <FiEdit3 size={32}></FiEdit3>
+      <FiEdit3 size={32} strokeWidth={1.5}></FiEdit3>
     </button>
 
     {showPopup && (

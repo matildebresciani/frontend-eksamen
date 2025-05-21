@@ -28,7 +28,7 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
     onClick={() => setShowPopup(true)}
     className="text-primary-red hover:text-primary-red-hover2 ease-in-out duration-200"
     aria-label="Slet event">
-        <LuTrash2 size={34} />
+        <LuTrash2 size={34} strokeWidth={1.5} />
     </button>
 
     {showPopup && (
