@@ -53,9 +53,12 @@ const SearchBar = ({ artworks, onLiveSearch, onSelectSuggestion }) => {
 
   const handleSuggestionClick = (item) => {
     setQuery(item.titles?.[0]?.title || "");
+    // setSuggestions([]);
+    // setHighlightedIndex(-1);
+    // onSelectSuggestion([item]);
+    onSelectSuggestion([item]);
     setSuggestions([]);
     setHighlightedIndex(-1);
-    onSelectSuggestion([item]);
   };
 
   const handleKeyDown = (e) => {

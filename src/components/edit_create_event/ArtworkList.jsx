@@ -10,8 +10,9 @@ import Image from "next/image";
 import FilterBtn from "./FilterBtn";
 import SearchBar from "./SearchBar";
 import { IoCheckmark } from "react-icons/io5";
-import { GoTrash } from "react-icons/go";
+import { LuTrash2 } from "react-icons/lu";
 import Button from "../Button";
+import { motion } from "motion/react";
 
 const ITEMS_PER_PAGE = 12;
 const MAX_SELECTION = 15;
@@ -88,6 +89,7 @@ const ArtworkList = () => {
 
     setFilteredArtworks(filtered);
     setCurrentPage(1);
+    setSearchResults(null); // Ryd tidligere søgning
   };
 
   const handleSelectArtist = (artist) => {
@@ -150,15 +152,6 @@ const ArtworkList = () => {
     fetchArtworks();
   }, []);
 
-  //   const isSearchActive = searchResults !== null;
-  //   const artworksToDisplay = isSearchActive ? searchResults : filteredArtworks;
-
-  //   const totalPages = Math.ceil(artworksToDisplay.length / ITEMS_PER_PAGE);
-
-  //   const displayedArtworks = artworksToDisplay.slice(
-  //     (currentPage - 1) * ITEMS_PER_PAGE,
-  //     currentPage * ITEMS_PER_PAGE
-  //   );
   const isSearchActive = searchResults !== null;
   const artworksToPaginate = isSearchActive ? searchResults : filteredArtworks;
   const totalPages = Math.ceil(artworksToPaginate.length / ITEMS_PER_PAGE);
@@ -172,14 +165,11 @@ const ArtworkList = () => {
     setSelectedArtists([]);
     setSelectedTechniques([]);
     setSelectedMaterials([]);
+    setSearchResults(null); // <- NYT!
     applyFilters([], [], []);
   };
 
   //Søgefunktion
-  //   const handleSearchResult = (artwork) => {
-  //     setFilteredArtworks([artwork]);
-  //     setCurrentPage(1);
-  //   };
   const handleSearchResult = (artwork) => {
     if (Array.isArray(artwork) && artwork.length > 0) {
       setSearchResults(artwork);
@@ -274,9 +264,12 @@ const ArtworkList = () => {
           {totalPages > 1 && (
             <div className="flex justify-center gap-2 my-4">
               {Array.from({ length: totalPages }, (_, i) => (
-                <button
+                <motion.button
                   key={i}
                   onClick={() => setCurrentPage(i + 1)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.1 }}
                   className={`px-2 py-1 mb-5 border rounded ${
                     currentPage === i + 1
                       ? "bg-primary-red text-white border-primary-red"
@@ -284,7 +277,7 @@ const ArtworkList = () => {
                   }`}
                 >
                   {i + 1}
-                </button>
+                </motion.button>
               ))}
             </div>
           )}
@@ -325,9 +318,12 @@ const ArtworkList = () => {
             {selectedTotalPages > 1 && (
               <div className="flex justify-center gap-2 my-4">
                 {Array.from({ length: selectedTotalPages }, (_, i) => (
-                  <button
+                  <motion.button
                     key={i}
                     onClick={() => setSelectedArtworksPage(i + 1)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.1 }}
                     className={`px-2 py-1 mb-2 border rounded ${
                       selectedArtworksPage === i + 1
                         ? "bg-primary-red text-white border-primary-red"
@@ -335,12 +331,11 @@ const ArtworkList = () => {
                     }`}
                   >
                     {i + 1}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             )}
 
-            {/* Flyttet knapper herned */}
             <div className="flex justify-between mt-4">
               {selectedArtworks.length > 0 && (
                 <Button
@@ -350,7 +345,7 @@ const ArtworkList = () => {
                   }}
                   variant="transparent_w_icon"
                 >
-                  <GoTrash />
+                  <LuTrash2 />
                   Ryd valg
                 </Button>
               )}

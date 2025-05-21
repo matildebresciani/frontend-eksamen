@@ -39,14 +39,14 @@ const Button = ({
       whileTap={{ scale: 0.95 }}
       transition={{ duration: 0.3 }}
     >
-    {loading ? (
+      {loading ? (
         <span className="flex justify-center items-center gap-2">
-        <Spinner />
-        {loadingText}
+          <Spinner />
+          {loadingText}
         </span>
-    ) : (
+      ) : (
         children
-    )}
+      )}
     </motion.button>
   );
 };
@@ -54,16 +54,17 @@ const Button = ({
 export default Button;
 
 const Spinner = () => {
-    return ( <div className="flex justify-center items-center rounded">
-                <motion.div
-                className="w-4 h-4 rounded-full border-2 border-gray-300 border-t-gray-500 will-change-transform"
-                animate={{ rotate: 360 }}
-                transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "linear",
-                }}
-            />
-    </div> );
-}
-
+  return (
+    <div className="flex justify-center items-center rounded">
+      <motion.div
+        className="w-4 h-4 rounded-full border-2 border-gray-300 border-t-gray-500 will-change-transform"
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+    </div>
+  );
+};
