@@ -2,7 +2,7 @@
 //Filtrere imellem kunstnere fra API?
 import { IoFilter } from "react-icons/io5";
 import Button from "../Button";
-import { GoTrash } from "react-icons/go";
+import { LuTrash2 } from "react-icons/lu";
 import { useState, useRef, useEffect } from "react";
 
 const FilterDropdown = ({ title, options, selected, onToggle, icon: Icon }) => {
@@ -93,7 +93,7 @@ const FilterBtn = ({
         selectedTechniques.length > 0 ||
         selectedMaterials.length > 0) && (
         <Button variant="transparent_w_icon" onClick={onClearFilters}>
-          <GoTrash />
+          <LuTrash2 />
           Ryd filtre
         </Button>
       )}
@@ -102,17 +102,3 @@ const FilterBtn = ({
 };
 
 export default FilterBtn;
-
-//Statisk version
-// import { IoFilter } from "react-icons/io5";
-
-// const FilterBtn = () => {
-//   return (
-//     <div className="flex justify-between bg-black hover:bg-[var(--color-text-header)] text-white items-center gap-5 px-3 py-2 rounded-xs">
-//       Filter
-//       <IoFilter />
-//     </div>
-//   );
-// };
-
-// export default FilterBtn;

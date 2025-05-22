@@ -53,9 +53,6 @@ const SearchBar = ({ artworks, onLiveSearch, onSelectSuggestion }) => {
 
   const handleSuggestionClick = (item) => {
     setQuery(item.titles?.[0]?.title || "");
-    // setSuggestions([]);
-    // setHighlightedIndex(-1);
-    // onSelectSuggestion([item]);
     onSelectSuggestion([item]);
     setSuggestions([]);
     setHighlightedIndex(-1);
@@ -83,7 +80,11 @@ const SearchBar = ({ artworks, onLiveSearch, onSelectSuggestion }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
+      console.log("Clicked somewhere"); //Test for at se om det fungerer
+
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        console.log("Clicked outside"); //Test for at se om det fungerer
+
         setSuggestions([]);
         setHighlightedIndex(-1);
       }
