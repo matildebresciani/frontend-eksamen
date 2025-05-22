@@ -165,7 +165,8 @@ const ArtworkList = () => {
     setSelectedArtists([]);
     setSelectedTechniques([]);
     setSelectedMaterials([]);
-    setSearchResults(null); // <- NYT!
+    setSearchResults(null); // vigtigt!
+    setCurrentPage(1); // dette manglet muligvis
     applyFilters([], [], []);
   };
 
@@ -179,11 +180,18 @@ const ArtworkList = () => {
     setCurrentPage(1);
   };
 
+  //NYT
+  useEffect(() => {
+    const newTotalPages = Math.ceil(artworksToPaginate.length / ITEMS_PER_PAGE);
+    if (currentPage > newTotalPages) {
+      setCurrentPage(1);
+    }
+  }, [artworksToPaginate, currentPage]);
+
   return (
     <div className="flex flex-col sm:flex-row gap-8">
       {/* Venstre kolonne - Galleriet */}
       <div className="flex-1 max-w-[600px]">
-        {/* Alt dit eksisterende galleri-indhold her... */}
         <div className="flex flex-col max-w-[350px] sm:max-w-[500px]">
           <div>
             <h5>Vælg op til {MAX_SELECTION} værker:</h5>
@@ -192,16 +200,23 @@ const ArtworkList = () => {
             </p>
           </div>
 
-          <SearchBar
+          {/* <SearchBar
             artworks={artworks}
             onLiveSearch={(results) => {
               setSearchResults(results?.length ? results : null);
               setCurrentPage(1);
+              handleSearchResult(results); //Gør at man kan lukke dropdown, men fucker up søgefunktionen!
             }}
             onSelectSuggestion={(selected) => {
               setSearchResults(selected?.length ? selected : null);
               setCurrentPage(1);
+              handleSearchResult(selected); //Gør at man kan lukke dropdown, men fucker up søgefunktionen!
             }}
+          /> */}
+          <SearchBar
+            artworks={artworks}
+            onLiveSearch={handleSearchResult}
+            onSelectSuggestion={handleSearchResult}
           />
 
           <div className="sm:flex sm:justify-between sm:items-center  mt-5">
@@ -234,7 +249,7 @@ const ArtworkList = () => {
                   >
                     {isSelected && (
                       <div
-                        className="absolute inset-0 z-10 pointer-events-none rounded"
+                        className="absolute inset-0 z-5 pointer-events-none rounded"
                         style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
                       >
                         <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border-2 border-primary-red">
@@ -260,7 +275,7 @@ const ArtworkList = () => {
               );
             })}
           </div>
-
+          {/* Pagination for alle værker VIRKER IKKE :( */}
           {totalPages > 1 && (
             <div className="flex justify-center gap-2 my-4">
               {Array.from({ length: totalPages }, (_, i) => (
@@ -314,7 +329,7 @@ const ArtworkList = () => {
               })}
             </div>
 
-            {/* Pagination for valgte værker */}
+            {/* Pagination for valgte værker VIRKER*/}
             {selectedTotalPages > 1 && (
               <div className="flex justify-center gap-2 my-4">
                 {Array.from({ length: selectedTotalPages }, (_, i) => (
