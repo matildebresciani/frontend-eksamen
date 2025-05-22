@@ -6,6 +6,7 @@ import transferReservationInformation from "@/app/store/reservationInformation";
 import { useEffect, useRef, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { fetchEventById, bookTickets } from "../../../api-mappe/EventsApiKald";
+import Button from "@/components/Button";
 
 const SignUpForm = () => {
   const { eventId } = useParams();
@@ -19,6 +20,8 @@ const SignUpForm = () => {
   const [billetter, setBilletter] = useState(1);
   const [totalTickets, setTotalTickets] = useState(null);
   const [bookedTickets, setBookedTickets] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // Henter event data fra api-mappen
   useEffect(() => {
@@ -48,14 +51,15 @@ const SignUpForm = () => {
       return;
     }
     setShowError(false);
+    setIsSubmitting(true);
     const values = getValues();
 
     try {
-      await bookTickets(eventId, {
+      await Promise.all([bookTickets(eventId, {
         navn: values.navn,
         email: values.email,
         billetter: billetter,
-      });
+      }), wait(1000)]) ;
       setReservation(values);
       router.push(`/events/${eventId}/tickets`);
     } catch (error) {
@@ -65,7 +69,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <form ref={formRef} className="bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-xl px-8 py-6 m-8 max-w-sm w-full mx-auto" onSubmit={handleConfirm}>
+    <form ref={formRef} className="bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-xl px-8 py-6 m-8 max-w-sm w-full mx-auto flex flex-col" onSubmit={handleConfirm}>
       <h3 className="font-semibold text-center text-lg mb-6">Tilmeld dig</h3>
 
       {/*input felt der har plus og minus til billet antal fungerer lidt bedre */}
@@ -146,9 +150,17 @@ const SignUpForm = () => {
         )}
       </div>
 
-      <button type="submit" className="w-full bg-primary-red text-white py-2 rounded-md hover:bg-red-700 transition block text-center">
+      {/* <button type="submit" className="w-full bg-primary-red text-white py-2 rounded-md hover:bg-red-700 transition block text-center">
         Bekræft reservation
-      </button>
+      </button> */}
+        <Button
+        variant="CTA"
+        type="submit"
+        loading={isSubmitting}
+        loadingText="Bekræfter reservation..."
+        >
+        Bekræft reservation
+        </Button>
     </form>
   );
 };

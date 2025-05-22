@@ -1,5 +1,6 @@
+//Matilde
+
 import { LuMapPin } from "react-icons/lu";
-import Link from "next/link";
 import BtnWithArrow from "../BtnWithArrow";
 import { SignedIn } from "@clerk/nextjs";
 import EditIcon from "../edit_create_event/EditIcon";

@@ -1,4 +1,7 @@
 "use client";
+
+//Matilde
+
 import React from "react";
 
 export const Input = ({ label, register, required, placeholder, name, error }) => (
@@ -7,9 +10,11 @@ export const Input = ({ label, register, required, placeholder, name, error }) =
     <input
       placeholder={placeholder}
       {...register(name || label, { required })}
-      className="w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red"
+      className={`w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red ${
+        error ? "animate-shake" : ""
+      }`}
     />
-    {error && <p className="text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
+    {error && <p className="!text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
   </div>
 );
 
@@ -22,7 +27,9 @@ export const Select = React.forwardRef(({ onChange, onBlur, name, label, placeho
       onChange={onChange}
       onBlur={onBlur}
       defaultValue=""  
-      className="w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red"
+      className={`w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red ${
+        error ? "animate-shake" : ""
+      }`}
     >
       <option value="" disabled>
         {placeholder || "Vælg en mulighed"}
@@ -37,7 +44,7 @@ export const Select = React.forwardRef(({ onChange, onBlur, name, label, placeho
         );
       })}
     </select>
-    {error && <p className="text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
+    {error && <p className="!text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
   </div>
 ));
 
@@ -51,8 +58,10 @@ export const Textarea = ({ label, register, required, placeholder, name, error }
       placeholder={placeholder}
       {...register(name, { required })}
       rows="4"
-      className="w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red"
+      className={`w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red ${
+        error ? "animate-shake" : ""
+      }`}
     />
-    {error && <p className="text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
+    {error && <p className="!text-sm !text-red-500 mt-1">{error.message || "Påkrævet felt"}</p>}
   </div>
 );

@@ -1,3 +1,5 @@
+//Matilde
+
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useEventFormLogic } from "./eventFormsLogic";
@@ -20,7 +22,6 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         watch,
         formState: { errors },
         reset,
-        setValue,
       } = useForm({
         defaultValues: {
             date: eventToEdit?.date || "",

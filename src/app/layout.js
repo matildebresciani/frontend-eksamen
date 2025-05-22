@@ -31,11 +31,11 @@ export default function RootLayout({ children }) {
         <body
           className={` ${workSans.variable} ${montserrat.variable} antialiased`}
         >
-          <Header></Header>
+          <Header />
           <main className="scroll-smooth px-8 sm:px-12 md:px-20 lg:px-30">
             {children}
           </main>
-          <Footer></Footer>
+          <Footer />
         </body>
       </html>
     </ClerkProvider>

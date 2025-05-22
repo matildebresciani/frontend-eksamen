@@ -6,7 +6,7 @@
 
 import { useEffect, useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
-import useCityStore from "@/app/store/cityStore";
+import normalizeCity from "@/utils/normalizeCity";
 
 const City = ({ city, isSelected, onChange, disabled }) => (
   <label
@@ -28,9 +28,8 @@ const City = ({ city, isSelected, onChange, disabled }) => (
   </label>
 );
 
-const SelectCity = () => {
+const SelectCity = ({selectedCities, setSelectedCities}) => {
   const [locations, setLocations] = useState([]);
-  const { selectedCities, setSelectedCities, normalizeCity } = useCityStore();
 
   useEffect(() => {
     fetch("https://server-gititgirls.onrender.com/locations")
