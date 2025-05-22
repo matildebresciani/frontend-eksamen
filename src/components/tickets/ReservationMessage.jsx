@@ -42,12 +42,17 @@ const ReservationMessage = () => {
           </p>
         </div>
       </div>
-      <div>
-        <p>Se dine billetter her.</p>
-        <p>
+      <div className="max-w-[1000px] mx-auto px-4">
+        <p className="mt-5">Se dine billetter her.</p>
+        <p className="mb-1">
           Vi sender dem til <b>{reservation.email}</b> hurtigst muligt.
         </p>
-        <Ticket eventId={eventId} />
+        {/*prompt: Hvordan får jeg ticket komponentet til at vise det antal af billetter brugeren har indtastet i SignUpform? */}
+        <div className="flex flex-wrap gap-6 justify-center mt-6">
+          {Array.from({ length: reservation.billetter || 1 }).map((_, idx) => (
+            <Ticket key={idx} eventId={eventId} />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -42,7 +42,7 @@ const Ticket = ({ eventId }) => {
             <h2 className="text-lg font-bold mb-1">{event.title}</h2>
             <p className="text-sm text-gray-700 mb-1">{event.location?.address}</p>
             <p className="text-xs text-gray-500">{event.date}</p>
-            <p className="text-xs text-gray-500">{event.time}</p>
+            <p className="text-xs text-gray-500">kl. 10:00</p>
           </>
         ) : (
           <p className="text-gray-400 text-sm">Indlæser event...</p>
