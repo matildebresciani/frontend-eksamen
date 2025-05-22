@@ -32,6 +32,8 @@ export default function Page() {
   const [formData, setFormData] = useState({});
   const [artworkError, setArtworkError] = useState("");
 
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   // Når form i step 1 valideres:
   const handleNextStep = (dataFromForm) => {
     setFormData(dataFromForm);
@@ -61,7 +63,7 @@ const handleCreateEvent = async () => {
     console.log("Data sendt ved oprettelse af event:", eventData);
 
     try {
-        const createdEvent = await createNewEvent(eventData);
+        const createdEvent = await Promise.all([createNewEvent(eventData), wait(1000)]);
         setEventLink(`/events/${createdEvent.id}`);
         setShowPopup(true);
         // evt. nulstil formular hvis ønsket
