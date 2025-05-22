@@ -18,15 +18,19 @@ export const Input = ({ label, register, required, placeholder, name, error }) =
   </div>
 );
 
-export const Select = React.forwardRef(({ onChange, onBlur, name, label, placeholder, error, options }, ref) => (
+export const Select = (({ onChange, onBlur, name, label, placeholder, error, options, value, ref }) => (
   <div className="flex flex-col">
     <label>{label}</label>
     <select
       name={name}
       ref={ref}
+      // onChange={(e) => {
+      //   onChange(e.target.value);
+      // }}
       onChange={onChange}
+      value={value}
       onBlur={onBlur}
-      defaultValue=""  
+      // defaultValue=""  
       className={`w-full rounded-md p-2 shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-red focus:primary-red ${
         error ? "animate-shake" : ""
       }`}
