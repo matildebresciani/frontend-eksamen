@@ -14,7 +14,9 @@ const Eventinfo = () => {
     const fetchEvent = async () => {
       try {
         // API'et kræver id, så vi sender eventId som id
-        const res = await fetch(`https://server-gititgirls.onrender.com/events/${eventId}`);
+        const res = await fetch(
+          `https://server-gititgirls.onrender.com/events/${eventId}`
+        );
         if (!res.ok) throw new Error("Event not found");
         const data = await res.json();
         setEvent(data);
@@ -29,24 +31,30 @@ const Eventinfo = () => {
   if (!event) return <div>Loading...</div>; // viser loading indtil eventet er hentet
 
   return (
-    <div>
-      <h1 className="font-bold text-center text-2xl">{event.title}</h1>
-      <p className="text-center max-w-xl mx-auto">{event.description}</p>
+    <div className="flex flex-col ">
+      <h1 className="text-center mb-5">{event.title}</h1>
+      <p className="mx-auto">{event.description}</p>
 
-      <div className="flex flex-row justify-evenly mt-6">
+      <div className="flex flex-row justify-evenly py-20">
         <div className="flex flex-col items-center">
-          <FiCalendar size={90} className="text-primary-red" />
-          <div className="font-semibold text-gray-500">{event.date}</div>
+          <FiCalendar size={90} className="text-primary-red stroke-1" />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5">
+            {event.date}
+          </div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuMapPin size={90} className="text-primary-red" />
-          <div className="font-semibold text-gray-500">{event.location?.address}</div>
+          <LuMapPin size={90} className="text-primary-red stroke-1" />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5">
+            {event.location?.address}
+          </div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuClock4 size={90} className="text-primary-red" />
-          <div className="font-semibold text-gray-500">17:00-20:00</div>
+          <LuClock4 size={90} className="text-primary-red stroke-1" />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5">
+            17:00-20:00
+          </div>
           {/*hardcoded tid siden API ikke har*/}
         </div>
       </div>
