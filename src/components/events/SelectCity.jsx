@@ -7,17 +7,19 @@
 import { useEffect, useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import normalizeCity from "@/utils/normalizeCity";
+import { motion } from "motion/react";
 
 const City = ({ city, isSelected, onChange, disabled }) => (
-  <label
-    className={`flex items-center gap-2 ${isSelected ? "font-bold" : ""} ${
-      disabled ? "opacity-50" : ""
-    }`}
+  <motion.label
+    onClick={() => onChange(city)}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    transition={{ duration: 0.1 }}
+    className={`flex items-center gap-2 cursor-pointer ${
+      isSelected ? "font-bold" : ""
+    } ${disabled ? "opacity-50" : ""}`}
   >
-    <div
-      onClick={() => onChange(city)}
-      className="w-4 h-4 border-2 shrink-0 border-black bg-white rounded-xs relative cursor-pointer"
-    >
+    <div className="w-4 h-4 border-2 shrink-0 border-black bg-white rounded-xs relative">
       {isSelected && (
         <div className="absolute inset-0 flex justify-center items-center text-primary-red">
           <IoCheckmark />
@@ -25,10 +27,10 @@ const City = ({ city, isSelected, onChange, disabled }) => (
       )}
     </div>
     {city}
-  </label>
+  </motion.label>
 );
 
-const SelectCity = ({selectedCities, setSelectedCities}) => {
+const SelectCity = ({ selectedCities, setSelectedCities }) => {
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
