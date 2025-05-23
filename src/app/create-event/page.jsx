@@ -99,7 +99,7 @@ const handleCreateEvent = async () => {
             blurred={step === 1}  // Blur når step 1, ikke blur når step 2
           />
           {step === 2 && (
-            <div className="mt-4 flex justify-end">
+            <div className="mt-4 flex flex-col items-end w-full">
             <Button
             variant="CTA"
             onClick={handleCreateEvent}
@@ -109,7 +109,7 @@ const handleCreateEvent = async () => {
             >
             Opret Event
             </Button>
-            {artworkError && <p className="text-red-600 mt-2">{artworkError}</p>}
+            {artworkError && <p className="!text-red-600 mt-2 !text-sm">{artworkError}</p>}
             </div>
           )}
         </div>

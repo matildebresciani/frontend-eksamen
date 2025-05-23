@@ -1,159 +1,89 @@
-//Matilde
-
-import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { useEventFormLogic } from "./eventFormsLogic";
-import { Input, Select, Textarea } from "./FormFields";
-import Button from "../../Button";
+import React, { useState } from "react";
+import { useEventFormLogic } from "./eventFormsLogic"; // Din custom hook med dates, locations osv.
 import PopUpBase from "../../PopUpBaseLayout";
+import Button from "../../Button";
 import { RxCross2 } from "react-icons/rx";
+import EditEventForm from "./EditEventForm";
+import ArtworkListEdit from "./ArtworksListEdit";
 import { EditEvent } from "@/api-mappe/EventsApiKald";
 
+
 const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
-    const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedArtworks, setSelectedArtworks] = useState(eventToEdit.artworks || []);
 
-    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const handleSubmit = async (formData) => {
+    setIsSubmitting(true);
 
-    const {
-        register,
-        handleSubmit,
-        watch,
-        control,
-        formState: { errors },
-        reset,
-      } = useForm({
-        //defaultValues bruges ved første render af form
-        defaultValues: {
-            date: eventToEdit?.date || "",
-            locationId: eventToEdit?.locationId || "",
-            title: eventToEdit?.title || "",
-            description: eventToEdit?.description || "",
-          },
-      });
-      
-      const selectedLocation = watch("locationId");
-      const selectedDate = watch("date");
-
-      const locationId = eventToEdit?.locationId || "";
-
-      useEffect(() => {
-        if (eventToEdit) {
-            //reset omskriver formularen til dens nuværende værdier når man trykker på rediger knap
-          reset({
-            date: eventToEdit.date,
-            locationId: eventToEdit.locationId || "",
-            title: eventToEdit.title,
-            description: eventToEdit.description,
-          });
-        }
-      }, [eventToEdit, reset]);
-      
-
-    
-      const dateOptions = dates.map((date) => ({
-        id: date,
-        name: date,
-        disabled: selectedLocation ? isDateOccupied(date, selectedLocation) && date !== eventToEdit.date : false,
-      }));
-
-      
-    
-      const locationOptions = locations.map((loc) => ({
-        id: loc.id,
-        name: `${loc.name} (${loc.address})`,
-        disabled: selectedDate ? isLocationOccupied(loc.id, selectedDate) && loc.id !== locationId : false,
-      }));
-
-      const onSubmit = async (data) => {
-        setIsSubmitting(true);
-        try {
-        const updatedEvent = await Promise.all([EditEvent(eventToEdit.id, data), wait(1000)]);
-
-         onEditSuccess(updatedEvent);
-          console.log("Data:", data);
-        } catch (error) {
-          console.error("Error updating event:", error);
-        }
+    try {
+      // Kombiner formData + artworks og opdater event
+      const updatedEventData = {
+        ...formData,
+        artworks: selectedArtworks,  // sørg for at artworks sendes med her, hvis api understøtter det
       };
-    return ( <PopUpBase>
-        <div className="flex justify-end">
-        <button onClick={closePopup} className="hover:text-gray-500 ease-in-out duration-300">
-        <RxCross2></RxCross2>
+
+      const updatedEvent = await EditEvent(eventToEdit.id, updatedEventData);
+
+      onEditSuccess(updatedEvent);
+      closePopup();
+    } catch (error) {
+      console.error("Fejl ved opdatering af event:", error);
+      // evt vis fejlbesked til bruger
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <PopUpBase>
+      <div className="flex justify-end">
+        <button
+          onClick={closePopup}
+          className="hover:text-gray-500 ease-in-out duration-300"
+          aria-label="Luk popup"
+        >
+          <RxCross2 />
         </button>
-        </div>
-        <h4 className="uppercase">Rediger Event</h4>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-fit">
-        {/* <Select
-          label="Dato:"
-          name="date"
-          options={dateOptions}
-          placeholder="Vælg en dato"
-          {...register("date", { required: "Dato skal vælges" })}
-          error={errors.date}
-        /> */}
-        <Controller
-  name="date"
-  control={control}
-  rules={{ required: "Dato skal vælges" }}
-  render={({ field, fieldState }) => (
-    <Select
-      label="Dato:"
-      placeholder="Vælg en dato"
-      options={dateOptions}
-      error={fieldState.error}
-      {...field} // dette inkluderer onChange, onBlur, value og ref
-    />
-  )}
-/>
-        {/* <Select
-          label="Lokation:"
-          name="locationId"
-          options={locationOptions}
-          placeholder="Vælg en lokation"
-          {...register("locationId", { required: "Lokation skal vælges" })}
-          error={errors.locationId}
-        /> */}
-        <Controller
-  name="locationId"
-  control={control}
-  rules={{ required: "Lokation skal vælges" }}
-  render={({ field, fieldState }) => (
-    <Select
-      label="Lokation:"
-      placeholder="Vælg en lokation"
-      options={locationOptions}
-      error={fieldState.error}
-      {...field}
-    />
-  )}
-/>
-        <Input
-          label="Event Navn:"
-          name="title"
-          placeholder="Navn på event..."
-          register={register}
-          required={{ value: true, message: "Navn skal udfyldes" }}
-          error={errors.title}
-        />
-        <Textarea
-          label="Beskrivelse:"
-          name="description"
-          placeholder="Event beskrivelse..."
-          register={register}
-          required={{ value: true, message: "Beskrivelse skal udfyldes" }}
-          error={errors.description}
-        />
-         <Button
-        variant="CTA"
+      </div>
+
+      <h3 className="uppercase">Rediger Event</h3>
+
+        <div className="grid grid-cols-[1fr_2fr] gap-4">
+      <EditEventForm
+        onSubmitData={handleSubmit} 
+        eventToEdit={eventToEdit}
+        dates={dates}
+        locations={locations}
+        isDateOccupied={isDateOccupied}
+        isLocationOccupied={isLocationOccupied}
+        onEditSuccess={(updatedEvent) => {
+          onEditSuccess(updatedEvent);
+          closePopup();
+        }}
+        formId="edit-event-form"
+        setIsSubmitting={setIsSubmitting}
+      />
+      <ArtworkListEdit 
+        selectedArtworks={selectedArtworks}
+        setSelectedArtworks={setSelectedArtworks}/>
+      </div>
+
+<div className="flex justify-center mt-4">
+      <Button
+        form="edit-event-form"
         type="submit"
+        variant="CTA"
         loading={isSubmitting}
         loadingText="Gemmer ændringer..."
-        >
+        className="mt-4"
+      >
         Gem ændringer
-        </Button>
-      </form>
-    </PopUpBase> );
-}
- 
+      </Button>
+
+</div>
+    </PopUpBase>
+  );
+};
+
 export default EditEventPopUp;

@@ -137,12 +137,38 @@ export const useArtworksLogic = (
   };
 
   // Hent kunstværker ved mount
+  //   useEffect(() => {
+  //     const fetchArtworks = async () => {
+  //       try {
+  //         const res = await fetch(
+  //           "https://api.smk.dk/api/v1/art/search?keys=modernisme&offset=0&rows=100"
+  //         );
+  //         const data = await res.json();
+  //         const items = data.items || [];
+
+  //         setArtworks(items);
+  //         setFilteredArtworks(items);
+  //       } catch (error) {
+  //         console.error("Fejl ved hentning af billeder:", error);
+  //       }
+  //     };
+  //     fetchArtworks();
+  //   }, []);
+
   useEffect(() => {
     const fetchArtworks = async () => {
       try {
         const res = await fetch(
           "https://api.smk.dk/api/v1/art/search?keys=modernisme&offset=0&rows=100"
         );
+
+        if (!res.ok) {
+          // Her kan du logge statuskode og tekst, hvis ikke OK
+          const text = await res.text(); // Læs det som tekst for debugging
+          console.error("Response error:", res.status, text);
+          throw new Error(`Network response was not ok: ${res.status}`);
+        }
+
         const data = await res.json();
         const items = data.items || [];
 
@@ -156,19 +182,19 @@ export const useArtworksLogic = (
   }, []);
 
   // Hent events (for bookede værker)
-  useEffect(() => {
-    const fetchEvents = async () => {
-      // TODO: Tilpas endpoint til events, hvis nødvendigt
-      try {
-        const res = await fetch("/api/events");
-        const data = await res.json();
-        setEvents(data);
-      } catch (error) {
-        console.error("Fejl ved hentning af events:", error);
-      }
-    };
-    fetchEvents();
-  }, []);
+  //   useEffect(() => {
+  //     const fetchEvents = async () => {
+  //       // TODO: Tilpas endpoint til events, hvis nødvendigt
+  //       try {
+  //         const res = await fetch("/api/events");
+  //         const data = await res.json();
+  //         setEvents(data);
+  //       } catch (error) {
+  //         console.error("Fejl ved hentning af events:", error);
+  //       }
+  //     };
+  //     fetchEvents();
+  //   }, []);
 
   const isSearchActive = searchResults !== null;
   const artworksToPaginate = isSearchActive ? searchResults : filteredArtworks;
