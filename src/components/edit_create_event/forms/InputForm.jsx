@@ -5,7 +5,7 @@
 //Også gjort brug af AI til at håndtere om dato og lokation er tilgengængelig afhængigt af hinanden
 //AI til at implementere loading effekt på knap
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useEventFormLogic } from "./eventFormsLogic";
 import Button from "../../Button";
@@ -15,7 +15,7 @@ import { RxCross2 } from "react-icons/rx";
 import PopUpBase from "../../PopUpBaseLayout";
 import { Input, Select, Textarea } from "./FormFields";
 
-const EventForm = () => {
+const EventForm = ({onNext, selectedArtworks, selectedDate, setSelectedDate, selectedLocation, setSelectedLocation, createNewEvent}) => {
   const {
     register,
     handleSubmit,
@@ -24,7 +24,7 @@ const EventForm = () => {
     reset,
   } = useForm();
 
-  const { dates, locations, isLocationOccupied, isDateOccupied, createNewEvent } = useEventFormLogic();
+  const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -32,8 +32,20 @@ const EventForm = () => {
   const [eventLink, setEventLink] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const selectedDate = watch("date");
-  const selectedLocation = watch("locationId");
+  // const selectedDate = watch("date");
+  // const selectedLocation = watch("locationId");
+
+    // Observer "date" feltet
+    const watchedDate = watch("date");
+    const watchedLocation = watch("locationId");
+  
+    useEffect(() => {
+      setSelectedDate(watchedDate);
+    }, [watchedDate, setSelectedDate]);
+  
+    useEffect(() => {
+      setSelectedLocation(watchedLocation);
+    }, [watchedLocation, setSelectedLocation]);
 
   const dateOptions = dates.map(date => ({
     id: date,
@@ -47,19 +59,27 @@ const EventForm = () => {
     disabled: selectedDate ? isLocationOccupied(loc.id, selectedDate) : false,
   }));
 
-  const onSubmit = async (data) => {
-    setIsSubmitting(true);
-    try {
-      const [createdEvent] = await Promise.all([createNewEvent(data), wait(1000)]);
-      setEventLink(`/events/${createdEvent.id}`);
-      setShowPopup(true);
-      reset();
-      console.log("Nyt event:", data)
-    } catch (error) {
-      console.log("SENDES TIL API:", data);
-    } finally {
-      setIsSubmitting(false); // Stop loading – også ved fejl
-    }
+  // const onSubmit = async (data) => {
+  //   setIsSubmitting(true);
+  //   try {
+  //     console.log("selectedArtworks ved submit:", selectedArtworks);
+  //     const cleanedArtworkIds = selectedArtworks.map(id => id.replace('_object', ''));
+  //     const eventData = { ...data, artworkIds: cleanedArtworkIds };
+  //     console.log("Data der sendes ved oprettelse af event:", eventData); 
+  //     const [createdEvent] = await Promise.all([createNewEvent(eventData), wait(1000)]);
+  //     setEventLink(`/events/${createdEvent.id}`);
+  //     setShowPopup(true);
+  //     reset();
+  //     console.log("Nyt event:", createdEvent);
+  //   } catch (error) {
+  //     console.log("SENDES TIL API:", data);
+  //   } finally {
+  //     setIsSubmitting(false); // Stop loading – også ved fejl
+  //   }
+  // };
+
+  const onSubmit = (data) => {
+    onNext(data);
   };
 
   const closePopup = () => {
@@ -73,14 +93,22 @@ const EventForm = () => {
         <Select label="Lokation:" name="locationId" options={locationOptions} placeholder="Vælg en lokation" {...register("locationId", { required: "Lokation skal vælges" })} error={errors.locationId} />
         <Input label="Event Navn:" name="title" placeholder="Navn på event..." register={register} required={{ value: true, message: "Navn skal udfyldes" }} error={errors.title} />
         <Textarea label="Beskrivelse:" name="description" placeholder="Event beskrivelse..." register={register} required={{ value: true, message: "Beskrivelse skal udfyldes" }} error={errors.description} />
-        <Button variant="tertiary" type="submit">Gem Kladde</Button>
-        <Button
+        {/* <Button variant="tertiary" type="submit">Gem Kladde</Button> */}
+        {/* <Button
         variant="CTA"
         type="submit"
         loading={isSubmitting}
         loadingText="Opretter event..."
       >
         Opret Event
+      </Button> */}
+              <Button
+        variant="transparent"
+        type="submit"
+        loading={isSubmitting}
+        loadingText="Næste step..."
+      >
+        Gå til vælg værker
       </Button>
 
       </form>

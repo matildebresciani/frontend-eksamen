@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 
 const EditIcon = ({ event, onEdit }) => {
   const [showPopup, setShowPopup] = useState(false);
+  console.log("Event:", event);
 
   const closePopup = () => {
     setShowPopup(false);

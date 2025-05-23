@@ -1,14 +1,13 @@
 //Matilde
 
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { useEventFormLogic } from "./eventFormsLogic";
 import { Input, Select, Textarea } from "./FormFields";
 import Button from "../../Button";
 import PopUpBase from "../../PopUpBaseLayout";
 import { RxCross2 } from "react-icons/rx";
 import { EditEvent } from "@/api-mappe/EventsApiKald";
-import { useState } from "react";
 
 const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
     const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
@@ -20,12 +19,14 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         register,
         handleSubmit,
         watch,
+        control,
         formState: { errors },
         reset,
       } = useForm({
+        //defaultValues bruges ved første render af form
         defaultValues: {
             date: eventToEdit?.date || "",
-            locationId: eventToEdit?.location?.id || "",
+            locationId: eventToEdit?.locationId || "",
             title: eventToEdit?.title || "",
             description: eventToEdit?.description || "",
           },
@@ -34,13 +35,14 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
       const selectedLocation = watch("locationId");
       const selectedDate = watch("date");
 
-      const locationId = eventToEdit?.location?.id || "";
+      const locationId = eventToEdit?.locationId || "";
 
       useEffect(() => {
         if (eventToEdit) {
+            //reset omskriver formularen til dens nuværende værdier når man trykker på rediger knap
           reset({
             date: eventToEdit.date,
-            locationId: eventToEdit.location?.id || "",
+            locationId: eventToEdit.locationId || "",
             title: eventToEdit.title,
             description: eventToEdit.description,
           });
@@ -66,9 +68,9 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
       const onSubmit = async (data) => {
         setIsSubmitting(true);
         try {
-        await Promise.all([EditEvent(eventToEdit.id, data), wait(1000)]);
+        const updatedEvent = await Promise.all([EditEvent(eventToEdit.id, data), wait(1000)]);
 
-         onEditSuccess(data);
+         onEditSuccess(updatedEvent);
           console.log("Data:", data);
         } catch (error) {
           console.error("Error updating event:", error);
@@ -82,22 +84,50 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         </div>
         <h4 className="uppercase">Rediger Event</h4>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-fit">
-        <Select
+        {/* <Select
           label="Dato:"
           name="date"
           options={dateOptions}
           placeholder="Vælg en dato"
           {...register("date", { required: "Dato skal vælges" })}
           error={errors.date}
-        />
-        <Select
+        /> */}
+        <Controller
+  name="date"
+  control={control}
+  rules={{ required: "Dato skal vælges" }}
+  render={({ field, fieldState }) => (
+    <Select
+      label="Dato:"
+      placeholder="Vælg en dato"
+      options={dateOptions}
+      error={fieldState.error}
+      {...field} // dette inkluderer onChange, onBlur, value og ref
+    />
+  )}
+/>
+        {/* <Select
           label="Lokation:"
           name="locationId"
           options={locationOptions}
           placeholder="Vælg en lokation"
           {...register("locationId", { required: "Lokation skal vælges" })}
           error={errors.locationId}
-        />
+        /> */}
+        <Controller
+  name="locationId"
+  control={control}
+  rules={{ required: "Lokation skal vælges" }}
+  render={({ field, fieldState }) => (
+    <Select
+      label="Lokation:"
+      placeholder="Vælg en lokation"
+      options={locationOptions}
+      error={fieldState.error}
+      {...field}
+    />
+  )}
+/>
         <Input
           label="Event Navn:"
           name="title"
