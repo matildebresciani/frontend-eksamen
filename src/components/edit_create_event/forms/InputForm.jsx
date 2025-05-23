@@ -103,12 +103,12 @@ const EventForm = ({onNext, selectedArtworks, selectedDate, setSelectedDate, sel
         Opret Event
       </Button> */}
               <Button
-        variant="CTA"
+        variant="transparent"
         type="submit"
         loading={isSubmitting}
         loadingText="Næste step..."
       >
-        Gå til "Vælg værker"
+        Gå til vælg værker
       </Button>
 
       </form>

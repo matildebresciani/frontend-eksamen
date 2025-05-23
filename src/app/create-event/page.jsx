@@ -78,7 +78,7 @@ const handleCreateEvent = async () => {
   return (
     <div>
       <h1>Opret Events</h1>
-      <div className="grid grid-cols-[1fr_2fr] gap-4">
+      <div className="grid grid-cols-[1fr_2fr] gap-12">
       <div>
       {/* <div className={`transition-opacity duration-300 ${step === 2 ? 'opacity-50 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}> */}
           <EventForm

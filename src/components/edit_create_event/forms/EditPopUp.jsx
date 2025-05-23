@@ -1,6 +1,6 @@
 //Matilde
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useEventFormLogic } from "./eventFormsLogic";
 import { Input, Select, Textarea } from "./FormFields";
@@ -8,7 +8,6 @@ import Button from "../../Button";
 import PopUpBase from "../../PopUpBaseLayout";
 import { RxCross2 } from "react-icons/rx";
 import { EditEvent } from "@/api-mappe/EventsApiKald";
-import { useState } from "react";
 
 const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
     const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
