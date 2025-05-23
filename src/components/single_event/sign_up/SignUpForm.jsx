@@ -55,11 +55,31 @@ const SignUpForm = () => {
     const values = getValues();
 
     try {
-      await Promise.all([bookTickets(eventId, {
-        navn: values.navn,
-        email: values.email,
-        billetter: billetter,
-      }), wait(1000)]) ;
+      // Book billetter
+      await Promise.all([
+        bookTickets(eventId, {
+          navn: values.navn,
+          email: values.email,
+          billetter: billetter,
+          eventId: eventId,
+        }),
+        wait(1000),
+      ]);
+
+      // Send bekræftelsesmail
+      await fetch("/api/sendConfirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: values.email, // brugerens mail fra inputfeltet
+          navn: values.navn,
+          billetter: billetter,
+          eventId: eventId,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log("MAIL API RESPONSE:", data));
+
       setReservation(values);
       router.push(`/events/${eventId}/tickets`);
     } catch (error) {
@@ -153,19 +173,13 @@ const SignUpForm = () => {
       {/* <button type="submit" className="w-full bg-primary-red text-white py-2 rounded-md hover:bg-red-700 transition block text-center">
         Bekræft reservation
       </button> */}
-        <Button
-        variant="CTA"
-        type="submit"
-        loading={isSubmitting}
-        loadingText="Bekræfter reservation..."
-        >
+      <Button variant="CTA" type="submit" loading={isSubmitting} loadingText="Bekræfter reservation...">
         Bekræft reservation
-        </Button>
+      </Button>
     </form>
   );
 };
 
 //billet antal i bunden vises ikke pludselig
-//mangler at billet antal overføres til ticket siden, men ticket skal styles først
 
 export default SignUpForm;
