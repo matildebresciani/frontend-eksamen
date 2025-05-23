@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 9;
 const MAX_SELECTION = 15;
 
 export const useArtworksLogic = (
@@ -227,5 +227,9 @@ export const useArtworksLogic = (
     handleSearchResult,
     MAX_SELECTION,
     isArtworkBooked,
+    artists,
+    techniques,
+    materials,
+    artworks,
   };
 };

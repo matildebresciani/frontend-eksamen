@@ -63,8 +63,9 @@ const handleCreateEvent = async () => {
     console.log("Data sendt ved oprettelse af event:", eventData);
 
     try {
-        const createdEvent = await Promise.all([createNewEvent(eventData), wait(1000)]);
+        const [createdEvent] = await Promise.all([createNewEvent(eventData), wait(1000)]);
         setEventLink(`/events/${createdEvent.id}`);
+        
         setShowPopup(true);
         // evt. nulstil formular hvis ønsket
       } catch (error) {
