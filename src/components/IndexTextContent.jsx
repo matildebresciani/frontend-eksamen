@@ -2,9 +2,9 @@
 
 const IndexTextContent = ({ children }) => {
   return (
-    <div className=" text-center font-medium mb-7 sm:mb-10 bg-[rgba(255,255,255,0.9)] py-4 sm:py-8 px-5 rounded-md">
+    <div className=" text-center font-medium mb-7 sm:mb-10 bg-[rgba(255,255,255,0.9)] py-5 sm:py-8 px-5 rounded-md">
       <h1>
-        Velkommen til <br></br>
+        Velkommen til<br></br>
         <span className="text-primary-red font-[var(--text-work-sans)] uppercase">
           Modernia Curators
         </span>

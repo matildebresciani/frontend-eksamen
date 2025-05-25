@@ -18,17 +18,17 @@ const Button = ({
   type = "button",
   loading = false,
   loadingText,
-  form
+  form,
 }) => {
   const variants = {
     tertiary: "bg-white border-text-light hover:bg-text-light hover:text-white",
     transparent:
       "border-primary-red text-primary-red bg-[rgba(255,255,255,0.8)] hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
     transparent_w_icon:
-      "flex items-center gap-2 border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
+      "text-xs sm:text-sm truncate flex gap-2 justify-center items-center border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
     CTA: "border-primary-red bg-primary-red text-white hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white",
     black:
-      "flex justify-between items-center w-full font-medium text-white px-3 py-2 rounded-md bg-black border-2 text-left hover:bg-[var(--color-text-p)]",
+      "flex gap-2 text-xs sm:text-sm justify-start items-center w-full font-medium text-white px-3 py-2 rounded-md bg-black border-2 text-left hover:bg-[var(--color-text-p)]",
   };
 
   return (

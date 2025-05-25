@@ -1,4 +1,5 @@
 //Matilde
+//Katinka - dropdown til mobile
 
 "use client";
 
@@ -7,6 +8,7 @@ import EventCard from "@/components/events/EventCard";
 import SelectCity from "@/components/events/SelectCity";
 import normalizeCity from "@/utils/normalizeCity";
 import { fetchEvents } from "../../api-mappe/EventsApiKald";
+import { IoIosArrowDown } from "react-icons/io";
 
 export default function Page() {
   const [events, setEvents] = useState([]);
@@ -46,7 +48,7 @@ export default function Page() {
 
   return (
     <section>
-      <h1>Events</h1>
+      <h1 className="mb-2 sm:mb-3">Events</h1>
       <p>
         Her finder du en oversigt over spændende kunstevents i hele Danmark.
         Glæd dig til alt fra Monets klassiske mesterværker til nyskabende
@@ -56,15 +58,32 @@ export default function Page() {
         dig!
       </p>
       <div>
-        <div className="border-2 border-black w-full my-4 sm:self-start sm:sticky sm:top-45"></div>
+        <div className="border-2 border-black w-full my-6 sm:my-10  sm:self-start sm:sticky sm:top-37 md:top-41 lg:top-45"></div>
 
         <div className="grid sm:grid-cols-[1fr_2fr] gap-4">
-          <div className="sm:self-start sm:sticky sm:top-48">
+          {/* Mobilversion med dropdown */}
+          <div className="block md:hidden">
+            <details className="w-full">
+              <summary className="text-primary-red flex justify-between items-center px-4 py-2 border-2 border-primary-red rounded cursor-pointer bg-white">
+                <span>Vælg By</span>
+                <IoIosArrowDown />
+              </summary>
+              <div className="px-4 pb-2">
+                <SelectCity
+                  selectedCities={selectedCities}
+                  setSelectedCities={setSelectedCities}
+                />
+              </div>
+            </details>
+          </div>
+          {/* Desktop version med sidefiltrering */}
+          <div className="hidden md:block">
             <SelectCity
               selectedCities={selectedCities}
               setSelectedCities={setSelectedCities}
             />
           </div>
+
           <div className="flex flex-col gap-4">
             {filteredEvents.map((event) => (
               <EventCard

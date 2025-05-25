@@ -22,7 +22,7 @@ const FilterDropdown = ({ title, options, selected, onToggle, icon: Icon }) => {
   }, []);
 
   return (
-    <div className="relative mb-3" ref={dropdownRef}>
+    <div className="relative mb-3 " ref={dropdownRef}>
       <Button
         onClick={() => setOpen(!open)}
         type="button"
@@ -33,7 +33,7 @@ const FilterDropdown = ({ title, options, selected, onToggle, icon: Icon }) => {
         <span>{title}</span>
       </Button>
       {open && (
-        <div className="absolute z-10 bg-white border mt-1 rounded shadow max-h-60 overflow-auto w-full">
+        <div className="absolute z-10 bg-white border text-sm mt-1 rounded shadow max-h-60 overflow-auto w-full">
           {options.map((option) => (
             <label
               key={option}
@@ -67,7 +67,8 @@ const FilterBtn = ({
   onClearFilters,
 }) => {
   return (
-    <div className="grid grid-cols-3 w-full gap-3">
+    // <div className="grid grid-cols-3 w-full">
+    <div className="flex flex-col flex-1/3 max-w-[600px] lg:flex-row w-full mt-5">
       <FilterDropdown
         title="Kunstnere"
         options={artists}

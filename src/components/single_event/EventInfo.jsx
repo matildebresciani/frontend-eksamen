@@ -35,24 +35,33 @@ const Eventinfo = () => {
       <h1 className="text-center mb-5">{event.title}</h1>
       <p className="mx-auto">{event.description}</p>
 
-      <div className="flex flex-row justify-evenly py-20">
+      <div className="flex flex-row justify-evenly py-20 gap-4">
         <div className="flex flex-col items-center">
-          <FiCalendar size={90} className="text-primary-red stroke-1" />
-          <div className="font-semibold text-[var(--color-text-light)] mt-5">
+          <FiCalendar
+            size={50}
+            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
+          />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             {event.date}
           </div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuMapPin size={90} className="text-primary-red stroke-1" />
-          <div className="font-semibold text-[var(--color-text-light)] mt-5">
+          <LuMapPin
+            size={50}
+            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
+          />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             {event.location?.address}
           </div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuClock4 size={90} className="text-primary-red stroke-1" />
-          <div className="font-semibold text-[var(--color-text-light)] mt-5">
+          <LuClock4
+            size={50}
+            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
+          />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             17:00-20:00
           </div>
           {/*hardcoded tid siden API ikke har*/}

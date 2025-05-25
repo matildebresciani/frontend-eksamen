@@ -24,8 +24,8 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
     } catch (error) {
       console.error("Kunne ikke slette eventet:", error);
     } finally {
-        setIsDeleting(false);
-      }
+      setIsDeleting(false);
+    }
   };
 
   const handleClose = () => {
@@ -44,12 +44,16 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
         className="text-primary-red hover:text-primary-red-hover2 ease-in-out duration-200"
         aria-label="Slet event"
       >
-        <LuTrash2 size={34} strokeWidth={1.5} />
+        <LuTrash2
+          size={34}
+          strokeWidth={1.5}
+          className="w-6 h-auto sm:w-7 md:w-8 lg:w-9"
+        />
       </motion.button>
 
       {showPopup && (
         <PopUpBase>
-           {!hasDeleted ? (
+          {!hasDeleted ? (
             <>
               <p>Er du sikker på at du vil slette dette event?</p>
               <div className="flex gap-4 justify-center mt-4">
@@ -74,9 +78,7 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
             </>
           ) : (
             <>
-              <p className="text-center">
-                Event blev slettet.
-              </p>
+              <p className="text-center">Event blev slettet.</p>
               <div className="flex justify-center mt-4">
                 <Button variant="tertiary" onClick={handleClose}>
                   Luk
