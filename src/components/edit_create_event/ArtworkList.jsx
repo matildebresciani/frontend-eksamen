@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar";
 import { motion } from "motion/react";
 import { useArtworksLogic } from "@/utils/artworksLogic";
 
-const ArtworkList = ({blurred = false, selectedArtworks, setSelectedArtworks, selectedDate }) => {
+const ArtworkList = ({ blurred = false, selectedArtworks, setSelectedArtworks, selectedDate }) => {
   const {
     displayedArtworks,
     currentPage,
@@ -30,7 +30,6 @@ const ArtworkList = ({blurred = false, selectedArtworks, setSelectedArtworks, se
     MAX_SELECTION,
     isArtworkBooked,
   } = useArtworksLogic(selectedDate, selectedArtworks, setSelectedArtworks);
-
 
   return (
     <div className={`flex flex-col sm:flex-row gap-8 ${blurred ? "filter blur-sm pointer-events-none select-none" : ""}`}>
@@ -58,35 +57,22 @@ const ArtworkList = ({blurred = false, selectedArtworks, setSelectedArtworks, se
           {displayedArtworks.length === 0 && <p>Ingen billeder fundet</p>}
 
           {displayedArtworks.map((artwork) => {
-            const isSelected = selectedArtworks.includes(artwork.id);
-            const isBooked = isArtworkBooked(artwork.id);
+            const isSelected = selectedArtworks.includes(artwork.object_number);
+            const isBooked = isArtworkBooked(artwork.object_number);
             const imageUrl = artwork.image_thumbnail || "/placeholder.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
-
             return (
               <motion.div
-                key={artwork.id}
-                onClick={() => toggleSelect(artwork.id)}
-                className={`relative aspect-square cursor-pointer overflow-hidden rounded-lg border-2 ${
-                  isSelected ? "border-secondary" : "border-transparent"
-                } ${isBooked ? "opacity-40 cursor-not-allowed" : ""}`}
+                key={artwork.object_number}
+                onClick={() => toggleSelect(artwork.object_number)}
+                className={`relative aspect-square cursor-pointer overflow-hidden rounded-lg border-2 ${isSelected ? "border-secondary" : "border-transparent"} ${
+                  isBooked ? "opacity-40 cursor-not-allowed" : ""
+                }`}
               >
-                <Image
-                  src={imageUrl}
-                  alt={title}
-                  fill
-                  sizes="(max-width: 600px) 33vw, 200px"
-                  className="object-cover"
-                />
-                {isSelected && (
-                  <IoCheckmark className="absolute right-1 top-1 text-xl text-secondary" />
-                )}
-                {isBooked && (
-                  <div className="absolute inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center text-white font-bold text-center text-sm">
-                    Booket
-                  </div>
-                )}
+                <Image src={imageUrl} alt={title} fill sizes="(max-width: 600px) 33vw, 200px" className="object-cover" />
+                {isSelected && <IoCheckmark className="absolute right-1 top-1 text-xl text-secondary" />}
+                {isBooked && <div className="absolute inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center text-white font-bold text-center text-sm">Booket</div>}
               </motion.div>
             );
           })}
@@ -94,11 +80,7 @@ const ArtworkList = ({blurred = false, selectedArtworks, setSelectedArtworks, se
 
         <div className="flex justify-center mt-3 gap-3">
           {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i}
-              className={`btn btn-sm ${currentPage === i + 1 ? "btn-primary" : "btn-ghost"}`}
-              onClick={() => setCurrentPage(i + 1)}
-            >
+            <button key={i} className={`btn btn-sm ${currentPage === i + 1 ? "btn-primary" : "btn-ghost"}`} onClick={() => setCurrentPage(i + 1)}>
               {i + 1}
             </button>
           ))}
@@ -115,25 +97,15 @@ const ArtworkList = ({blurred = false, selectedArtworks, setSelectedArtworks, se
 
         <motion.div className="grid grid-cols-3 gap-3 max-h-[300px] overflow-y-auto mt-3">
           {displayedSelectedArtworks.map((id) => {
-            const artwork = displayedArtworks.find((a) => a.id === id);
-            const imageUrl = artwork.image_thumbnail || "/placeholder.jpg";
-            const title = artwork.titles?.[0]?.title || "Uden titel";
+            const artwork = displayedArtworks.find((a) => a.object_number === id);
+            const imageUrl = artwork?.image_thumbnail || "/placeholder.jpg";
+            const title = artwork?.titles?.[0]?.title || "Uden titel";
 
             if (!artwork) return null;
 
             return (
-              <div
-                key={id}
-                className="relative aspect-square rounded-lg overflow-hidden cursor-pointer border-2 border-secondary"
-                onClick={() => toggleSelect(id)}
-              >
-           <Image
-            src={imageUrl}
-            alt={title}
-            fill
-            sizes="(max-width: 600px) 33vw, 200px"
-            className="object-cover"
-            />
+              <div key={id} className="relative aspect-square rounded-lg overflow-hidden cursor-pointer border-2 border-secondary" onClick={() => toggleSelect(id)}>
+                <Image src={imageUrl} alt={title} fill sizes="(max-width: 600px) 33vw, 200px" className="object-cover" />
                 <LuTrash2 className="absolute right-1 top-1 text-lg text-secondary" />
               </div>
             );
@@ -143,13 +115,7 @@ const ArtworkList = ({blurred = false, selectedArtworks, setSelectedArtworks, se
         {selectedTotalPages > 1 && (
           <div className="flex justify-center mt-3 gap-3">
             {Array.from({ length: selectedTotalPages }).map((_, i) => (
-              <button
-                key={i}
-                className={`btn btn-sm ${
-                  selectedArtworksPage === i + 1 ? "btn-primary" : "btn-ghost"
-                }`}
-                onClick={() => setSelectedArtworksPage(i + 1)}
-              >
+              <button key={i} className={`btn btn-sm ${selectedArtworksPage === i + 1 ? "btn-primary" : "btn-ghost"}`} onClick={() => setSelectedArtworksPage(i + 1)}>
                 {i + 1}
               </button>
             ))}

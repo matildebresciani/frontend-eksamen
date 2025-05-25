@@ -3,11 +3,7 @@ import { useEffect, useState } from "react";
 const ITEMS_PER_PAGE = 12;
 const MAX_SELECTION = 15;
 
-export const useArtworksLogic = (
-  selectedDate,
-  selectedArtworks,
-  setSelectedArtworks
-) => {
+export const useArtworksLogic = (selectedDate, selectedArtworks, setSelectedArtworks) => {
   const [artworks, setArtworks] = useState([]);
   const [events, setEvents] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
@@ -23,71 +19,36 @@ export const useArtworksLogic = (
 
   // Pagination valgte værker
   const [selectedArtworksPage, setSelectedArtworksPage] = useState(1);
-  const selectedTotalPages = Math.ceil(
-    selectedArtworks.length / ITEMS_PER_PAGE
-  );
+  const selectedTotalPages = Math.ceil(selectedArtworks.length / ITEMS_PER_PAGE);
 
-  const displayedSelectedArtworks = selectedArtworks.slice(
-    (selectedArtworksPage - 1) * ITEMS_PER_PAGE,
-    selectedArtworksPage * ITEMS_PER_PAGE
-  );
+  const displayedSelectedArtworks = selectedArtworks.slice((selectedArtworksPage - 1) * ITEMS_PER_PAGE, selectedArtworksPage * ITEMS_PER_PAGE);
 
   // Bookede værker til valgt dato
-  const bookedArtworkIds = events
-    .filter((event) => event.date === selectedDate)
-    .flatMap((event) => event.artworks);
+  const bookedArtworkIds = events.filter((event) => event.date === selectedDate).flatMap((event) => event.artworks);
 
   const isArtworkBooked = (id) => bookedArtworkIds.includes(id);
 
   // Udtræk kunstnere, teknikker, materialer alfabetisk
-  const artists = Array.from(
-    new Set(
-      artworks
-        .map((item) => item.production?.[0]?.creator)
-        .filter((name) => typeof name === "string" && name.length > 0)
-    )
-  ).sort();
+  const artists = Array.from(new Set(artworks.map((item) => item.production?.[0]?.creator).filter((name) => typeof name === "string" && name.length > 0))).sort();
 
-  const techniques = Array.from(
-    new Set(
-      artworks
-        .flatMap((item) => item.techniques || [])
-        .filter((t) => typeof t === "string" && t.length > 0)
-    )
-  ).sort();
+  const techniques = Array.from(new Set(artworks.flatMap((item) => item.techniques || []).filter((t) => typeof t === "string" && t.length > 0))).sort();
 
-  const materials = Array.from(
-    new Set(
-      artworks
-        .flatMap((item) => item.materials || [])
-        .filter((m) => typeof m === "string" && m.length > 0)
-    )
-  ).sort();
+  const materials = Array.from(new Set(artworks.flatMap((item) => item.materials || []).filter((m) => typeof m === "string" && m.length > 0))).sort();
 
   // Filtreringsfunktion
-  const applyFilters = (
-    artistsSelected,
-    techniquesSelected,
-    materialsSelected
-  ) => {
+  const applyFilters = (artistsSelected, techniquesSelected, materialsSelected) => {
     let filtered = [...artworks];
 
     if (artistsSelected.length > 0) {
-      filtered = filtered.filter((art) =>
-        artistsSelected.includes(art.production?.[0]?.creator)
-      );
+      filtered = filtered.filter((art) => artistsSelected.includes(art.production?.[0]?.creator));
     }
 
     if (techniquesSelected.length > 0) {
-      filtered = filtered.filter((art) =>
-        (art.techniques || []).some((t) => techniquesSelected.includes(t))
-      );
+      filtered = filtered.filter((art) => (art.techniques || []).some((t) => techniquesSelected.includes(t)));
     }
 
     if (materialsSelected.length > 0) {
-      filtered = filtered.filter((art) =>
-        (art.materials || []).some((m) => materialsSelected.includes(m))
-      );
+      filtered = filtered.filter((art) => (art.materials || []).some((m) => materialsSelected.includes(m)));
     }
 
     setFilteredArtworks(filtered);
@@ -96,43 +57,26 @@ export const useArtworksLogic = (
   };
 
   const handleSelectArtist = (artist) => {
-    const updated = selectedArtists.includes(artist)
-      ? selectedArtists.filter((a) => a !== artist)
-      : [...selectedArtists, artist];
+    const updated = selectedArtists.includes(artist) ? selectedArtists.filter((a) => a !== artist) : [...selectedArtists, artist];
     setSelectedArtists(updated);
     applyFilters(updated, selectedTechniques, selectedMaterials);
   };
 
   const handleSelectTechnique = (technique) => {
-    const updated = selectedTechniques.includes(technique)
-      ? selectedTechniques.filter((t) => t !== technique)
-      : [...selectedTechniques, technique];
+    const updated = selectedTechniques.includes(technique) ? selectedTechniques.filter((t) => t !== technique) : [...selectedTechniques, technique];
     setSelectedTechniques(updated);
     applyFilters(selectedArtists, updated, selectedMaterials);
   };
 
   const handleSelectMaterial = (material) => {
-    const updated = selectedMaterials.includes(material)
-      ? selectedMaterials.filter((m) => m !== material)
-      : [...selectedMaterials, material];
+    const updated = selectedMaterials.includes(material) ? selectedMaterials.filter((m) => m !== material) : [...selectedMaterials, material];
     setSelectedMaterials(updated);
     applyFilters(selectedArtists, selectedTechniques, updated);
   };
 
   // Toggle udvælgelse med max grænse og tjek booket
-  const toggleSelect = (id) => {
-    if (isArtworkBooked(id)) return; // kan ikke vælge booket værk
-
-    let updated;
-    if (selectedArtworks.includes(id)) {
-      updated = selectedArtworks.filter((aid) => aid !== id);
-    } else if (selectedArtworks.length < MAX_SELECTION) {
-      updated = [...selectedArtworks, id];
-    } else {
-      return;
-    }
-
-    setSelectedArtworks(updated);
+  const toggleSelect = (object_number) => {
+    setSelectedArtworks((prev) => (prev.includes(object_number) ? prev.filter((id) => id !== object_number) : prev.length < MAX_SELECTION ? [...prev, object_number] : prev));
     setSelectedArtworksPage(1);
   };
 
@@ -140,11 +84,10 @@ export const useArtworksLogic = (
   useEffect(() => {
     const fetchArtworks = async () => {
       try {
-        const res = await fetch(
-          "https://api.smk.dk/api/v1/art/search?keys=modernisme&offset=0&rows=100"
-        );
+        const res = await fetch("https://api.smk.dk/api/v1/art/search?keys=modernisme&offset=0&rows=100&fields=id,object_number,image_thumbnail,titles,techniques");
         const data = await res.json();
         const items = data.items || [];
+        console.log("SMK items:", items);
 
         setArtworks(items);
         setFilteredArtworks(items);
@@ -182,10 +125,7 @@ export const useArtworksLogic = (
   }, [artworksToPaginate, currentPage, totalPages]);
 
   // Slice til visning
-  const displayedArtworks = artworksToPaginate.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  const displayedArtworks = artworksToPaginate.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
   const handleClearFilters = () => {
     setSelectedArtists([]);

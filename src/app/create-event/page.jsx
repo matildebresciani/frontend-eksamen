@@ -1,5 +1,5 @@
 //Matilde og Katinka
-"use client"
+"use client";
 import { useState } from "react";
 import { useEventFormLogic } from "@/components/edit_create_event/forms/eventFormsLogic";
 import ArtworkList from "@/components/edit_create_event/ArtworkList";
@@ -11,24 +11,18 @@ import BtnWithArrow from "@/components/BtnWithArrow";
 import { RxCross2 } from "react-icons/rx";
 
 export default function Page() {
-    const {
-        dates,
-        locations,
-        isLocationOccupied,
-        createNewEvent,
-      } = useEventFormLogic();
+  const { dates, locations, isLocationOccupied, createNewEvent } = useEventFormLogic();
 
+  const [selectedArtworks, setSelectedArtworks] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const [selectedArtworks, setSelectedArtworks] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [selectedLocation, setSelectedLocation] = useState(null);
-    const [step, setStep] = useState(1);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [eventLink, setEventLink] = useState("");
 
-    const [showPopup, setShowPopup] = useState(false);
-    const [eventLink, setEventLink] = useState("");
-
-      // Midlertidigt gem data fra step 1
+  // Midlertidigt gem data fra step 1
   const [formData, setFormData] = useState({});
   const [artworkError, setArtworkError] = useState("");
 
@@ -44,8 +38,8 @@ export default function Page() {
     setShowPopup(false);
   };
 
-// Når event oprettes i step 2
-const handleCreateEvent = async () => {
+  // Når event oprettes i step 2
+  const handleCreateEvent = async () => {
     // Tjek om mindst ét artwork er valgt
     if (selectedArtworks.length === 0) {
       setArtworkError("Du skal vælge mindst ét artwork for at oprette event.");
@@ -57,37 +51,35 @@ const handleCreateEvent = async () => {
 
     const eventData = {
       ...formData,
-      artworkIds: selectedArtworks.map(id => id.replace('_object', '')),
+      artworkIds: selectedArtworks,
     };
 
     console.log("Data sendt ved oprettelse af event:", eventData);
 
     try {
-        const createdEvent = await Promise.all([createNewEvent(eventData), wait(1000)]);
-        setEventLink(`/events/${createdEvent.id}`);
-        setShowPopup(true);
-        // evt. nulstil formular hvis ønsket
-      } catch (error) {
-        console.error("Fejl ved oprettelse af event:", error);
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
+      const createdEvent = await Promise.all([createNewEvent(eventData), wait(1000)]);
+      console.log("Event oprettet:", createdEvent);
 
+      // Da vi har promise.all, kan vi antage at createdEvent[0] er det oprettede event,
+      // da wait(1000) kun er for at simulere en forsinkelse
+      // createdvent = [event, undefinded]
+      setEventLink(`/events/${createdEvent[0].id}`);
+      setShowPopup(true);
+      // evt. nulstil formular hvis ønsket
+    } catch (error) {
+      console.error("Fejl ved oprettelse af event:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div>
       <h1>Opret Events</h1>
       <div className="grid grid-cols-[1fr_2fr] gap-12">
-      <div>
-      {/* <div className={`transition-opacity duration-300 ${step === 2 ? 'opacity-50 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}> */}
-          <EventForm
-            onNext={handleNextStep}
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            selectedLocation={selectedLocation}
-            setSelectedLocation={setSelectedLocation}
-          />
+        <div>
+          {/* <div className={`transition-opacity duration-300 ${step === 2 ? 'opacity-50 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}> */}
+          <EventForm onNext={handleNextStep} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} />
         </div>
 
         <div>
@@ -95,20 +87,14 @@ const handleCreateEvent = async () => {
             selectedArtworks={selectedArtworks}
             setSelectedArtworks={setSelectedArtworks}
             selectedDate={selectedDate}
-            blurred={step === 1}  // Blur når step 1, ikke blur når step 2
+            blurred={step === 1} // Blur når step 1, ikke blur når step 2
           />
           {step === 2 && (
             <div className="mt-4 flex justify-end">
-            <Button
-            variant="CTA"
-            onClick={handleCreateEvent}
-            disabled={selectedArtworks.length === 0}
-            loading={isSubmitting}
-            loadingText="Opretter event..."
-            >
-            Opret Event
-            </Button>
-            {artworkError && <p className="text-red-600 mt-2">{artworkError}</p>}
+              <Button variant="CTA" onClick={handleCreateEvent} disabled={selectedArtworks.length === 0} loading={isSubmitting} loadingText="Opretter event...">
+                Opret Event
+              </Button>
+              {artworkError && <p className="text-red-600 mt-2">{artworkError}</p>}
             </div>
           )}
         </div>
