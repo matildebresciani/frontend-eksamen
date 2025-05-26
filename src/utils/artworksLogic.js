@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchEvents } from "@/api-mappe/EventsApiKald";
 
 export const useArtworksLogic = (
   selectedDate,
@@ -38,7 +39,8 @@ export const useArtworksLogic = (
     .filter((event) => event.date === selectedDate)
     .flatMap((event) => event.artworks);
 
-  const isArtworkBooked = (id) => bookedArtworkIds.includes(id);
+  const isArtworkBooked = (object_number) =>
+    bookedArtworkIds.includes(object_number);
 
   // Udtræk kunstnere, teknikker, materialer alfabetisk
   const artists = Array.from(
@@ -196,6 +198,18 @@ export const useArtworksLogic = (
   }, []);
 
   // Hent events (for bookede værker)
+  useEffect(() => {
+    const getEvents = async () => {
+      try {
+        const data = await fetchEvents();
+        setEvents(data);
+      } catch (error) {
+        console.error("Fejl ved hentning af events:", error);
+      }
+    };
+    getEvents();
+  }, []);
+
   //   useEffect(() => {
   //     const fetchEvents = async () => {
   //       // TODO: Tilpas endpoint til events, hvis nødvendigt

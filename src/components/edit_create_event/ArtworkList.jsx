@@ -83,6 +83,7 @@ const ArtworkList = ({
               <div key={artwork.object_number}>
                 <div
                   onClick={() => {
+                    if (isBooked) return;
                     if (
                       selectedArtworks.includes(artwork.object_number) ||
                       selectedArtworks.length < MAX_SELECTION
@@ -119,7 +120,7 @@ const ArtworkList = ({
 
 
                   {isBooked && (
-                    <div className="absolute inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center text-white font-bold text-center text-sm">
+                    <div className="absolute inset-0 bg-gray-700/40 flex items-center justify-center text-white font-bold text-center text-sm cursor-not-allowed">
                       Booket
                     </div>
                   )}
