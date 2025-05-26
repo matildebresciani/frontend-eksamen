@@ -34,19 +34,18 @@ export default async function SingleArtwork({ params }) {
 
   if (!artwork) return <div>Kunstværk blev ikke fundet</div>;
 
-  // Få fat i suggested_bg_color (Ikke pænt :P)
-  // const backgroundColor = artwork.suggested_bg_color || "#ffffff"; // fallback hvis den mangler
-
   return (
     <div>
-      <Image
-        src={artwork.image_thumbnail || "/placeholder.jpg"}
-        alt={artwork.title || "Artwork"}
-        width={1500}
-        height={1000}
-        // style={{ backgroundColor }}
-      />
-      <SingleArtTextContent data={artwork} />
+      <div className="flex flex-col items-center mx-3">
+        <Image
+          src={artwork.image_thumbnail || "/placeholder.jpg"}
+          alt={artwork.title || "Artwork"}
+          width={artwork.width || 1200}
+          height={artwork.height || 900}
+          className="w-full h-auto object-contain"
+        />
+        <SingleArtTextContent data={artwork} />
+      </div>
       <RelatedArt artworkId={artworkId} />
     </div>
   );
