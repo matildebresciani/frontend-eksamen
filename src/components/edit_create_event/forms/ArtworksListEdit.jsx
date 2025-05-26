@@ -34,6 +34,13 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
     artworks,
   } = useArtworksLogic(selectedDate, selectedArtworks, setSelectedArtworks);
 
+  console.log("Selected artworks in ArtworkListEdit:", selectedArtworks);
+
+
+  if (artworks.length === 0) {
+    return <p className="text-center text-sm">Indlæser kunstværker...</p>;
+  }
+
   return (
     <div
       className={`flex flex-col sm:flex-row gap-2 p-4 bg-white rounded
@@ -68,6 +75,8 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
             const isBooked = isArtworkBooked(artwork.object_number);
             const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
+
+            console.log("Artwork:", artwork.object_number, "Selected:", isSelected);
 
             return (
               <div key={artwork.object_number} className="max-w-[100px]">
@@ -155,7 +164,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
                   height={100}
                   className="rounded object-cover"
                 />
-                <LuTrash2 className="absolute right-1 top-1 text-lg text-secondary" />
+                <LuTrash2 className="absolute right-1 top-1 text-lg text-white m-1 w-6 h-auto stroke-1" />
                 <p className="truncate mt-1 text-xs">{title}</p>
               </div>
             );

@@ -11,16 +11,18 @@ import { EditEvent } from "@/api-mappe/EventsApiKald";
 const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedArtworks, setSelectedArtworks] = useState(eventToEdit.artworks || []);
+  const [selectedArtworks, setSelectedArtworks] = useState(
+    eventToEdit.artworkIds || []
+  );
+  
 
   const handleSubmit = async (formData) => {
     setIsSubmitting(true);
-
     try {
       // Kombiner formData + artworks og opdater event
       const updatedEventData = {
         ...formData,
-        artworks: selectedArtworks,  // sørg for at artworks sendes med her, hvis api understøtter det
+        artworkIds: selectedArtworks,  // sørg for at artworks sendes med her, hvis api understøtter det
       };
 
       const updatedEvent = await EditEvent(eventToEdit.id, updatedEventData);

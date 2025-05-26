@@ -75,7 +75,7 @@ const SelectCity = ({ selectedCities, setSelectedCities }) => {
           disabled={isAlleSelected}
         />
       ))}
-      <div className="border-b-4 border-black mt-4"></div>
+      <div className="border-b-4 border-black mt-4 hidden md:block"></div>
     </div>
   );
 };

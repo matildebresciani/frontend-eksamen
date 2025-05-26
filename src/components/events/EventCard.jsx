@@ -16,6 +16,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
     router.push(`/events/${event.id}`);
   };
 
+
   return (
     <div
       onClick={handleCardClick}

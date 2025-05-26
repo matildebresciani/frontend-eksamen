@@ -34,6 +34,7 @@ export default function Page() {
   };
 
   const handleEdit = (updatedEvent) => {
+    console.log("Updated event modtaget fra API:", updatedEvent);
     setEvents((prevEvents) =>
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );
