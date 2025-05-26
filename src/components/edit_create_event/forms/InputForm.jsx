@@ -56,6 +56,7 @@ const EventForm = ({onNext, selectedArtworks, selectedDate, setSelectedDate, sel
   const locationOptions = locations.map(loc => ({
     id: loc.id,
     name: `${loc.name} (${loc.address})`,
+    maxArtworks: loc.maxArtworks,
     disabled: selectedDate ? isLocationOccupied(loc.id, selectedDate) : false,
   }));
 
