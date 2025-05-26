@@ -1,7 +1,7 @@
 //Matilde og Katinka
 "use client";
 import { useState } from "react";
-import { useEventFormLogic } from "@/components/edit_create_event/forms/eventFormsLogic";
+import { useEventFormLogic } from "@/utils/eventFormsLogic";
 import ArtworkList from "@/components/edit_create_event/ArtworkList";
 import EventForm from "@/components/edit_create_event/forms/InputForm";
 import Button from "@/components/Button";

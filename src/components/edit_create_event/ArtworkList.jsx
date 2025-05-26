@@ -150,7 +150,9 @@ const ArtworkList = ({
 
         <motion.div className="grid grid-cols-3 gap-2">
           {displayedSelectedArtworks.map((id) => {
-            const artwork = artworks.find((a) => a.id === id);
+            // const artwork = artworks.find((a) => a.id === id);
+            const artwork = artworks.find((a) => a.object_number === id);
+
 
             if (!artwork) return null;
 

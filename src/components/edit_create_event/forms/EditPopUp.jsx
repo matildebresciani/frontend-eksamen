@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useEventFormLogic } from "./eventFormsLogic"; // Din custom hook med dates, locations osv.
+import { useEventFormLogic } from "../../../utils/eventFormsLogic"; // Din custom hook med dates, locations osv.
 import PopUpBase from "../../PopUpBaseLayout";
 import Button from "../../Button";
 import { RxCross2 } from "react-icons/rx";
@@ -67,6 +67,7 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
       <ArtworkListEdit 
         selectedArtworks={selectedArtworks}
         setSelectedArtworks={setSelectedArtworks}/>
+        
       </div>
 
 <div className="flex justify-center mt-4">

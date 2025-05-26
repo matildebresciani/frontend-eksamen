@@ -7,7 +7,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useEventFormLogic } from "./eventFormsLogic";
+import { useEventFormLogic } from "../../../utils/eventFormsLogic";
 import Button from "../../Button";
 import Link from "next/link";
 import BtnWithArrow from "../../BtnWithArrow";

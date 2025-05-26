@@ -42,7 +42,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
         ${blurred ? "filter blur-sm pointer-events-none select-none" : ""}`}
     >
       {/* Venstre kolonne - Kunstværker */}
-      <div className="flex-1 max-w-[600px] overflow-y-auto pr-4">
+      <div className="max-w-[600px] overflow-y-auto pr-4">
         <h5 className="font-semibold mb-1">Vælg op til {MAX_SELECTION} værker:</h5>
         <p className="text-sm mb-3">Du kan vælge {MAX_SELECTION - selectedArtworks.length} værker mere</p>
 
@@ -64,15 +64,15 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
           {displayedArtworks.length === 0 && <p>Ingen billeder fundet</p>}
 
           {displayedArtworks.map((artwork) => {
-            const isSelected = selectedArtworks.includes(artwork.id);
-            const isBooked = isArtworkBooked(artwork.id);
+            const isSelected = selectedArtworks.includes(artwork.object_number);
+            const isBooked = isArtworkBooked(artwork.object_number);
             const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             return (
-              <div key={artwork.id} className="max-w-[100px]">
+              <div key={artwork.object_number} className="max-w-[100px]">
                 <div
-                  onClick={() => toggleSelect(artwork.id)}
+                  onClick={() => toggleSelect(artwork.object_number)}
                   className="relative cursor-pointer group rounded overflow-hidden"
                 >
                   {isSelected && (
@@ -133,7 +133,9 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
 
         <motion.div className="grid grid-cols-3 gap-2">
           {displayedSelectedArtworks.map((id) => {
-            const artwork = artworks.find((a) => a.id === id);
+            // const artwork = artworks.find((a) => a.id === id);
+            const artwork = artworks.find((a) => a.object_number === id);
+
 
             if (!artwork) return null;
 

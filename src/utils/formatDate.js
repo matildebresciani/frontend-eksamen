@@ -9,3 +9,11 @@ export const formatDate = (date) => {
 
   return `${weekday} d. ${day}. ${month}`;
 };
+
+// export const formatDate = (date) =>
+//   new Date(date).toLocaleDateString("da-DK", {
+//     weekday: "long",
+//     year: "numeric",
+//     month: "short",
+//     day: "numeric",
+//   });
