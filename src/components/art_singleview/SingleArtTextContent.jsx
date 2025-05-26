@@ -153,9 +153,13 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
                   className="text-primary-red hover:underline transition-colors"
                 >
                   <strong>{event.title}</strong>
-                </Link>{" "}
-                — {event.location?.name},{" "}
-                {new Date(event.date).toLocaleDateString()}
+                </Link>
+                <span>
+                  — {new Date(event.date).toLocaleDateString()}{" "}
+                  {event.location?.name && event.location?.address
+                    ? `${event.location.name}, ${event.location.address}`
+                    : "Lokation ikke tilgængelig"}
+                </span>
               </li>
             ))
           ) : (
