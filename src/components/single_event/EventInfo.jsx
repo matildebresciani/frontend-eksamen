@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { LuMapPin, LuClock4 } from "react-icons/lu";
 import { FiCalendar } from "react-icons/fi";
+import { formatDate } from "@/utils/formatDate";
 
 const Eventinfo = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
+  
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -30,30 +32,41 @@ const Eventinfo = () => {
 
   if (!event) return <div>Loading...</div>; // viser loading indtil eventet er hentet
 
+  const formattedDate = formatDate(event.date);
+
   return (
     <div className="flex flex-col ">
       <h1 className="text-center mb-5">{event.title}</h1>
       <p className="mx-auto">{event.description}</p>
 
-      <div className="flex flex-row justify-evenly py-20">
+      <div className="flex flex-row justify-evenly py-20 gap-4">
         <div className="flex flex-col items-center">
-          <FiCalendar size={90} className="text-primary-red stroke-1" />
-          <div className="font-semibold text-[var(--color-text-light)] mt-5">
-            {event.date}
+          <FiCalendar
+            size={50}
+            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
+          />
+          <div className="font-semibold capitalize text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
+            {formattedDate}
           </div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuMapPin size={90} className="text-primary-red stroke-1" />
-          <div className="font-semibold text-[var(--color-text-light)] mt-5">
+          <LuMapPin
+            size={50}
+            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
+          />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             {event.location?.address}
           </div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuClock4 size={90} className="text-primary-red stroke-1" />
-          <div className="font-semibold text-[var(--color-text-light)] mt-5">
-            17:00-20:00
+          <LuClock4
+            size={50}
+            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
+          />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
+            Kl. 10-14
           </div>
           {/*hardcoded tid siden API ikke har*/}
         </div>

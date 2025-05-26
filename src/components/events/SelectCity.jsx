@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import normalizeCity from "@/utils/normalizeCity";
 import { motion } from "motion/react";
@@ -58,8 +58,8 @@ const SelectCity = ({ selectedCities, setSelectedCities }) => {
   const isAlleSelected = selectedCities.includes("Alle Byer");
 
   return (
-    <div className="flex flex-col gap-2 max-w-1/2">
-      <h4 className="!text-primary-red">Vælg By</h4>
+    <div className="flex flex-col gap-2 max-w-1/2 mt-2">
+      <h4 className="!text-primary-red hidden md:block">Vælg By</h4>
       <City
         city="Alle Byer"
         isSelected={isAlleSelected}
@@ -75,7 +75,7 @@ const SelectCity = ({ selectedCities, setSelectedCities }) => {
           disabled={isAlleSelected}
         />
       ))}
-      <div className="border-b-4 border-black mt-4"></div>
+      <div className="border-b-4 border-black mt-4 hidden md:block"></div>
     </div>
   );
 };

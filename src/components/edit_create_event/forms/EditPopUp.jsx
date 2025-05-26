@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useEventFormLogic } from "./eventFormsLogic"; // Din custom hook med dates, locations osv.
+import { useEventFormLogic } from "../../../utils/eventFormsLogic"; // Din custom hook med dates, locations osv.
 import PopUpBase from "../../PopUpBaseLayout";
 import Button from "../../Button";
 import { RxCross2 } from "react-icons/rx";
@@ -11,16 +11,23 @@ import { EditEvent } from "@/api-mappe/EventsApiKald";
 const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedArtworks, setSelectedArtworks] = useState(eventToEdit.artworks || []);
+  const [selectedArtworks, setSelectedArtworks] = useState(
+    eventToEdit.artworkIds || []
+  );
+  const [selectedLocation, setSelectedLocation] = useState(eventToEdit.locationId || null);
+
+ const maxSelection = selectedLocation
+  ? locations.find(loc => loc.id === selectedLocation)?.maxArtworks ?? 0
+  : 0;  
+   
 
   const handleSubmit = async (formData) => {
     setIsSubmitting(true);
-
     try {
       // Kombiner formData + artworks og opdater event
       const updatedEventData = {
         ...formData,
-        artworks: selectedArtworks,  // sørg for at artworks sendes med her, hvis api understøtter det
+        artworkIds: selectedArtworks,  // sørg for at artworks sendes med her, hvis api understøtter det
       };
 
       const updatedEvent = await EditEvent(eventToEdit.id, updatedEventData);
@@ -63,10 +70,15 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         }}
         formId="edit-event-form"
         setIsSubmitting={setIsSubmitting}
+        selectedLocation={selectedLocation}
+        setSelectedLocation={setSelectedLocation}
+        onLocationChange={setSelectedLocation}
       />
       <ArtworkListEdit 
         selectedArtworks={selectedArtworks}
-        setSelectedArtworks={setSelectedArtworks}/>
+        setSelectedArtworks={setSelectedArtworks}
+        maxSelection={maxSelection}/>
+        
       </div>
 
 <div className="flex justify-center mt-4">

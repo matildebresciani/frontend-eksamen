@@ -7,7 +7,7 @@ import FilterBtn from "../FilterBtn";
 import { motion } from "motion/react";
 import { useArtworksLogic } from "@/utils/artworksLogic";
 
-const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtworks, selectedDate }) => {
+const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtworks, selectedDate, maxSelection }) => {
   const {
     displayedArtworks,
     currentPage,
@@ -26,13 +26,21 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
     displayedSelectedArtworks,
     handleClearFilters,
     handleSearchResult,
-    MAX_SELECTION,
     isArtworkBooked,
     artists,
     techniques,
     materials,
     artworks,
   } = useArtworksLogic(selectedDate, selectedArtworks, setSelectedArtworks);
+
+  console.log("Selected artworks in ArtworkListEdit:", selectedArtworks);
+
+  const MAX_SELECTION = maxSelection || 15;
+
+
+  if (artworks.length === 0) {
+    return <p className="text-center text-sm">Indlæser kunstværker...</p>;
+  }
 
   return (
     <div
@@ -42,7 +50,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
         ${blurred ? "filter blur-sm pointer-events-none select-none" : ""}`}
     >
       {/* Venstre kolonne - Kunstværker */}
-      <div className="flex-1 max-w-[600px] overflow-y-auto pr-4">
+      <div className="max-w-[600px] overflow-y-auto pr-4">
         <h5 className="font-semibold mb-1">Vælg op til {MAX_SELECTION} værker:</h5>
         <p className="text-sm mb-3">Du kan vælge {MAX_SELECTION - selectedArtworks.length} værker mere</p>
 
@@ -64,15 +72,24 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
           {displayedArtworks.length === 0 && <p>Ingen billeder fundet</p>}
 
           {displayedArtworks.map((artwork) => {
-            const isSelected = selectedArtworks.includes(artwork.id);
-            const isBooked = isArtworkBooked(artwork.id);
+            const isSelected = selectedArtworks.includes(artwork.object_number);
+            const isBooked = isArtworkBooked(artwork.object_number);
             const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
+            console.log("Artwork:", artwork.object_number, "Selected:", isSelected);
+
             return (
-              <div key={artwork.id} className="max-w-[100px]">
+              <div key={artwork.object_number} className="max-w-[100px]">
                 <div
-                  onClick={() => toggleSelect(artwork.id)}
+                  onClick={() => {
+                    if (
+                      selectedArtworks.includes(artwork.object_number) ||
+                      selectedArtworks.length < MAX_SELECTION
+                    ) {
+                      toggleSelect(artwork.object_number);
+                    }
+                  }}
                   className="relative cursor-pointer group rounded overflow-hidden"
                 >
                   {isSelected && (
@@ -89,6 +106,12 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
                     height={100}
                     className="rounded object-cover"
                   />
+
+                    {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
+                    <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed">
+                        Maks nået
+                    </div>
+                    )}
 
                   {isBooked && (
                     <div className="absolute inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center text-white font-bold text-center text-sm rounded">
@@ -133,7 +156,9 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
 
         <motion.div className="grid grid-cols-3 gap-2">
           {displayedSelectedArtworks.map((id) => {
-            const artwork = artworks.find((a) => a.id === id);
+            // const artwork = artworks.find((a) => a.id === id);
+            const artwork = artworks.find((a) => a.object_number === id);
+
 
             if (!artwork) return null;
 
@@ -153,7 +178,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
                   height={100}
                   className="rounded object-cover"
                 />
-                <LuTrash2 className="absolute right-1 top-1 text-lg text-secondary" />
+                <LuTrash2 className="absolute right-1 top-1 text-lg text-white m-1 w-6 h-auto stroke-1" />
                 <p className="truncate mt-1 text-xs">{title}</p>
               </div>
             );
