@@ -52,7 +52,7 @@ export default function Page() {
 
     const eventData = {
       ...formData,
-      artworkIds: selectedArtworks.map((id) => id.replace("_object", "")),
+      artworkIds: selectedArtworks,
     };
 
     console.log("Data sendt ved oprettelse af event:", eventData);
@@ -62,6 +62,8 @@ export default function Page() {
         createNewEvent(eventData),
         wait(1000),
       ]);
+      console.log("Event oprettet:", createdEvent);
+
       setEventLink(`/events/${createdEvent.id}`);
 
       setShowPopup(true);

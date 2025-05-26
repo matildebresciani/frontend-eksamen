@@ -29,7 +29,6 @@ async function fetchLocations() {
   }
 }
 
-
 //GET: til hente flere events
 async function fetchEvents() {
   try {
@@ -118,14 +117,16 @@ async function deleteEvent(eventId) {
 }
 
 //PUT: book billetter til et event
-async function bookTickets(eventId, ticketData) {
+async function bookTickets(eventId, updatedEventData) {
   try {
+    console.log("Booking tickets for event ID:", eventId, "with data:", updatedEventData);
+
     const response = await fetch(`https://server-gititgirls.onrender.com/events/${eventId}/book`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(ticketData),
+      body: JSON.stringify(updatedEventData),
     });
     if (!response.ok) {
       throw new Error("Failed to book tickets");

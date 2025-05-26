@@ -68,19 +68,19 @@ const ArtworkList = ({
           onClearFilters={handleClearFilters}
         />
 
-        <div layout className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-5">
           {displayedArtworks.length === 0 && <p>Ingen billeder fundet</p>}
 
           {displayedArtworks.map((artwork) => {
-            const isSelected = selectedArtworks.includes(artwork.id);
-            const isBooked = isArtworkBooked(artwork.id);
+            const isSelected = selectedArtworks.includes(artwork.object_number);
+            const isBooked = isArtworkBooked(artwork.object_number);
             const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             return (
-              <div key={artwork.id}>
+              <div key={artwork.object_number}>
                 <div
-                  onClick={() => toggleSelect(artwork.id)}
+                  onClick={() => toggleSelect(artwork.object_number)}
                   className="relative cursor-pointer group"
                 >
                   {isSelected && (
@@ -88,7 +88,7 @@ const ArtworkList = ({
                       className="absolute inset-0 z-5 pointer-events-none rounded"
                       style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
                     >
-                      <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border-1 border-primary-red">
+                      <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border-2 border-primary-red">
                         <IoCheckmark className="text-primary-red text-sm" />
                       </div>
                     </div>
@@ -98,7 +98,7 @@ const ArtworkList = ({
                     alt={title}
                     width={200}
                     height={200}
-                    className="rounded w-full h-auto"
+                    className="rounded"
                   />
 
                   {isBooked && (

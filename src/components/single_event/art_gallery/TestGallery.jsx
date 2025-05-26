@@ -4,10 +4,7 @@
 import { useRef } from "react";
 // import ArtCart from "./ArtCart";
 import TestArtCart from "./TestArtCart";
-import {
-  IoArrowBackCircleOutline,
-  IoArrowForwardCircleOutline,
-} from "react-icons/io5";
+import { IoArrowBackCircleOutline, IoArrowForwardCircleOutline } from "react-icons/io5";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -21,9 +18,7 @@ const TestGallery = () => {
   useEffect(() => {
     const fetchArtwork = async () => {
       try {
-        const eventResponse = await fetch(
-          `https://server-gititgirls.onrender.com/events/${eventId}`
-        );
+        const eventResponse = await fetch(`https://server-gititgirls.onrender.com/events/${eventId}`);
         const eventData = await eventResponse.json();
         console.log("Fetched Event Data:", eventData); // Log event data
 
@@ -47,10 +42,7 @@ const TestGallery = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen space-y-6">
-      <div
-        ref={scrollRef}
-        className="flex items-center justify-start space-x-6 overflow-x-auto px-10 snap-x scroll-smooth w-full"
-      >
+      <div ref={scrollRef} className="flex items-center justify-start space-x-6 overflow-x-auto px-10 snap-x scroll-smooth w-full">
         {/* {Array.from({ length: event?.artworkIds?.length || 0 }).map(
           (_, idx) => (
             <ArtCart key={idx} index={idx} />
@@ -58,29 +50,15 @@ const TestGallery = () => {
         )} */}
         {/*//Lagt til af Katinka */}
         {event?.artworkIds?.map((artworkId, idx) => (
-          //   <ArtCart key={idx} artworkId={artworkId} />
-          //   <TestArtCart key={idx} artworkId={artworkId} />
           <TestArtCart key={idx} artworkId={artworkId} eventId={eventId} />
         ))}
       </div>
 
       <div className="flex items-center space-x-8">
-        <motion.button
-          onClick={() => scroll("left")}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.1 }}
-          className="text-gray-700 hover:text-black"
-        >
+        <motion.button onClick={() => scroll("left")} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.1 }} className="text-gray-700 hover:text-black">
           <IoArrowBackCircleOutline size={50} />
         </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.1 }}
-          onClick={() => scroll("right")}
-          className="text-gray-700 hover:text-black"
-        >
+        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.1 }} onClick={() => scroll("right")} className="text-gray-700 hover:text-black">
           <IoArrowForwardCircleOutline size={50} />
         </motion.button>
       </div>
