@@ -1,7 +1,7 @@
 "use client";
 //Maja
 import { useRouter, useParams } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import transferReservationInformation from "@/app/store/reservationInformation";
 import { useEffect, useRef, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
@@ -21,6 +21,7 @@ const SignUpForm = () => {
   const [totalTickets, setTotalTickets] = useState(null);
   const [bookedTickets, setBookedTickets] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [Event, setEvent] = useState({});
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // Henter event data fra api-mappen
@@ -29,6 +30,7 @@ const SignUpForm = () => {
       const data = await fetchEventById(eventId);
       setTotalTickets(data.totalTickets);
       setBookedTickets(data.bookedTickets);
+      setEvent(data);
     };
     if (eventId) fetchEvent();
   }, [eventId]);
@@ -56,19 +58,15 @@ const SignUpForm = () => {
 
     try {
       // Book billetter
-      await Promise.all([
-        bookTickets(eventId, {
-          navn: values.navn,
-          email: values.email,
-          billetter: billetter,
-          eventId: eventId,
-        }),
-        wait(1000),
-      ]);
+      console.log("THIS IS EVENT:", Event);
+      console.log(bookedTickets, "er antal billetter der bookes");
+
+      await Promise.all([bookTickets(eventId, { ...Event, bookedTickets: bookedTickets + billetter }), wait(1000)]);
 
       // Send bekræftelsesmail
       await fetch("/api/sendConfirmation", {
         method: "POST",
+
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: values.email, // brugerens mail fra inputfeltet
