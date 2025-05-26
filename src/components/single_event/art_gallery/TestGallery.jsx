@@ -11,6 +11,7 @@ import {
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
+import { motion } from "motion/react";
 
 const TestGallery = () => {
   const scrollRef = useRef();
@@ -64,18 +65,24 @@ const TestGallery = () => {
       </div>
 
       <div className="flex items-center space-x-8">
-        <button
+        <motion.button
           onClick={() => scroll("left")}
-          className="text-gray-700 hover:text-black transition transform hover:scale-110"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.1 }}
+          className="text-gray-700 hover:text-black"
         >
           <IoArrowBackCircleOutline size={50} />
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.1 }}
           onClick={() => scroll("right")}
-          className="text-gray-700 hover:text-black transition transform hover:scale-110"
+          className="text-gray-700 hover:text-black"
         >
           <IoArrowForwardCircleOutline size={50} />
-        </button>
+        </motion.button>
       </div>
     </div>
   );

@@ -18,6 +18,7 @@ const Button = ({
   type = "button",
   loading = false,
   loadingText,
+  form
 }) => {
   const variants = {
     tertiary: "bg-white border-text-light hover:bg-text-light hover:text-white",
@@ -34,6 +35,7 @@ const Button = ({
     <motion.button
       type={type}
       onClick={onClick}
+      form={form}
       className={`px-4 py-1 border-2 rounded font-medium text-md font-(family-name:--font-work-sans) ${variants[variant]}`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
