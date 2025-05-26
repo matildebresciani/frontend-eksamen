@@ -57,7 +57,7 @@ const ArtworkList = ({ blurred = false, selectedArtworks, setSelectedArtworks, s
           onClearFilters={handleClearFilters}
         />
 
-        <div layout className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-5">
           {displayedArtworks.length === 0 && <p>Ingen billeder fundet</p>}
 
           {displayedArtworks.map((artwork) => {
