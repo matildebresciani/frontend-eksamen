@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchArtworkById } from "../../../api-mappe/SmkApiKald";
+import BtnWithArrow from "@/components/BtnWithArrow";
 
 const TestArtCart = ({ artworkId, eventId }) => {
   const [artwork, setArtwork] = useState(null);
@@ -28,14 +29,24 @@ const TestArtCart = ({ artworkId, eventId }) => {
   }
 
   return (
-    <div className="relative flex items-center justify-center overflow-hidden rounded-xl shadow-lg min-w-[300px] h-[300px]">
-      <Image src={artwork.image_thumbnail || "/placeholder.jpg"} alt={artwork.titles?.[0]?.title || "Artwork"} width={300} height={300} className="object-cover w-full h-full" />
-      <Link
-        href={`/events/${eventId}/artwork/${artwork.object_number}`}
-        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity"
-      >
-        <span className="text-white font-bold text-lg">LÆS MERE</span>
-      </Link>
+    <div className="relative flex items-center justify-center overflow-hidden rounded-xl shadow-lg bg-white max-w-[340px] max-h-[420px] min-w-[200px] min-h-[200px]">
+      <Image
+        src={artwork.image_thumbnail || "/placeholder.jpg"}
+        alt={artwork.titles?.[0]?.title || "Artwork"}
+        width={600}
+        height={800}
+        className="object-contain max-h-[400px] max-w-[340px] w-auto h-auto transition duration-300 hover:opacity-40"
+      />
+      <div className="absolute inset-0 flex flex-col justify-end px-6 py-4 opacity-0 transition-opacity duration-300 hover:opacity-100 bg-white/70 backdrop-blur-xs rounded-xl">
+        <span className="text-white font-semibold text-xl drop-shadow mb-2 break-words leading-tight max-w-full text-balance sm:text-md md:text-lg lg:text-xl line-clamp-2 ">
+          {artwork.titles?.[0]?.title || "TITEL PÅ BILLEDE"}
+        </span>
+        <Link href={`/events/${eventId}/artwork/${artwork.object_number}`} className="mt-2 group/button">
+          <BtnWithArrow>
+            <span className="font-semibold text-lg">LÆS MERE</span>
+          </BtnWithArrow>
+        </Link>
+      </div>
     </div>
   );
 };

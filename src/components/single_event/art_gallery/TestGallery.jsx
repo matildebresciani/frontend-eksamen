@@ -43,11 +43,6 @@ const TestGallery = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen space-y-6">
       <div ref={scrollRef} className="flex items-center justify-start space-x-6 overflow-x-auto px-10 snap-x scroll-smooth w-full">
-        {/* {Array.from({ length: event?.artworkIds?.length || 0 }).map(
-          (_, idx) => (
-            <ArtCart key={idx} index={idx} />
-          )
-        )} */}
         {/*//Lagt til af Katinka */}
         {event?.artworkIds?.map((artworkId, idx) => (
           <TestArtCart key={idx} artworkId={artworkId} eventId={eventId} />
