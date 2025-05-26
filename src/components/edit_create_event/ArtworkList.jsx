@@ -61,14 +61,14 @@ const ArtworkList = ({ blurred = false, selectedArtworks, setSelectedArtworks, s
           {displayedArtworks.length === 0 && <p>Ingen billeder fundet</p>}
 
           {displayedArtworks.map((artwork) => {
-            const isSelected = selectedArtworks.includes(artwork.id);
-            const isBooked = isArtworkBooked(artwork.id);
+            const isSelected = selectedArtworks.includes(artwork.object_number);
+            const isBooked = isArtworkBooked(artwork.object_number);
             const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             return (
-              <div key={artwork.id}>
-                <div onClick={() => toggleSelect(artwork.id)} className="relative cursor-pointer group">
+              <div key={artwork.object_number}>
+                <div onClick={() => toggleSelect(artwork.object_number)} className="relative cursor-pointer group">
                   {isSelected && (
                     <div className="absolute inset-0 z-5 pointer-events-none rounded" style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}>
                       <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border-2 border-primary-red">

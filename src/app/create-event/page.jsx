@@ -60,10 +60,7 @@ export default function Page() {
       const [createdEvent] = await Promise.all([createNewEvent(eventData), wait(1000)]);
       console.log("Event oprettet:", createdEvent);
 
-      // Da vi har promise.all, kan vi antage at createdEvent[0] er det oprettede event,
-      // da wait(1000) kun er for at simulere en forsinkelse
-      // createdvent = [event, undefinded]
-      setEventLink(`/events/${createdEvent[0].id}`);
+      setEventLink(`/events/${createdEvent.id}`);
 
       setShowPopup(true);
       // evt. nulstil formular hvis ønsket

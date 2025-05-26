@@ -6,6 +6,8 @@ import { fetchArtworkById } from "../../../api-mappe/SmkApiKald";
 const TestArtCart = ({ artworkId, eventId }) => {
   const [artwork, setArtwork] = useState(null);
 
+  console.log(artworkId, "artworkId in TestArtCart"); // Log artworkId prop
+
   useEffect(() => {
     const fetchArtwork = async () => {
       try {
@@ -13,6 +15,7 @@ const TestArtCart = ({ artworkId, eventId }) => {
         if (data.items && data.items.length > 0) {
           setArtwork(data.items[0]);
         }
+        console.log("artwork id", artworkId); // Log fetched artwork data
       } catch (error) {
         console.error("Error fetching artwork:", error);
       }
