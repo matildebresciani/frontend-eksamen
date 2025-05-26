@@ -10,15 +10,12 @@ import { formatDate } from "@/utils/formatDate";
 const Eventinfo = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
-  
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
         // API'et kræver id, så vi sender eventId som id
-        const res = await fetch(
-          `https://server-gititgirls.onrender.com/events/${eventId}`
-        );
+        const res = await fetch(`https://server-gititgirls.onrender.com/events/${eventId}`);
         if (!res.ok) throw new Error("Event not found");
         const data = await res.json();
         setEvent(data);
@@ -36,38 +33,23 @@ const Eventinfo = () => {
 
   return (
     <div className="flex flex-col ">
-      <h1 className="text-center mb-5">{event.title}</h1>
-      <p className="mx-auto">{event.description}</p>
+      <h1 className="text-center mb-5 font-semibold">{event.title}</h1>
+      <p className="mx-auto text-center">{event.description}</p>
 
       <div className="flex flex-row justify-evenly py-20 gap-4">
         <div className="flex flex-col items-center">
-          <FiCalendar
-            size={50}
-            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
-          />
-          <div className="font-semibold capitalize text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
-            {formattedDate}
-          </div>
+          <FiCalendar size={50} className="text-primary-red stroke-2 sm:size-15 md:size-20 lg:size-25" />
+          <div className="font-semibold capitalize text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">{formattedDate}</div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuMapPin
-            size={50}
-            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
-          />
-          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
-            {event.location?.address}
-          </div>
+          <LuMapPin size={50} className="text-primary-red stroke-2 sm:size-15 md:size-20 lg:size-25" />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">{event.location?.address}</div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuClock4
-            size={50}
-            className="text-primary-red stroke-1 sm:size-15 md:size-20 lg:size-25"
-          />
-          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
-            Kl. 10-14
-          </div>
+          <LuClock4 size={50} className="text-primary-red stroke-2 sm:size-15 md:size-20 lg:size-25" />
+          <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">Kl. 10-14</div>
           {/*hardcoded tid siden API ikke har*/}
         </div>
       </div>

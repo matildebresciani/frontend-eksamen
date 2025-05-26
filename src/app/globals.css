@@ -113,3 +113,12 @@ button {
 .animate-shake {
   animation: shake 0.5s;
 }
+
+/*class til at skjule scrollbar da man ikke kan gennem tailwind styling kun*/
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

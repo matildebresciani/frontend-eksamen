@@ -41,8 +41,8 @@ const TestGallery = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen space-y-6">
-      <div ref={scrollRef} className="flex items-center justify-start space-x-6 overflow-x-auto px-10 snap-x scroll-smooth w-full">
+    <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8">
+      <div ref={scrollRef} className="flex items-center justify-start space-x-6 overflow-x-auto px-10 snap-x scroll-smooth w-full scrollbar-hide">
         {/*//Lagt til af Katinka */}
         {event?.artworkIds?.map((artworkId, idx) => (
           <TestArtCart key={idx} artworkId={artworkId} eventId={eventId} />
