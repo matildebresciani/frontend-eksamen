@@ -27,6 +27,10 @@ export default function Page() {
   const [formData, setFormData] = useState({});
   const [artworkError, setArtworkError] = useState("");
 
+  const maxSelection = selectedLocation
+  ? locations.find(loc => loc.id === selectedLocation)?.maxArtworks ?? 0
+  : 0;
+
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // Når form i step 1 valideres:
@@ -95,6 +99,7 @@ export default function Page() {
             selectedArtworks={selectedArtworks}
             setSelectedArtworks={setSelectedArtworks}
             selectedDate={selectedDate}
+            maxSelection={maxSelection}
             blurred={step === 1} // Blur når step 1, ikke blur når step 2
           />
           {step === 2 && (

@@ -14,7 +14,12 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   const [selectedArtworks, setSelectedArtworks] = useState(
     eventToEdit.artworkIds || []
   );
-  
+  const [selectedLocation, setSelectedLocation] = useState(eventToEdit.locationId || null);
+
+ const maxSelection = selectedLocation
+  ? locations.find(loc => loc.id === selectedLocation)?.maxArtworks ?? 0
+  : 0;  
+   
 
   const handleSubmit = async (formData) => {
     setIsSubmitting(true);
@@ -65,10 +70,14 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         }}
         formId="edit-event-form"
         setIsSubmitting={setIsSubmitting}
+        selectedLocation={selectedLocation}
+        setSelectedLocation={setSelectedLocation}
+        onLocationChange={setSelectedLocation}
       />
       <ArtworkListEdit 
         selectedArtworks={selectedArtworks}
-        setSelectedArtworks={setSelectedArtworks}/>
+        setSelectedArtworks={setSelectedArtworks}
+        maxSelection={maxSelection}/>
         
       </div>
 

@@ -13,6 +13,7 @@ const ArtworkList = ({
   selectedArtworks,
   setSelectedArtworks,
   selectedDate,
+  maxSelection,
 }) => {
   const {
     displayedArtworks,
@@ -32,13 +33,14 @@ const ArtworkList = ({
     displayedSelectedArtworks,
     handleClearFilters,
     handleSearchResult,
-    MAX_SELECTION,
     isArtworkBooked,
     artists,
     techniques,
     materials,
     artworks,
   } = useArtworksLogic(selectedDate, selectedArtworks, setSelectedArtworks);
+
+  const MAX_SELECTION = maxSelection || 15;
 
   return (
     <div
@@ -80,7 +82,15 @@ const ArtworkList = ({
             return (
               <div key={artwork.object_number}>
                 <div
-                  onClick={() => toggleSelect(artwork.object_number)}
+                  onClick={() => {
+                    if (
+                      selectedArtworks.includes(artwork.object_number) ||
+                      selectedArtworks.length < MAX_SELECTION
+                    ) {
+                      toggleSelect(artwork.object_number);
+                    }
+                  }}
+                  
                   className="relative cursor-pointer group"
                 >
                   {isSelected && (
@@ -100,6 +110,13 @@ const ArtworkList = ({
                     height={200}
                     className="rounded"
                   />
+
+                    {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
+                    <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed">
+                        Maks nået
+                    </div>
+                    )}
+
 
                   {isBooked && (
                     <div className="absolute inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center text-white font-bold text-center text-sm">

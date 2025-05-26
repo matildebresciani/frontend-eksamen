@@ -7,7 +7,7 @@ import FilterBtn from "../FilterBtn";
 import { motion } from "motion/react";
 import { useArtworksLogic } from "@/utils/artworksLogic";
 
-const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtworks, selectedDate }) => {
+const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtworks, selectedDate, maxSelection }) => {
   const {
     displayedArtworks,
     currentPage,
@@ -26,7 +26,6 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
     displayedSelectedArtworks,
     handleClearFilters,
     handleSearchResult,
-    MAX_SELECTION,
     isArtworkBooked,
     artists,
     techniques,
@@ -35,6 +34,8 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
   } = useArtworksLogic(selectedDate, selectedArtworks, setSelectedArtworks);
 
   console.log("Selected artworks in ArtworkListEdit:", selectedArtworks);
+
+  const MAX_SELECTION = maxSelection || 15;
 
 
   if (artworks.length === 0) {
@@ -81,7 +82,14 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
             return (
               <div key={artwork.object_number} className="max-w-[100px]">
                 <div
-                  onClick={() => toggleSelect(artwork.object_number)}
+                  onClick={() => {
+                    if (
+                      selectedArtworks.includes(artwork.object_number) ||
+                      selectedArtworks.length < MAX_SELECTION
+                    ) {
+                      toggleSelect(artwork.object_number);
+                    }
+                  }}
                   className="relative cursor-pointer group rounded overflow-hidden"
                 >
                   {isSelected && (
@@ -98,6 +106,12 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
                     height={100}
                     className="rounded object-cover"
                   />
+
+                    {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
+                    <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed">
+                        Maks nået
+                    </div>
+                    )}
 
                   {isBooked && (
                     <div className="absolute inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center text-white font-bold text-center text-sm rounded">

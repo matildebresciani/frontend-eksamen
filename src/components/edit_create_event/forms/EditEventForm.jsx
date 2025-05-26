@@ -15,6 +15,7 @@ const EditEventForm = ({
   formId,
   setIsSubmitting,
   onSubmitData,
+  onLocationChange,
 }) => {
   const {
     register,
@@ -34,6 +35,12 @@ const EditEventForm = ({
 
   const selectedLocation = watch("locationId");
   const selectedDate = watch("date");
+
+  useEffect(() => {
+    if (onLocationChange) {
+      onLocationChange(selectedLocation);
+    }
+  }, [selectedLocation, onLocationChange]);
 
   // Reset form values når eventToEdit ændres
   useEffect(() => {
@@ -60,6 +67,7 @@ const EditEventForm = ({
   const locationOptions = locations.map((loc) => ({
     id: loc.id,
     name: `${loc.name} (${loc.address})`,
+    maxArtworks: loc.maxArtworks,
     disabled:
       selectedDate &&
       isLocationOccupied(loc.id, selectedDate) &&
