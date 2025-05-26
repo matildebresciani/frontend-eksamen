@@ -51,12 +51,7 @@ export default function Page() {
     <section>
       <h1 className="mb-2 sm:mb-3">Events</h1>
       <p>
-        Her finder du en oversigt over spændende kunstevents i hele Danmark.
-        Glæd dig til alt fra Monets klassiske mesterværker til nyskabende
-        moderne kunst og installationer. Udstillingerne spænder bredt – fra
-        intime gallerier til store museer. Der er noget for enhver smag, uanset
-        om du er kunstelsker eller nysgerrig nybegynder. Vi glæder os til at se
-        dig!
+      Oplev spændende kunstevents med fokus på modernismen – over hele Danmark. Gå på opdagelse i en tid præget af kunstnerisk opbrud og nyskabelse, hvor former, farver og idéer blev udfordret. Fra kubisme og ekspressionisme til abstrakte eksperimenter – udstillingerne rummer alt fra intime gallerier til anerkendte museer. Uanset om du er passioneret kunstkender eller bare nysgerrig, er der masser at opleve. Vi glæder os til at byde dig velkommen!
       </p>
       <div>
         <div className="border-2 border-black w-full my-6 sm:my-10  sm:self-start sm:sticky sm:top-37 md:top-41 lg:top-45"></div>
