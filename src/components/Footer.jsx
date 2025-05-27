@@ -12,9 +12,7 @@ const Footer = () => {
         className="sm:w-[120px] sm:h-[120px]"
       />
       <div>
-        <h5 className="font-semibold mb-2 text-white uppercase">
-          Modernia Curators
-        </h5>
+        <h5 className=" mb-2  uppercase">Modernia Curators</h5>
         <p>Sølvgade 48-50</p>
         <p className="mb-2">1307 København K</p>
         <p>Telefon: 33 74 84 94</p>
