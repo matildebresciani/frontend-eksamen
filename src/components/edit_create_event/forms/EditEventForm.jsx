@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Input, Select, Textarea } from "./FormFields"; // Sørg for at disse er dine egne komponenter eller udskift med dine egne inputs
 import { EditEvent } from "@/api-mappe/EventsApiKald";
+import { formatDate } from "@/utils/formatDate";
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -57,7 +58,7 @@ const EditEventForm = ({
   // Lav options til select med disabled baseret på optagethed og ikke den nuværende event's data
   const dateOptions = dates.map((date) => ({
     id: date,
-    name: date,
+    name: formatDate(date),
     disabled:
       selectedLocation &&
       isDateOccupied(date, selectedLocation) &&

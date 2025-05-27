@@ -14,6 +14,7 @@ import BtnWithArrow from "../../BtnWithArrow";
 import { RxCross2 } from "react-icons/rx";
 import PopUpBase from "../../PopUpBaseLayout";
 import { Input, Select, Textarea } from "./FormFields";
+import { formatDate } from "@/utils/formatDate";
 
 const EventForm = ({
   formRef,
@@ -61,7 +62,7 @@ const EventForm = ({
 
   const dateOptions = dates.map((date) => ({
     id: date,
-    name: date,
+    name: formatDate(date),
     disabled: selectedLocation ? isDateOccupied(date, selectedLocation) : false,
   }));
 

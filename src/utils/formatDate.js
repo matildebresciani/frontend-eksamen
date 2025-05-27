@@ -7,7 +7,9 @@ export const formatDate = (date) => {
   const day = d.getDate();
   const month = d.toLocaleDateString("da-DK", { month: "long" });
 
-  return `${weekday} d. ${day}. ${month}`;
+  const formatted = `${weekday} d. ${day}. ${month}`;
+
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 };
 
 // export const formatDate = (date) =>
