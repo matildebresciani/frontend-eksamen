@@ -16,6 +16,7 @@ export const useArtworksLogic = (
   const MAX_SELECTION = selectedLocation?.maxArtworks ?? 15;
 
   // Filtrering
+  const [selectedTitles, setSelectedTitles] = useState([]);
   const [selectedArtists, setSelectedArtists] = useState([]);
   const [selectedTechniques, setSelectedTechniques] = useState([]);
   const [selectedMaterials, setSelectedMaterials] = useState([]);
@@ -42,7 +43,15 @@ export const useArtworksLogic = (
   const isArtworkBooked = (object_number) =>
     bookedArtworkIds.includes(object_number);
 
-  // Udtræk kunstnere, teknikker, materialer alfabetisk
+  // Udtræk titler, kunstnere, teknikker, materialer alfabetisk
+  const titles = Array.from(
+    new Set(
+      artworks
+        .map((artwork) => artwork.titles?.[0]?.title)
+        .filter((title) => !!title)
+    )
+  ).sort();
+
   const artists = Array.from(
     new Set(
       artworks
@@ -69,11 +78,18 @@ export const useArtworksLogic = (
 
   // Filtreringsfunktion
   const applyFilters = (
+    titlesSelected,
     artistsSelected,
     techniquesSelected,
     materialsSelected
   ) => {
     let filtered = [...artworks];
+
+    if (titlesSelected.length > 0) {
+      filtered = filtered.filter((art) =>
+        titlesSelected.includes(art.titles?.[0]?.title)
+      );
+    }
 
     if (artistsSelected.length > 0) {
       filtered = filtered.filter((art) =>
@@ -98,12 +114,30 @@ export const useArtworksLogic = (
     setSearchResults(null);
   };
 
+  const handleSelectTitle = (title) => {
+    const updated = selectedTitles.includes(title)
+      ? selectedTitles.filter((a) => a !== title)
+      : [...selectedTitles, title];
+    setSelectedTitles(updated);
+    applyFilters(
+      updated,
+      selectedArtists,
+      selectedTechniques,
+      selectedMaterials
+    );
+  };
+
   const handleSelectArtist = (artist) => {
     const updated = selectedArtists.includes(artist)
       ? selectedArtists.filter((a) => a !== artist)
       : [...selectedArtists, artist];
     setSelectedArtists(updated);
-    applyFilters(updated, selectedTechniques, selectedMaterials);
+    applyFilters(
+      selectedTitles,
+      updated,
+      selectedTechniques,
+      selectedMaterials
+    );
   };
 
   const handleSelectTechnique = (technique) => {
@@ -111,7 +145,7 @@ export const useArtworksLogic = (
       ? selectedTechniques.filter((t) => t !== technique)
       : [...selectedTechniques, technique];
     setSelectedTechniques(updated);
-    applyFilters(selectedArtists, updated, selectedMaterials);
+    applyFilters(selectedTitles, selectedArtists, updated, selectedMaterials);
   };
 
   const handleSelectMaterial = (material) => {
@@ -119,7 +153,7 @@ export const useArtworksLogic = (
       ? selectedMaterials.filter((m) => m !== material)
       : [...selectedMaterials, material];
     setSelectedMaterials(updated);
-    applyFilters(selectedArtists, selectedTechniques, updated);
+    applyFilters(selectedTitles, selectedArtists, selectedTechniques, updated);
   };
 
   // Toggle udvælgelse med max grænse og tjek booket
@@ -242,12 +276,13 @@ export const useArtworksLogic = (
   );
 
   const handleClearFilters = () => {
+    setSelectedTitles([]);
     setSelectedArtists([]);
     setSelectedTechniques([]);
     setSelectedMaterials([]);
     setSearchResults(null);
     setCurrentPage(1);
-    applyFilters([], [], []);
+    applyFilters([], [], [], []);
   };
 
   const handleSearchResult = (results) => {
@@ -266,14 +301,17 @@ export const useArtworksLogic = (
     currentPage,
     setCurrentPage,
     totalPages,
+    selectedTitles,
     selectedArtists,
     selectedTechniques,
     selectedMaterials,
+    handleSelectTitle,
     handleSelectArtist,
     handleSelectTechnique,
     handleSelectMaterial,
     toggleSelect,
     selectedArtworksPage,
+    // setSelectedTitles,
     setSelectedArtworksPage,
     selectedTotalPages,
     displayedSelectedArtworks,
@@ -281,6 +319,7 @@ export const useArtworksLogic = (
     handleSearchResult,
     MAX_SELECTION,
     isArtworkBooked,
+    titles,
     artists,
     techniques,
     materials,
