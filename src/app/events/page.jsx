@@ -87,15 +87,20 @@ export default function Page() {
           </div>
 
           <div className="flex flex-col gap-4">
-            {filteredEvents.map((event) => (
-              <EventCard
-                key={event.id}
-                event={event}
-                onDeleted={() => handleDeleted(event.id)}
-                onEdit={handleEdit}
-              />
-            ))}
-          </div>
+            {filteredEvents.length === 0 ? (
+                <p className="mt-2 italic">Ingen events fundet på valgte lokation...</p>
+            ) : (
+                filteredEvents.map((event) => (
+                <EventCard
+                    key={event.id}
+                    event={event}
+                    onDeleted={() => handleDeleted(event.id)}
+                    onEdit={handleEdit}
+                />
+                ))
+            )}
+            </div>
+
         </div>
       </div>
     </section>
