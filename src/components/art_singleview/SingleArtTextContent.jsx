@@ -4,12 +4,70 @@
 
 import Link from "next/link";
 
+//Rydder op i farverne :)
+function hexToHSL(hex) {
+  // Omregning af hex til RGB
+  let r = 0,
+    g = 0,
+    b = 0;
+  if (hex.length === 4) {
+    r = parseInt(hex[1] + hex[1], 16);
+    g = parseInt(hex[2] + hex[2], 16);
+    b = parseInt(hex[3] + hex[3], 16);
+  } else if (hex.length === 7) {
+    r = parseInt(hex.substring(1, 3), 16);
+    g = parseInt(hex.substring(3, 5), 16);
+    b = parseInt(hex.substring(5, 7), 16);
+  }
+
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  const max = Math.max(r, g, b),
+    min = Math.min(r, g, b);
+  let h = 0,
+    s = 0,
+    l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+    }
+    h /= 6;
+  }
+  return { h, s, l };
+}
+
 const SingleArtTextContent = ({ data, allEvents = [] }) => {
   // Filtrér events der indeholder dette værk
   const relatedEvents = allEvents.filter((event) =>
     event.artworkIds?.includes(data.object_number)
   );
+  //Sorterer farverne efter Hue
+  const sortedColors = [...data.colors].sort((a, b) => {
+    const hslA = hexToHSL(a);
+    const hslB = hexToHSL(b);
+    return hslA.h - hslB.h;
+  });
+  //Sorterer farverne ifht lightness
+  // const sortedColors = [...data.colors].sort((a, b) => {
+  //   const hslA = hexToHSL(a);
+  //   const hslB = hexToHSL(b);
+  //   return hslA.l - hslB.l;
+  // });
 
+  //Ændrer amerikansk til dansk dato
   function formatDanishDate(dateStr) {
     return new Date(dateStr).toLocaleDateString("da-DK", {
       day: "2-digit",
@@ -51,25 +109,20 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
             <span className="font-semibold">Farver brugt:</span>
           </li>
         </ul>
-        <div className="flex gap-3 flex-wrap py-3">
-          {data.colors?.length > 0 ? (
-            data.colors.map((color, index) => (
+        <div className="flex flex-wrap py-3">
+          {sortedColors.length > 0 ? (
+            sortedColors.map((color, index) => (
               <div
                 key={index}
-                style={{
-                  backgroundColor: color,
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  border: "1px solid var(--color-text-light)",
-                }}
+                className={`w-10 h-10 rounded-full border border-neutral-300 ${
+                  index !== 0 ? "-ml-6" : ""
+                }`}
+                style={{ backgroundColor: color }}
                 title={color}
               />
             ))
           ) : (
-            <p className="text-sm text-gray-500">
-              Ingen farver fundet i databasen.
-            </p>
+            <p className="text-gray-500">Ingen farver fundet i databasen.</p>
           )}
         </div>
       </div>
