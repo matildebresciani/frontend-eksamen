@@ -146,7 +146,7 @@ const ArtworkList = ({
                 >
                   {/* Checkbox-hjørne – altid synlig */}
                   <div
-                    className={`absolute top-1 right-1 w-5 h-5 rounded-sm flex items-center justify-center border-1 border-white z-10 ${
+                    className={`absolute top-1 right-1 w-5 h-5 rounded-sm flex items-center justify-center border-1 border-white z-8 ${
                       isSelected ? "bg-white" : "bg-transparent"
                     }`}
                   >
