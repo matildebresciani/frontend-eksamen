@@ -97,7 +97,7 @@ const onSubmit = (data) => {
     <form
       id={formId}
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-fit"
+      className="flex flex-col gap-4 w-full p-2"
     >
       <Controller
         name="date"

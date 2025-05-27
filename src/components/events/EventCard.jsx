@@ -59,7 +59,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
         </figure>
 
         <div className="flex flex-col gap-1 w-full">
-          <p className="italic font-medium">"{event.title}"</p>
+          <p className="italic font-medium capitalize">"{event.title}"</p>
           <p className="font-bold">Kl. 10.00</p>
 
           <div className="flex flex-row items-center gap-1">
@@ -68,7 +68,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
           </div>
 
           <div className="flex justify-between gap-4">
-            <p className="line-clamp-3 flex-1">{event.description}</p>
+            <p className="line-clamp-3 flex-1 first-letter:uppercase">{event.description}</p>
             {/* <div
               className="flex md:justify-end shrink-0 items-end gap-4"
               onClick={(e) => e.stopPropagation()}

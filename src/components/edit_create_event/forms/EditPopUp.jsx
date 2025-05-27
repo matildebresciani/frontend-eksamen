@@ -57,9 +57,9 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         </button>
       </div>
 
-      <h3 className="uppercase">Rediger Event</h3>
+      <h3 className="uppercase px-2">Rediger Event</h3>
 
-        <div className="grid grid-cols-[1fr_2fr] gap-4">
+        <div className="grid lg:grid-cols-[1fr_2fr] gap-4">
       <EditEventForm
         onSubmitData={handleSubmit} 
         eventToEdit={eventToEdit}
