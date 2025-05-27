@@ -81,12 +81,12 @@ const Header = () => {
 const HeaderNav = () => {
   const { openSignIn } = useClerk();
   return (
-    <div className="flex items-center gap-2 sm:gap-2 md:gap-4 text-lg sm:text-xl md:text-2xl">
+    <div className="flex items-center gap-2 md:gap-4 text-sm sm:text-xl md:text-2xl">
 
       {/* Se Events - Mobilvisning (vises under sm) */}
       <div className="block sm:hidden">
         <Link href="/events">
-          <Button variant="transparent" className="px-3 py-1 text-sm">
+          <Button variant="transparent">
             EVENTS
           </Button>
         </Link>
@@ -109,11 +109,11 @@ const HeaderNav = () => {
       </SignedOut>
 
       <SignedIn>
-        <div className="flex gap-2">
+        <div className="flex gap-2 sm:gap-4 items-center">
 
           {/* Opret Event - Mobilvisning */}
           <Link href="/create-event" className="block sm:hidden">
-            <Button variant="CTA" className="px-3 py-1 text-sm">
+            <Button variant="CTA">
               OPRET
             </Button>
           </Link>
@@ -123,7 +123,9 @@ const HeaderNav = () => {
             <Button variant="CTA">OPRET EVENT</Button>
           </Link>
 
+        <div className="flex items-center justify-center">
           <UserButton />
+        </div>
 
         </div>
 
