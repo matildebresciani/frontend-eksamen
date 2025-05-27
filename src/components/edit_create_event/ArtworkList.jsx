@@ -200,7 +200,7 @@ const ArtworkList = ({
             return (
               <div
                 key={id}
-                className="relative text-sm cursor-pointer break-inside-avoid"
+                className="relative text-sm cursor-pointer break-inside-avoid mb-4"
                 onClick={() => toggleSelect(id)}
               >
                 <Image
