@@ -22,7 +22,7 @@ const FilterDropdown = ({ title, options, selected, onToggle, icon: Icon }) => {
   }, []);
 
   return (
-    <div className="relative mb-3 " ref={dropdownRef}>
+    <div className="relative" ref={dropdownRef}>
       <Button
         onClick={() => setOpen(!open)}
         type="button"
@@ -58,17 +58,28 @@ const FilterBtn = ({
   artists = [],
   techniques = [],
   materials = [],
+  titles = [],
   selectedArtists = [],
   selectedTechniques = [],
   selectedMaterials = [],
+  selectedTitles = [],
   onSelectArtist,
   onSelectTechnique,
   onSelectMaterial,
+  onSelectTitle,
   onClearFilters,
 }) => {
   return (
     // <div className="grid grid-cols-3 w-full">
-    <div className="flex flex-col flex-1/3 max-w-[600px] lg:flex-row w-full mt-5">
+    // <div className="flex flex-col flex-1/3 max-w-[600px] lg:flex-row w-full mt-5">
+    <div className="grid grid-cols-2 max-w-[600px] w-full mt-5">
+      <FilterDropdown
+        title="Titel"
+        options={titles}
+        selected={selectedTitles}
+        onToggle={onSelectTitle}
+        icon={IoFilter}
+      />
       <FilterDropdown
         title="Kunstnere"
         options={artists}
@@ -90,7 +101,9 @@ const FilterBtn = ({
         onToggle={onSelectMaterial}
         icon={IoFilter}
       />
-      {(selectedArtists.length > 0 ||
+
+      {(selectedTitles.length > 0 ||
+        selectedArtists.length > 0 ||
         selectedTechniques.length > 0 ||
         selectedMaterials.length > 0) && (
         <Button variant="transparent_w_icon" onClick={onClearFilters}>
