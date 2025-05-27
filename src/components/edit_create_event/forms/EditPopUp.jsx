@@ -32,6 +32,9 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
 
       const updatedEvent = await EditEvent(eventToEdit.id, updatedEventData);
 
+      const fullLocation = locations.find(loc => loc.id === updatedEvent.locationId);
+        updatedEvent.location = fullLocation || null;
+
       onEditSuccess(updatedEvent);
       closePopup();
     } catch (error) {
