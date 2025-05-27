@@ -76,7 +76,7 @@ const ArtworkList = ({
           onClearFilters={handleClearFilters}
         />
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-5">
+        <div className="columns-2 sm:columns-3 gap-2 my-5">
           {displayedArtworks.length === 0 && <p>Ingen billeder fundet</p>}
 
           {displayedArtworks.map((artwork) => {
@@ -147,7 +147,7 @@ const ArtworkList = ({
                   {/* Checkbox-hjørne – altid synlig */}
                   <div
                     className={`absolute top-1 right-1 w-5 h-5 rounded-sm flex items-center justify-center border-1 border-white z-10 ${
-                      isSelected ? "bg-white" : "bg-transparen"
+                      isSelected ? "bg-white" : "bg-transparent"
                     }`}
                   >
                     {isSelected && (
@@ -161,14 +161,16 @@ const ArtworkList = ({
                     alt={title}
                     width={200}
                     height={200}
-                    className="rounded"
+                    className="rounded mb-2"
                   />
 
                   {/* Overlay med titel — vises både ved hover og når valgt */}
                   <div
                     className={`absolute inset-0 text-white transition-opacity flex items-center justify-center text-xs text-center px-2  ${
-                      isSelected
+                        isSelected
                         ? "bg-black/50 opacity-100"
+                        : !isSelected && selectedArtworks.length >= MAX_SELECTION
+                        ? "opacity-0"
                         : "bg-black/50 opacity-0 group-hover:opacity-100"
                     }`}
                   >

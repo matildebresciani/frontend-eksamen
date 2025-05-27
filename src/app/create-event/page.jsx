@@ -106,8 +106,8 @@ export default function Page() {
       </div>
 
       {step === 2 && (
-            <div className="flex justify-center sm:justify-end sticky bottom-5">
-            <div className="mt-4 flex flex-col items-center sm:items-end justify-end">
+            <div className="flex justify-center sm:justify-end sticky bottom-5 pointer-events-none">
+            <div className="mt-4 flex flex-col items-center sm:items-end justify-end pointer-events-auto">
               <Button
                 variant="CTA"
                 onClick={handleCreateEvent}
