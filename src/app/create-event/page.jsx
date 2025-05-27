@@ -102,24 +102,28 @@ export default function Page() {
             maxSelection={maxSelection}
             blurred={step === 1} // Blur når step 1, ikke blur når step 2
           />
-          {step === 2 && (
-            <div className="mt-4 flex flex-col items-end w-full">
+        </div>
+      </div>
+
+      {step === 2 && (
+            <div className="flex justify-center sm:justify-end sticky bottom-5">
+            <div className="mt-4 flex flex-col items-center sm:items-end justify-end">
               <Button
                 variant="CTA"
                 onClick={handleCreateEvent}
                 disabled={selectedArtworks.length === 0}
                 loading={isSubmitting}
                 loadingText="Opretter event..."
+                className="!text-xl px-4 py-2"
               >
                 Opret Event
               </Button>
               {artworkError && (
-                <p className="!text-red-600 mt-2 !text-sm">{artworkError}</p>
+                <p className="!text-red-600 mt-2 !text-sm font-medium w-2/3 text-center sm:text-right text-shadow-white">{artworkError}</p>
               )}
             </div>
+            </div>
           )}
-        </div>
-      </div>
 
       {showPopup && (
         <PopUpBase>
