@@ -34,7 +34,7 @@ const TestArtCart = ({ artworkId, eventId }) => {
   return (
     <Link
       href={linkHref}
-      className="relative flex items-center justify-center overflow-hidden rounded-xl shadow-lg bg-white max-w-[420px] min-w-[250px] cursor-pointer"
+      className="relative flex items-center justify-center overflow-hidden rounded-sm shadow-lg bg-white max-w-[420px] min-w-[250px] cursor-pointer"
       style={{ padding: 0 }} // Sikrer ingen ekstra padding
     >
       <Image
@@ -45,7 +45,7 @@ const TestArtCart = ({ artworkId, eventId }) => {
         className="object-contain w-full h-auto transition duration-300 group-hover:opacity-40"
         style={{ display: "block" }}
       />
-      <div className="absolute inset-0 flex flex-col justify-end px-6 py-4 opacity-0 transition-opacity duration-300 hover:opacity-100 bg-white/10 backdrop-blur-[2px] rounded-xl">
+      <div className="absolute inset-0 flex flex-col justify-end px-6 py-4 opacity-0 transition-opacity duration-300 hover:opacity-100 bg-white/10 backdrop-blur-[2px] rounded-sm">
         <span className="text-white font-semibold text-lg mb-1 break-words leading-tight max-w-full text-balance sm:text-sm md:text-md lg:text-lg line-clamp-2 text-shadow-red">
           {artwork.titles?.[0]?.title || "TITEL PÅ BILLEDE"}
         </span>
