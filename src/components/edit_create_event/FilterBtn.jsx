@@ -72,7 +72,7 @@ const FilterBtn = ({
   return (
     // <div className="grid grid-cols-3 w-full">
     // <div className="flex flex-col flex-1/3 max-w-[600px] lg:flex-row w-full mt-5">
-    <div className="grid grid-cols-2 max-w-[600px] w-full mt-5">
+    <div className="grid grid-cols-2 max-w-[600px] w-full mt-3 gap-2">
       <FilterDropdown
         title="Titel"
         options={titles}
@@ -106,7 +106,11 @@ const FilterBtn = ({
         selectedArtists.length > 0 ||
         selectedTechniques.length > 0 ||
         selectedMaterials.length > 0) && (
-        <Button variant="transparent_w_icon" onClick={onClearFilters}>
+        <Button
+          variant="transparent_w_icon"
+          className="w-fit"
+          onClick={onClearFilters}
+        >
           <LuTrash2 />
           Ryd filtre
         </Button>
