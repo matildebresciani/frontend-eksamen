@@ -16,6 +16,7 @@ import PopUpBase from "../../PopUpBaseLayout";
 import { Input, Select, Textarea } from "./FormFields";
 
 const EventForm = ({
+  formRef,
   onNext,
   selectedArtworks,
   selectedDate,
@@ -31,6 +32,7 @@ const EventForm = ({
     watch,
     formState: { errors },
     reset,
+    getValues,
   } = useForm({
     defaultValues: {
       date: "",        // default tom værdi = placeholder vises
@@ -77,6 +79,13 @@ const EventForm = ({
   const closePopup = () => {
     setShowPopup(false);
   };
+
+  //Henter den nyeste og opdaterede data fra formularen
+  useEffect(() => {
+    if (formRef) {
+      formRef.current = { getValues };
+    }
+  }, [formRef, getValues]);
 
   return (
     <>

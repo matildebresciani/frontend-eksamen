@@ -1,6 +1,6 @@
 //Matilde og Katinka
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useEventFormLogic } from "@/utils/eventFormsLogic";
 import ArtworkList from "@/components/edit_create_event/ArtworkList";
 import EventForm from "@/components/edit_create_event/forms/InputForm";
@@ -33,6 +33,8 @@ export default function Page() {
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+  const formRef = useRef(null);
+
   // Når form i step 1 valideres:
   const handleNextStep = (dataFromForm) => {
     setFormData(dataFromForm);
@@ -54,8 +56,10 @@ export default function Page() {
     setArtworkError(""); // Clear error hvis ok
     setIsSubmitting(true);
 
+    const latestFormData = formRef.current?.getValues?.() ?? {};
+
     const eventData = {
-      ...formData,
+      ...latestFormData,
       artworkIds: selectedArtworks,
     };
 
@@ -91,6 +95,7 @@ export default function Page() {
             setSelectedDate={setSelectedDate}
             selectedLocation={selectedLocation}
             setSelectedLocation={setSelectedLocation}
+            formRef={formRef}
           />
         </div>
 
