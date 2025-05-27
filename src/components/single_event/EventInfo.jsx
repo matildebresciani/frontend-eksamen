@@ -33,8 +33,8 @@ const Eventinfo = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-center mb-5 font-semibold">{event.title}</h1>
-      <p className="mx-auto text-center">{event.description}</p>
+      <h1 className="text-center mb-5 font-semibold capitalize">{event.title}</h1>
+      <p className="mx-auto text-center first-letter:capitalize">{event.description}</p>
 
       <div className="grid grid-cols-3 py-20 gap-28 text-center max-w-[1000px] mx-auto ">
         <div className="flex flex-col items-center">

@@ -152,7 +152,7 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
                   href={`/events/${event.id}`}
                   className="text-primary-red hover:underline transition-colors"
                 >
-                  <strong>{event.title}</strong>
+                  <strong className="capitalize">{event.title}</strong>
                 </Link>
                 <span>
                   — {new Date(event.date).toLocaleDateString()}{" "}

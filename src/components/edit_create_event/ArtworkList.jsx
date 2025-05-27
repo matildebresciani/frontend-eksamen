@@ -23,9 +23,11 @@ const ArtworkList = ({
     selectedArtists,
     selectedTechniques,
     selectedMaterials,
+    selectedTitles,
     handleSelectArtist,
     handleSelectTechnique,
     handleSelectMaterial,
+    handleSelectTitle,
     toggleSelect,
     selectedArtworksPage,
     setSelectedArtworksPage,
@@ -37,6 +39,7 @@ const ArtworkList = ({
     artists,
     techniques,
     materials,
+    titles,
     artworks,
   } = useArtworksLogic(selectedDate, selectedArtworks, setSelectedArtworks);
 
@@ -61,12 +64,15 @@ const ArtworkList = ({
           artists={artists}
           techniques={techniques}
           materials={materials}
+          titles={titles}
           selectedArtists={selectedArtists}
           selectedTechniques={selectedTechniques}
           selectedMaterials={selectedMaterials}
+          selectedTitles={selectedTitles}
           onSelectArtist={handleSelectArtist}
           onSelectTechnique={handleSelectTechnique}
           onSelectMaterial={handleSelectMaterial}
+          onSelectTitle={handleSelectTitle}
           onClearFilters={handleClearFilters}
         />
 
@@ -80,6 +86,51 @@ const ArtworkList = ({
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             return (
+              // <div key={artwork.object_number}>
+              //   <div
+              //     onClick={() => {
+              //       if (isBooked) return;
+              //       if (
+              //         selectedArtworks.includes(artwork.object_number) ||
+              //         selectedArtworks.length < MAX_SELECTION
+              //       ) {
+              //         toggleSelect(artwork.object_number);
+              //       }
+              //     }}
+              //     className="relative cursor-pointer group"
+              //   >
+              //     {isSelected && (
+              //       <div
+              //         className="absolute inset-0 z-5 pointer-events-none rounded"
+              //         style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+              //       >
+              //         <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border-2 border-primary-red">
+              //           <IoCheckmark className="text-primary-red text-sm" />
+              //         </div>
+              //       </div>
+              //     )}
+              //     <Image
+              //       src={imageUrl}
+              //       alt={title}
+              //       width={200}
+              //       height={200}
+              //       className="rounded"
+              //     />
+
+              //     {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
+              //       <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed">
+              //         Maks nået
+              //       </div>
+              //     )}
+
+              //     {isBooked && (
+              //       <div className="absolute inset-0 bg-gray-700/40 flex items-center justify-center text-white font-bold text-center text-sm cursor-not-allowed">
+              //         Booket
+              //       </div>
+              //     )}
+              //   </div>
+              //   <p className="truncate">{title}</p>
+              // </div>
               <div key={artwork.object_number}>
                 <div
                   onClick={() => {
@@ -91,19 +142,20 @@ const ArtworkList = ({
                       toggleSelect(artwork.object_number);
                     }
                   }}
-                  
                   className="relative cursor-pointer group"
                 >
-                  {isSelected && (
-                    <div
-                      className="absolute inset-0 z-5 pointer-events-none rounded"
-                      style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
-                    >
-                      <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border-2 border-primary-red">
-                        <IoCheckmark className="text-primary-red text-sm" />
-                      </div>
-                    </div>
-                  )}
+                  {/* Checkbox-hjørne – altid synlig */}
+                  <div
+                    className={`absolute top-1 right-1 w-5 h-5 rounded-sm flex items-center justify-center border-1 border-white z-10 ${
+                      isSelected ? "bg-white" : "bg-transparen"
+                    }`}
+                  >
+                    {isSelected && (
+                      <IoCheckmark className="text-primary-red text-xl" />
+                    )}
+                  </div>
+
+                  {/* Billede */}
                   <Image
                     src={imageUrl}
                     alt={title}
@@ -112,20 +164,31 @@ const ArtworkList = ({
                     className="rounded"
                   />
 
-                    {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
+                  {/* Overlay med titel — vises både ved hover og når valgt */}
+                  <div
+                    className={`absolute inset-0 text-white transition-opacity flex items-center justify-center text-xs text-center px-2  ${
+                      isSelected
+                        ? "bg-black/50 opacity-100"
+                        : "bg-black/50 opacity-0 group-hover:opacity-100"
+                    }`}
+                  >
+                    <span className="text-wrap truncate">{title}</span>
+                  </div>
+
+                  {/* Blokering hvis max er nået og billedet ikke er valgt */}
+                  {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
                     <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed">
-                        Maks nået
+                      Maks nået
                     </div>
-                    )}
+                  )}
 
-
+                  {/* Booket overlay */}
                   {isBooked && (
                     <div className="absolute inset-0 bg-gray-700/40 flex items-center justify-center text-white font-bold text-center text-sm cursor-not-allowed">
                       Booket
                     </div>
                   )}
                 </div>
-                <p className="truncate">{title}</p>
               </div>
             );
           })}
@@ -170,7 +233,6 @@ const ArtworkList = ({
           {displayedSelectedArtworks.map((id) => {
             // const artwork = artworks.find((a) => a.id === id);
             const artwork = artworks.find((a) => a.object_number === id);
-
 
             if (!artwork) return null;
 

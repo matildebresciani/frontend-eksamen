@@ -44,13 +44,12 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
 
   return (
     <div
-      className={`flex flex-col sm:flex-row gap-2 p-4 bg-white rounded
-        max-w-[800px] max-h-[450px] overflow-hidden
-        min-w-[320px]
-        ${blurred ? "filter blur-sm pointer-events-none select-none" : ""}`}
+      className="flex flex-col sm:flex-row gap-2 p-2 bg-white rounded
+        max-w-[800px] sm:max-h-[450px] overflow-hidden
+        min-w-[320px]"
     >
       {/* Venstre kolonne - Kunstværker */}
-      <div className="max-w-[600px] overflow-y-auto pr-4">
+      <div className="sm:max-w-[600px] sm:overflow-y-auto pr-4">
         <h5 className="font-semibold mb-1">Vælg op til {MAX_SELECTION} værker:</h5>
         <p className="text-sm mb-3">Du kan vælge {MAX_SELECTION - selectedArtworks.length} værker mere</p>
 
@@ -68,7 +67,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
           onClearFilters={handleClearFilters}
         />
 
-        <div className="grid grid-cols-2 sm:grid-cols-3">
+        <div className="grid grid-cols-3 gap-2">
           {displayedArtworks.length === 0 && <p>Ingen billeder fundet</p>}
 
           {displayedArtworks.map((artwork) => {
@@ -146,8 +145,10 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
         </div>
       </div>
 
+      <span className="border-b-1 border-black w-full sm:hidden"></span>
+
       {/* Højre kolonne - Valgte værker */}
-      <div className="w-1/2 sm:w-[300px] overflow-y-auto max-h-[600px] px-2">
+      <div className="w-full sm:w-1/2 sm:overflow-y-auto sm:max-h-[600px] px-2 mt-4 sm:mt-0">
         <h5 className="mb-2">
           Valgte værker ({selectedArtworks.length} / {MAX_SELECTION})
         </h5>
