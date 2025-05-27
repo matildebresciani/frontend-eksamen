@@ -28,8 +28,8 @@ export default function Page() {
   const [artworkError, setArtworkError] = useState("");
 
   const maxSelection = selectedLocation
-  ? locations.find(loc => loc.id === selectedLocation)?.maxArtworks ?? 0
-  : 0;
+    ? locations.find((loc) => loc.id === selectedLocation)?.maxArtworks ?? 0
+    : 0;
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -106,24 +106,26 @@ export default function Page() {
       </div>
 
       {step === 2 && (
-            <div className="flex justify-center sm:justify-end sticky bottom-5 pointer-events-none">
-            <div className="mt-4 flex flex-col items-center sm:items-end justify-end pointer-events-auto">
-              <Button
-                variant="CTA"
-                onClick={handleCreateEvent}
-                disabled={selectedArtworks.length === 0}
-                loading={isSubmitting}
-                loadingText="Opretter event..."
-                className="!text-xl px-4 py-2"
-              >
-                Opret Event
-              </Button>
-              {artworkError && (
-                <p className="!text-red-600 mt-2 !text-sm font-medium w-2/3 text-center sm:text-right text-shadow-white">{artworkError}</p>
-              )}
-            </div>
-            </div>
-          )}
+        <div className="flex justify-center sm:justify-end sticky bottom-5 pointer-events-none z-10">
+          <div className="mt-4 flex flex-col items-center sm:items-end justify-end pointer-events-auto">
+            <Button
+              variant="CTA"
+              onClick={handleCreateEvent}
+              disabled={selectedArtworks.length === 0}
+              loading={isSubmitting}
+              loadingText="Opretter event..."
+              className="!text-xl px-4 py-2"
+            >
+              Opret Event
+            </Button>
+            {artworkError && (
+              <p className="!text-red-600 mt-2 !text-sm font-medium w-2/3 text-center sm:text-right text-shadow-white">
+                {artworkError}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       {showPopup && (
         <PopUpBase>
