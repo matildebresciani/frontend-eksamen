@@ -187,7 +187,7 @@ const ArtworkList = ({
 
         {selectedArtworks.length === 0 && <p>Ingen valgte værker endnu</p>}
 
-        <motion.div className="grid grid-cols-3 gap-2">
+        <motion.div className="columns-3 gap-2">
           {displayedSelectedArtworks.map((id) => {
             // const artwork = artworks.find((a) => a.id === id);
             const artwork = artworks.find((a) => a.object_number === id);
@@ -200,7 +200,7 @@ const ArtworkList = ({
             return (
               <div
                 key={id}
-                className="relative text-sm cursor-pointer"
+                className="relative text-sm cursor-pointer break-inside-avoid"
                 onClick={() => toggleSelect(id)}
               >
                 <Image
@@ -210,8 +210,8 @@ const ArtworkList = ({
                   height={100}
                   className="rounded w-full h-auto"
                 />
-                <LuTrash2 className="absolute right-1 top-1 text-lg text-white m-1 w-6 h-auto stroke-1" />
-                <p className="truncate">{title}</p>
+                <LuTrash2 className="absolute right-1 top-1 text-lg text-white m-1 w-7 h-auto stroke-1" />
+                <p className="truncate !text-sm">{title}</p>
               </div>
             );
           })}

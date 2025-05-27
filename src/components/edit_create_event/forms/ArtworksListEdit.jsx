@@ -173,14 +173,14 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
       <span className="border-b-1 border-black w-full sm:hidden"></span>
 
       {/* Højre kolonne - Valgte værker */}
-      <div className="w-full sm:w-1/2 sm:overflow-y-auto sm:max-h-[600px] px-2 mt-4 sm:mt-0">
+      <div className="w-full sm:w-1/2 sm:overflow-y-auto sm:max-h-[600px] px-2 mt-4 sm:mt-0 ">
         <h5 className="mb-2">
           Valgte værker ({selectedArtworks.length} / {MAX_SELECTION})
         </h5>
 
         {selectedArtworks.length === 0 && <p>Ingen valgte værker endnu</p>}
 
-        <motion.div className="grid grid-cols-3 gap-2">
+        <motion.div className="columns-3 gap-2">
           {displayedSelectedArtworks.map((id) => {
             // const artwork = artworks.find((a) => a.id === id);
             const artwork = artworks.find((a) => a.object_number === id);
@@ -194,7 +194,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
             return (
               <div
                 key={id}
-                className="relative text-sm cursor-pointer"
+                className="relative text-sm cursor-pointer mb-4 break-inside-avoid"
                 onClick={() => toggleSelect(id)}
               >
                 <Image
@@ -202,10 +202,10 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
                   alt={title}
                   width={100}
                   height={100}
-                  className="rounded object-cover"
+                  className="rounded object-cover w-fit"
                 />
-                <LuTrash2 className="absolute right-1 top-1 text-lg text-white m-1 w-6 h-auto stroke-1" />
-                <p className="truncate mt-1 text-xs">{title}</p>
+               <LuTrash2 className="absolute right-1 top-1 text-2xl text-white m-1 w-8 h-auto stroke-1" />
+               <p className="truncate !text-sm">{title}</p>
               </div>
             );
           })}
