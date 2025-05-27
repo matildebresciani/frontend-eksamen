@@ -13,9 +13,7 @@ const SignUpForm = () => {
   const router = useRouter();
   const { register, getValues, trigger, setValue, formState } = useForm();
   const { errors } = formState;
-  const setReservation = transferReservationInformation(
-    (state) => state.setReservation
-  );
+  const setReservation = transferReservationInformation((state) => state.setReservation);
   const formRef = useRef();
   const [shake, setShake] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -89,12 +87,8 @@ const SignUpForm = () => {
   };
 
   return (
-    <form
-      ref={formRef}
-      className="bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-xl px-8 py-6 m-8 max-w-sm w-full mx-auto flex flex-col"
-      onSubmit={handleConfirm}
-    >
-      <h3 className="font-semibold text-center text-lg mb-6">Tilmeld dig</h3>
+    <form ref={formRef} className="bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-xl px-8 py-6 m-8 max-w-sm w-full mx-auto flex flex-col" onSubmit={handleConfirm}>
+      <h3 className="font-semibold text-center text-lg mb-6">Tilmeld dig Gratis</h3>
 
       {/*input felt der har plus og minus til billet antal fungerer lidt bedre */}
       <div className="mb-4">
@@ -111,9 +105,7 @@ const SignUpForm = () => {
             <FiMinus />
           </button>
           <span
-            className={`w-60 text-center rounded-md p-2 bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] ${
-              errors.billetter && "border-primary-red"
-            } ${shake && errors.billetter ? "animate-shake" : ""}`}
+            className={`w-60 text-center rounded-md p-2 bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] ${errors.billetter && "border-primary-red"} ${shake && errors.billetter ? "animate-shake" : ""}`}
             style={{ minWidth: "3rem", display: "inline-block" }}
           >
             {billetter}
@@ -122,11 +114,7 @@ const SignUpForm = () => {
             type="button"
             aria-label="plus"
             onClick={() => handleChange(billetter + 1)}
-            disabled={
-              totalTickets !== null &&
-              bookedTickets !== null &&
-              billetter >= totalTickets - bookedTickets
-            }
+            disabled={totalTickets !== null && bookedTickets !== null && billetter >= totalTickets - bookedTickets}
             className="p-3 text-primary-red rounded-md bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] hover:bg-primary-red hover:text-white transition"
           >
             <FiPlus />
@@ -143,9 +131,9 @@ const SignUpForm = () => {
           id="navn"
           placeholder="Dit navn..."
           {...register("navn", { required: true })}
-          className={`w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-primary-red ${
-            errors.navn && "border-primary-red"
-          } ${shake && errors.navn ? "animate-shake" : ""}`}
+          className={`w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-primary-red ${errors.navn && "border-primary-red"} ${
+            shake && errors.navn ? "animate-shake" : ""
+          }`}
         />
       </div>
 
@@ -160,25 +148,20 @@ const SignUpForm = () => {
           {...register("email", {
             required: true,
           })}
-          className={`w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-primary-red ${
-            errors.email && "border-primary-red"
-          } ${shake && errors.email ? "animate-shake" : ""}`}
+          className={`w-full rounded-md p-2 shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-primary-red ${errors.email && "border-primary-red"} ${
+            shake && errors.email ? "animate-shake" : ""
+          }`}
         />
       </div>
 
-      {showError && (
-        <div className="text-primary-red text-center text-xs mb-2">
-          Udfyld alle felter korrekt
-        </div>
-      )}
+      {showError && <div className="text-primary-red text-center text-xs mb-2">Udfyld alle felter korrekt</div>}
 
       {/* Her vises hvor mange billetter der er tilbage */}
       <div className="text-center text-sm text-gray-600 mb-4">
         {totalTickets !== null && bookedTickets !== null ? (
           <>
             {`Der er ${totalTickets - bookedTickets} `}
-            {totalTickets - bookedTickets === 1 ? "billet" : "billetter"}{" "}
-            tilbage
+            {totalTickets - bookedTickets === 1 ? "billet" : "billetter"} tilbage
           </>
         ) : (
           "Indlæser antal billetter..."
@@ -188,12 +171,7 @@ const SignUpForm = () => {
       {/* <button type="submit" className="w-full bg-primary-red text-white py-2 rounded-md hover:bg-red-700 transition block text-center">
         Bekræft reservation
       </button> */}
-      <Button
-        variant="CTA"
-        type="submit"
-        loading={isSubmitting}
-        loadingText="Bekræfter reservation..."
-      >
+      <Button variant="CTA" type="submit" loading={isSubmitting} loadingText="Bekræfter reservation...">
         Bekræft reservation
       </Button>
     </form>
