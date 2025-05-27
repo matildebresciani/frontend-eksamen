@@ -37,25 +37,36 @@ export default async function handler(req, res) {
       //Prompt: "hvordan styler jeg en mail i nodemailer?"
       //prompt: "hvordan kan jeg tilføje og vise vores logo i en mail?"
       html: `
-  <div style="font-family:sans-serif;background:#f7f7f7;padding:0;margin:0;">
+ <div style="font-family:sans-serif;background:#f7f7f7;padding:0;margin:0;">
   <div style="max-width:700px;width:100%;margin:48px auto 24px auto;background:#fff;border-radius:22px;box-shadow:0 4px 24px rgba(185,28,28,0.10);padding:32px 0;">
-    <div style="text-align:center;">
-      <img src="cid:logo_mail" alt="Logo" style="max-width:56px;margin-bottom:20px;" />
-      <p style="font-size:1.4rem;color:#b91c1c;font-weight:bold;margin:0 0 20px;">Tak for din reservation!</p>
-      <table style="margin:0 auto;font-size:1rem;color:#111;line-height:1.6;">
-        <tr><td><b>Event:</b></td><td>&nbsp;${event.title}</td></tr>
-        <tr><td><b>Sted:</b></td><td>&nbsp;${event.location?.address}</td></tr>
-        <tr><td><b>Dato:</b></td><td>&nbsp;${event.date}</td></tr>
+    <div>
+      <div style="text-align:center;">
+        <img src="https://res.cloudinary.com/dkqozs6xd/image/upload/v1748336573/logo_mail_tglb6v.png" alt="Logo" style="max-width:56px;margin-bottom:20px;" />
+        <p style="font-size:1.4rem;color:#b91c1c;font-weight:bold;margin:0 0 20px;">Tak for din reservation!</p>
+      </div>
+      <table style="margin:0 auto;font-size:1rem;color:#111;line-height:1.6;border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 6px 2px 0;font-weight:bold;text-align:right;">Event:</td>
+          <td style="padding:0 0 2px 0;text-align:left;">${event.title}</td>
+        </tr>
+        <tr>
+          <td style="padding:0 6px 2px 0;font-weight:bold;text-align:right;">Sted:</td>
+          <td style="padding:0 0 2px 0;text-align:left;">${event.location?.address}</td>
+        </tr>
+        <tr>
+          <td style="padding:0 6px 2px 0;font-weight:bold;text-align:right;">Dato:</td>
+          <td style="padding:0 0 2px 0;text-align:left;">${event.date}</td>
+        </tr>
       </table>
-      <p style="margin-top:24px;font-size:1.1rem;color:#111;">Se dine billetter herunder:</p>
+      <p style="margin-top:24px;font-size:1.1rem;color:#111;text-align:center;">Se dine billetter herunder:</p>
     </div>
 
     <div style="margin:0 24px;">
       ${Array.from({ length: billetter })
         .map(
           (_, idx) => `
-        <div style="background:#fff;border-radius:16px;padding:24px 20px 20px 20px;margin:32px auto;max-width:340px;box-shadow:0 2px 12px rgba(0,0,0,0.1);position:relative;">
-          <img src="cid:logo_mail" alt="Logo" style="position:absolute;top:20px;right:20px;width:52px;" />
+        <div style="background:#fff;border:2px solid #b91c1c;border-radius:16px;padding:24px 20px 20px 20px;margin:32px auto;max-width:340px;box-shadow:0 2px 12px rgba(0,0,0,0.1);position:relative;">
+          <img src="https://res.cloudinary.com/dkqozs6xd/image/upload/v1748336573/logo_mail_tglb6v.png" alt="Logo" style="position:absolute;top:20px;right:20px;width:52px;" />
           <div style="font-size:1.4rem;font-weight:bold;color:#111;margin-bottom:16px;">${event.title}</div>
           <div style="font-size:1.1rem;font-weight:bold;color:#b91c1c;margin-bottom:4px;">${event.date}</div>
           <div style="font-size:1rem;color:#111;margin-bottom:24px;">${event.location?.address}</div>

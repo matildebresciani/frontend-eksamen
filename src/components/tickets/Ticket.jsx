@@ -10,11 +10,11 @@
 //     displayValue={false}   // skjul tekst under stregkoden
 //   />
 // </div>
-
 import React, { useEffect, useState } from "react";
 import Barcode from "react-barcode";
 import { fetchEventById } from "../../api-mappe/EventsApiKald";
 import { fetchArtworkById } from "@/api-mappe/SmkApiKald";
+import { formatDate } from "@/utils/formatDate";
 
 const Ticket = ({ eventId }) => {
   const [event, setEvent] = useState(null);
@@ -41,6 +41,9 @@ const Ticket = ({ eventId }) => {
     };
     getArtworkImg();
   }, [event]);
+
+  const formattedDate = event ? formatDate(event.date) : "";
+
   return (
     <div className="w-[1000px] h-[280px] mx-auto mt-10 p-2 shadow-[0_0_10px_rgba(0,0,0,0.2)] rounded-sm bg-white grid grid-cols-[280px_1fr_1fr] overflow-visible">
       {/* Billede del */}
@@ -53,7 +56,7 @@ const Ticket = ({ eventId }) => {
           <>
             <h2 className="text-lg font-bold mb-1">{event.title}</h2>
             <p className="text-sm text-gray-700 mb-1">{event.location?.address}</p>
-            <p className="text-xs text-gray-500">{event.date}</p>
+            <p className="text-xs text-gray-500 capitalize">{formattedDate}</p>
             <p className="text-xs text-gray-500">kl. 10:00</p>
           </>
         ) : (
