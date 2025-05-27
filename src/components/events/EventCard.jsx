@@ -35,7 +35,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
   }, [event]);
 
   const ticketsLeft = event.totalTickets - event.bookedTickets;
-  const fewTicketsLeft = ticketsLeft <= 50;  
+  const fewTicketsLeft = ticketsLeft <= 5;  
 
   const handleCardClick = () => {
     router.push(`/events/${event.id}`);

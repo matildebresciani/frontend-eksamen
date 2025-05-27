@@ -62,9 +62,7 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
                   onClick={handleDelete}
                   loading={isDeleting}
                   loadingText="Sletter event..."
-                  className={`transition-all duration-300 ${
-                    isDeleting ? "flex-1" : "w-auto"
-                  }`}
+                  className="transition-all duration-300 w-auto"
                 >
                   {isDeleting ? "Sletter event..." : "JA"}
                 </Button>
