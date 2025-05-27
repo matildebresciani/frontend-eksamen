@@ -86,51 +86,6 @@ const ArtworkList = ({
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             return (
-              // <div key={artwork.object_number}>
-              //   <div
-              //     onClick={() => {
-              //       if (isBooked) return;
-              //       if (
-              //         selectedArtworks.includes(artwork.object_number) ||
-              //         selectedArtworks.length < MAX_SELECTION
-              //       ) {
-              //         toggleSelect(artwork.object_number);
-              //       }
-              //     }}
-              //     className="relative cursor-pointer group"
-              //   >
-              //     {isSelected && (
-              //       <div
-              //         className="absolute inset-0 z-5 pointer-events-none rounded"
-              //         style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
-              //       >
-              //         <div className="absolute top-1 right-1 w-5 h-5 bg-white rounded-sm flex items-center justify-center border-2 border-primary-red">
-              //           <IoCheckmark className="text-primary-red text-sm" />
-              //         </div>
-              //       </div>
-              //     )}
-              //     <Image
-              //       src={imageUrl}
-              //       alt={title}
-              //       width={200}
-              //       height={200}
-              //       className="rounded"
-              //     />
-
-              //     {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
-              //       <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed">
-              //         Maks nået
-              //       </div>
-              //     )}
-
-              //     {isBooked && (
-              //       <div className="absolute inset-0 bg-gray-700/40 flex items-center justify-center text-white font-bold text-center text-sm cursor-not-allowed">
-              //         Booket
-              //       </div>
-              //     )}
-              //   </div>
-              //   <p className="truncate">{title}</p>
-              // </div>
               <div key={artwork.object_number}>
                 <div
                   onClick={() => {
@@ -142,11 +97,11 @@ const ArtworkList = ({
                       toggleSelect(artwork.object_number);
                     }
                   }}
-                  className="relative cursor-pointer group"
+                  className="relative cursor-pointer group w-fit justify-center"
                 >
                   {/* Checkbox-hjørne – altid synlig */}
                   <div
-                    className={`absolute top-1 right-1 w-5 h-5 rounded-sm flex items-center justify-center border-1 border-white z-10 ${
+                    className={`absolute top-1 right-1 w-5 h-5 rounded-sm flex items-center justify-center border-1 border-white z-8 ${
                       isSelected ? "bg-white" : "bg-transparent"
                     }`}
                   >
@@ -167,9 +122,10 @@ const ArtworkList = ({
                   {/* Overlay med titel — vises både ved hover og når valgt */}
                   <div
                     className={`absolute inset-0 text-white transition-opacity flex items-center justify-center text-xs text-center px-2  ${
-                        isSelected
+                      isSelected
                         ? "bg-black/50 opacity-100"
-                        : !isSelected && selectedArtworks.length >= MAX_SELECTION
+                        : !isSelected &&
+                          selectedArtworks.length >= MAX_SELECTION
                         ? "opacity-0"
                         : "bg-black/50 opacity-0 group-hover:opacity-100"
                     }`}
