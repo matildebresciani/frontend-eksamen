@@ -9,6 +9,7 @@ import DeleteBtn from "../edit_create_event/Delete";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchArtworkById } from "@/api-mappe/SmkApiKald";
+import Image from "next/image";
 
 const EventCard = ({ event, onDeleted, onEdit }) => {
   const router = useRouter();
@@ -33,6 +34,9 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
     getArtworkImg();
   }, [event]);
 
+  const ticketsLeft = event.totalTickets - event.bookedTickets;
+  const fewTicketsLeft = ticketsLeft <= 50;  
+
   const handleCardClick = () => {
     router.push(`/events/${event.id}`);
   };
@@ -54,9 +58,24 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
       </div>
 
       <div className="flex flex-row-reverse sm:flex-row cq-[min-width:640px]:grid cq-[min-width:640px]:grid-cols-[159px_1fr] gap-4 mt-2 items-start">
-        <figure className="w-[150px] h-[150px] shrink-0 cq-[min-width:800px]:w-[200px] cq-[min-width:800px]:h-[200px] overflow-hidden flex items-center justify-center rounded">
-          {artworkImg ? <img src={artworkImg} alt="Event billede" className="object-cover w-full h-full" /> : null}
+      <figure className="relative w-[150px] h-[150px] shrink-0 cq-[min-width:800px]:w-[200px] cq-[min-width:800px]:h-[200px] overflow-hidden flex items-center justify-center rounded">
+        {artworkImg && (
+            <Image
+            src={artworkImg}
+            alt="Event billede"
+            height={150}
+            width={150}
+            className="object-cover w-full h-full"
+            />
+        )}
+
+        {fewTicketsLeft && (
+            <div className="absolute top-1.5 left-0.5 bg-primary-red/80 text-white text-xs font-semibold px-2 py-1 rounded-xs">
+            FÅ BILLETTER!
+            </div>
+        )}
         </figure>
+
 
         <div className="flex flex-col gap-1 w-full">
           <p className="italic font-medium capitalize">"{event.title}"</p>
