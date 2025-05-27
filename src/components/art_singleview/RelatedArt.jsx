@@ -76,8 +76,10 @@ const RelatedArt = ({ artworkId }) => {
           <div className="flex overflow-x-auto">
             <div className="flex gap-4 shrink-0">
               {related.map((item) => (
-                <Link
-                  href={`/artwork/${item.object_number}`}
+                <div
+                onClick={() => {
+                    window.location.href = `/artwork/${item.object_number}`;
+                  }}
                   key={item.object_number}
                 >
                   <div className="min-w-[160px]">
@@ -92,7 +94,7 @@ const RelatedArt = ({ artworkId }) => {
                       {data.titles?.[0]?.title || "Ukendt titel"}
                     </p> */}
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
