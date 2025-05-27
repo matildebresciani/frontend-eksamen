@@ -32,25 +32,24 @@ const Eventinfo = () => {
   const formattedDate = formatDate(event.date);
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col">
       <h1 className="text-center mb-5 font-semibold">{event.title}</h1>
       <p className="mx-auto text-center">{event.description}</p>
 
-      <div className="flex flex-row justify-evenly py-20 gap-4">
+      <div className="grid grid-cols-3 py-20 gap-28 text-center max-w-[1000px] mx-auto ">
         <div className="flex flex-col items-center">
-          <FiCalendar size={50} className="text-primary-red stroke-2 sm:size-15 md:size-20 lg:size-25" />
+          <FiCalendar size={80} className="text-primary-red " strokeWidth={1.4} />
           <div className="font-semibold capitalize text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">{formattedDate}</div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuMapPin size={50} className="text-primary-red stroke-2 sm:size-15 md:size-20 lg:size-25" />
+          <LuMapPin size={80} className="text-primary-red " strokeWidth={1.4} />
           <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">{event.location?.address}</div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuClock4 size={50} className="text-primary-red stroke-2 sm:size-15 md:size-20 lg:size-25" />
+          <LuClock4 size={80} className="text-primary-red " strokeWidth={1.4} />
           <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">Kl. 10-14</div>
-          {/*hardcoded tid siden API ikke har*/}
         </div>
       </div>
     </div>
