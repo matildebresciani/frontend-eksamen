@@ -142,7 +142,7 @@ const ArtworkList = ({
                       toggleSelect(artwork.object_number);
                     }
                   }}
-                  className="relative cursor-pointer group"
+                  className="relative cursor-pointer group w-fit justify-center"
                 >
                   {/* Checkbox-hjørne – altid synlig */}
                   <div
@@ -167,9 +167,10 @@ const ArtworkList = ({
                   {/* Overlay med titel — vises både ved hover og når valgt */}
                   <div
                     className={`absolute inset-0 text-white transition-opacity flex items-center justify-center text-xs text-center px-2  ${
-                        isSelected
+                      isSelected
                         ? "bg-black/50 opacity-100"
-                        : !isSelected && selectedArtworks.length >= MAX_SELECTION
+                        : !isSelected &&
+                          selectedArtworks.length >= MAX_SELECTION
                         ? "opacity-0"
                         : "bg-black/50 opacity-0 group-hover:opacity-100"
                     }`}
