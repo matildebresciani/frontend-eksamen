@@ -32,19 +32,24 @@ const TestArtCart = ({ artworkId, eventId }) => {
   const linkHref = `/events/${eventId}/artwork/${artwork.object_number}`;
 
   return (
-    <Link href={linkHref} className="relative flex items-center justify-center overflow-hidden rounded-xl shadow-lg bg-white max-w-[340px] max-h-[420px] min-w-[200px] min-h-[200px] cursor-pointer">
+    <Link
+      href={linkHref}
+      className="relative flex items-center justify-center overflow-hidden rounded-xl shadow-lg bg-white max-w-[420px] min-w-[250px] cursor-pointer group"
+      style={{ padding: 0 }} // Sikrer ingen ekstra padding
+    >
       <Image
         src={artwork.image_thumbnail || "/placeholder.jpg"}
         alt={artwork.titles?.[0]?.title || "Artwork"}
         width={600}
         height={800}
-        className="object-contain max-h-[400px] max-w-[340px] w-auto h-auto transition duration-300 hover:opacity-40"
+        className="object-contain w-full h-auto transition duration-300 group-hover:opacity-40"
+        style={{ display: "block" }}
       />
-      <div className="absolute inset-0 flex flex-col justify-end px-6 py-4 opacity-0 transition-opacity duration-300 hover:opacity-100 bg-white/10 backdrop-blur-[2px] rounded-xl">
-        <span className="text-white font-semibold text-xl break-words leading-tight max-w-full text-balance sm:text-md md:text-lg lg:text-xl line-clamp-2 text-shadow-red">
+      <div className="absolute inset-0 flex flex-col justify-end px-6 py-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-white/10 backdrop-blur-[2px] rounded-xl">
+        <span className="text-white font-semibold text-lg mb-1 break-words leading-tight max-w-full text-balance sm:text-sm md:text-md lg:text-lg line-clamp-2 text-shadow-red">
           {artwork.titles?.[0]?.title || "TITEL PÅ BILLEDE"}
         </span>
-        <span className=" group pointer-events-auto">
+        <span className=" group/button pointer-events-none">
           <BtnWithArrow>
             <span className="font-semibold text-lg">LÆS MERE</span>
           </BtnWithArrow>
