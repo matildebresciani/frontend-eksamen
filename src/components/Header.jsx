@@ -35,7 +35,7 @@ const Header = () => {
             alt="header logo"
             width={70}
             height={70}
-            className="sm:w-[100px] sm:h-[100px]"
+            className="lg:w-[100px] lg:h-[100px]"
           />
           <div className="leading-[1.2] hidden sm:block sm:text-lg md:text-xl">
             MODERNIA
@@ -81,12 +81,25 @@ const Header = () => {
 const HeaderNav = () => {
   const { openSignIn } = useClerk();
   return (
-    <div className="flex items-center gap-2 sm:gap-8 text-lg sm:text-xl md:text-2xl">
-      <div className="hidden sm:block ">
+    <div className="flex items-center gap-2 sm:gap-2 md:gap-4 text-lg sm:text-xl md:text-2xl">
+
+      {/* Se Events - Mobilvisning (vises under sm) */}
+      <div className="block sm:hidden">
+        <Link href="/events">
+          <Button variant="transparent" className="px-3 py-1 text-sm">
+            EVENTS
+          </Button>
+        </Link>
+      </div>
+
+        {/* Se Events - Desktopvisning */}
+        <div className="hidden sm:block whitespace-nowrap">
         <Link href="/events">
           <Button variant="transparent">SE EVENTS</Button>
         </Link>
       </div>
+
+
       <SignedOut>
         <div>
           <Button variant="CTA" onClick={() => openSignIn()}>
@@ -94,13 +107,26 @@ const HeaderNav = () => {
           </Button>
         </div>
       </SignedOut>
+
       <SignedIn>
-        <div className="flex gap-4">
-          <Link href="/create-event">
+        <div className="flex gap-2">
+
+          {/* Opret Event - Mobilvisning */}
+          <Link href="/create-event" className="block sm:hidden">
+            <Button variant="CTA" className="px-3 py-1 text-sm">
+              OPRET
+            </Button>
+          </Link>
+
+          {/* Opret Event - Desktopvisning */}
+          <Link href="/create-event" className="hidden sm:block whitespace-nowrap">
             <Button variant="CTA">OPRET EVENT</Button>
           </Link>
+
           <UserButton />
+
         </div>
+
       </SignedIn>
     </div>
   );
