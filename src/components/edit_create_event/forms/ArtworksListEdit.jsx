@@ -147,7 +147,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
       </div>
 
       {/* Højre kolonne - Valgte værker */}
-      <div className="w-1/2 sm:w-[300px] overflow-y-auto max-h-[600px]">
+      <div className="w-1/2 sm:w-[300px] overflow-y-auto max-h-[600px] px-2">
         <h5 className="mb-2">
           Valgte værker ({selectedArtworks.length} / {MAX_SELECTION})
         </h5>
