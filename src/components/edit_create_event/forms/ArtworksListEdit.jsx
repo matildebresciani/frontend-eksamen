@@ -52,7 +52,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
         min-w-[320px]"
     >
       {/* Venstre kolonne - Kunstværker */}
-      <div className="sm:max-w-[600px] sm:overflow-y-auto pr-4">
+      <div className="w-full sm:w-1/2 sm:overflow-y-auto pr-4">
         <h5 className="font-semibold mb-1">Vælg op til {MAX_SELECTION} værker:</h5>
         <p className="text-sm mb-3">Du kan vælge {MAX_SELECTION - selectedArtworks.length} værker mere</p>
 
@@ -113,7 +113,7 @@ const ArtworkListEdit = ({ blurred = false, selectedArtworks, setSelectedArtwork
                             alt={title}
                             width={100}
                             height={100}
-                            className="rounded mb-2"
+                            className="rounded mb-2 w-full"
                           />
         
                           {/* Overlay med titel — vises både ved hover og når valgt */}
