@@ -60,7 +60,7 @@ export default function Page() {
         til at byde dig velkommen!
       </p>
       <div>
-        <div className="border-2 border-black w-full my-6 sm:my-10  self-start sticky sm:top-37 md:top-41 lg:top-45"></div>
+        <div className="border-2 border-black w-full my-6 sm:my-10 z-50 self-start sticky sm:top-37 md:top-41 lg:top-45"></div>
 
         <div className="grid sm:grid-cols-[1fr_2fr] gap-4">
           {/* Mobilversion med dropdown */}
