@@ -54,7 +54,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
       </div>
 
       <div className="flex flex-row-reverse sm:flex-row cq-[min-width:640px]:grid cq-[min-width:640px]:grid-cols-[159px_1fr] gap-4 mt-2 items-start">
-        <figure className="bg-gray-500 w-[100px] h-[100px] shrink-0 cq-[min-width:800px]:w-[200px] cq-[min-width:800px]:h-[200px] overflow-hidden flex items-center justify-center rounded">
+        <figure className="w-[150px] h-[150px] shrink-0 cq-[min-width:800px]:w-[200px] cq-[min-width:800px]:h-[200px] overflow-hidden flex items-center justify-center rounded">
           {artworkImg ? <img src={artworkImg} alt="Event billede" className="object-cover w-full h-full" /> : null}
         </figure>
 
