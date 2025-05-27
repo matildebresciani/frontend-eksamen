@@ -122,3 +122,8 @@ button {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/*class til at tilføje skygge på font i gallery så tekst bliver mere synligt + højrer kontrast*/
+.text-shadow-red {
+  text-shadow: 0 2px 6px rgba(44, 40, 41, 0.8), 0 0 2px rgb(30, 28, 28);
+}
