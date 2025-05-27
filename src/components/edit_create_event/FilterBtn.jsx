@@ -106,7 +106,7 @@ const FilterBtn = ({
         selectedArtists.length > 0 ||
         selectedTechniques.length > 0 ||
         selectedMaterials.length > 0) && (
-        <Button variant="transparent_w_icon" onClick={onClearFilters}>
+        <Button variant="transparent_w_icon" className="w-fit" onClick={onClearFilters}>
           <LuTrash2 />
           Ryd filtre
         </Button>
