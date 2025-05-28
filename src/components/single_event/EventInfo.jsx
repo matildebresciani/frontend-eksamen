@@ -44,7 +44,7 @@ const Eventinfo = ({event, onEdit}) => {
   return (
     <div className="flex flex-col">
       <SignedIn>
-        <div className="text-center my-4">
+        <div className="flex justify-center my-4">
         <EditIcon event={event} onEdit={onEdit}>REDIGER EVENT</EditIcon>
         </div>
       </SignedIn>
