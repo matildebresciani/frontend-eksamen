@@ -9,6 +9,7 @@ import Image from "next/image";
 import transferReservationInformation from "@/app/store/reservationInformation";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { formatDate } from "@/utils/formatDate";
 
 const ReservationMessage = () => {
   const reservation = transferReservationInformation((state) => state.reservation);
@@ -32,13 +33,14 @@ const ReservationMessage = () => {
 
   if (!reservation || !event) return <div>Indlæser billetoplysninger...</div>;
 
+  const formattedDate = event ? formatDate(event.date) : "";
   return (
     <div>
       <div className="flex flex-col items-center pb-10">
         <Image src="/monalisa.png" alt="lineart af monalisa" width={100} height={100} />
         <div>
           <p className="text-center">
-            Kære {reservation.navn}, her er dine billetter til <b>{event.title}</b>, vi glæder os til at se dig/jer på <b>{event.location?.address}</b> den <b>{event.date}</b>.
+            Kære {reservation.navn}, her er dine billetter til <b>{event.title}</b>, vi glæder os til at se dig/jer på <b>{event.location?.address}</b> | <b>{formattedDate}</b>.
           </p>
         </div>
       </div>
