@@ -101,16 +101,18 @@ const ArtworkList = ({
                   }}
                   className="relative cursor-pointer group w-fit justify-center"
                 >
-                  {/* Checkbox-hjørne – altid synlig */}
-                  <div
-                    className={`absolute top-1 right-1 w-5 h-5 rounded-sm flex items-center justify-center border-1 border-white z-8 ${
-                      isSelected ? "bg-white" : "bg-transparent"
-                    }`}
-                  >
-                    {isSelected && (
-                      <IoCheckmark className="text-primary-red text-xl" />
-                    )}
-                  </div>
+                  {/* Checkbox-hjørne – vises kun hvis ikke booket */}
+                  {!isBooked && (
+                    <div
+                      className={`absolute top-1 right-1 w-5 h-5 rounded-sm flex items-center justify-center border-1 border-white z-8 ${
+                        isSelected ? "bg-white" : "bg-transparent"
+                      }`}
+                    >
+                      {isSelected && (
+                        <IoCheckmark className="text-primary-red text-xl" />
+                      )}
+                    </div>
+                  )}
 
                   {/* Billede */}
                   <Image
@@ -124,18 +126,17 @@ const ArtworkList = ({
                   {/* Overlay med titel — vises både ved hover og når valgt */}
                   {!isBooked && (
                     <div
-                        className={`absolute inset-0 text-white transition-opacity flex items-center justify-center text-xs text-center px-2 ${
+                      className={`absolute inset-0 text-white transition-opacity flex items-center justify-center text-xs text-center px-2 ${
                         isSelected
-                            ? "bg-black/50 opacity-100"
-                            : selectedArtworks.length >= MAX_SELECTION
-                            ? "opacity-0"
-                            : "bg-black/50 opacity-0 group-hover:opacity-100"
-                        }`}
+                          ? "bg-black/50 opacity-100"
+                          : selectedArtworks.length >= MAX_SELECTION
+                          ? "opacity-0"
+                          : "bg-black/50 opacity-0 group-hover:opacity-100"
+                      }`}
                     >
-                        <span className="text-wrap truncate">{title}</span>
+                      <span className="text-wrap truncate">{title}</span>
                     </div>
-                    )}
-
+                  )}
 
                   {/* Blokering hvis max er nået og billedet ikke er valgt */}
                   {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
