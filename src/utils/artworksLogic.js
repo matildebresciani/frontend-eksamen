@@ -42,21 +42,31 @@ export const useArtworksLogic = (
   );
 
   // Bookede værker til valgt dato
-  // Formatér datoen, hvis den er et Date-objekt
   const formattedDate =
     typeof selectedDate === "string"
       ? selectedDate
       : selectedDate?.toISOString().split("T")[0] ?? null;
 
-  // Bookede værker til valgt dato
-  const bookedArtworkIds = events
-    .filter((event) => event.date === formattedDate)
-    .flatMap((event) => event.artworks ?? event.artworkIds ?? []);
+  // Funktion til at hente bookede værker for valgt dato, evt. ekskl. et bestemt event (til redigering)
+  const getBookedArtworkIds = (excludeEventId = null) => {
+    return events
+      .filter((event) => {
+        // Samme dato og ikke det event vi er ved at redigere
+        const sameDate = event.date === formattedDate;
+        const notExcluded = excludeEventId ? event.id !== excludeEventId : true;
+        return sameDate && notExcluded;
+      })
+      .flatMap((event) => event.artworks ?? event.artworkIds ?? []);
+  };
 
-  // Funktion til at tjekke om værk er booket
-  const isArtworkBooked = (object_number) => {
+  // Funktion til at tjekke om et værk er booket
+  const isArtworkBooked = (object_number, excludeEventId = null) => {
+    const bookedArtworkIds = getBookedArtworkIds(excludeEventId);
     const booked = bookedArtworkIds.includes(object_number);
-    console.log(`Check artwork ${object_number} booked:`, booked);
+    console.log(
+      `Check artwork ${object_number} booked (exclude: ${excludeEventId}):`,
+      booked
+    );
     return booked;
   };
 

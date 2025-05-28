@@ -13,6 +13,7 @@ const ArtworkListEdit = ({
   setSelectedArtworks,
   selectedDate,
   maxSelection,
+  excludeEventId,
 }) => {
   const {
     displayedArtworks,
@@ -87,7 +88,7 @@ const ArtworkListEdit = ({
 
           {displayedArtworks.map((artwork) => {
             const isSelected = selectedArtworks.includes(artwork.object_number);
-            const isBooked = isArtworkBooked(artwork.object_number);
+            const isBooked = isArtworkBooked(artwork.object_number, excludeEventId);
             const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
@@ -128,18 +129,19 @@ const ArtworkListEdit = ({
                   />
 
                   {/* Overlay med titel — vises både ved hover og når valgt */}
-                  <div
-                    className={`absolute inset-0 text-white transition-opacity flex items-center justify-center text-xs text-center px-2  ${
-                      isSelected
-                        ? "bg-black/50 opacity-100"
-                        : !isSelected &&
-                          selectedArtworks.length >= MAX_SELECTION
-                        ? "opacity-0"
-                        : "bg-black/50 opacity-0 group-hover:opacity-100"
-                    }`}
-                  >
-                    <span className="text-wrap truncate">{title}</span>
-                  </div>
+                  {!isBooked && (
+                    <div
+                      className={`absolute inset-0 text-white transition-opacity flex items-center justify-center text-xs text-center px-2 ${
+                        isSelected
+                          ? "bg-black/50 opacity-100"
+                          : selectedArtworks.length >= MAX_SELECTION
+                          ? "opacity-0"
+                          : "bg-black/50 opacity-0 group-hover:opacity-100"
+                      }`}
+                    >
+                      <span className="text-wrap truncate">{title}</span>
+                    </div>
+                  )}
 
                   {/* Blokering hvis max er nået og billedet ikke er valgt */}
                   {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
@@ -150,8 +152,8 @@ const ArtworkListEdit = ({
 
                   {/* Booket overlay */}
                   {isBooked && (
-                    <div className="absolute inset-0 bg-gray-700/40 flex items-center justify-center text-white font-bold text-center text-sm cursor-not-allowed">
-                      Booket
+                    <div className="absolute inset-0 bg-gray-700/60 flex items-center justify-center text-white font-semibold text-center text-xs cursor-not-allowed">
+                      Allerede booket på valgte dato
                     </div>
                   )}
                 </div>
