@@ -65,12 +65,12 @@ export default function Page() {
         <div className="grid sm:grid-cols-[1fr_2fr] gap-4">
           {/* Mobilversion med dropdown */}
           <div className="block md:hidden self-start sticky top-26 bg-white pt-2 z-50">
-            <details className="w-full">
+            <details className="group w-full">
               <summary className="text-primary-red flex justify-between items-center px-4 py-2 border-2 border-primary-red rounded cursor-pointer bg-white">
                 <span>Vælg By</span>
-                <IoIosArrowDown />
+                <IoIosArrowDown className="transition-transform duration-300 group-open:rotate-180" />
               </summary>
-              <div className="px-4 pb-2 ">
+              <div className="px-4 pb-2">
                 <SelectCity
                   selectedCities={selectedCities}
                   setSelectedCities={setSelectedCities}
@@ -88,19 +88,20 @@ export default function Page() {
 
           <div className="flex flex-col gap-4">
             {filteredEvents.length === 0 ? (
-                <p className="mt-2 italic">Ingen events fundet på valgte lokation...</p>
+              <p className="mt-2 italic">
+                Ingen events fundet på valgte lokation...
+              </p>
             ) : (
-                filteredEvents.map((event) => (
+              filteredEvents.map((event) => (
                 <EventCard
-                    key={event.id}
-                    event={event}
-                    onDeleted={() => handleDeleted(event.id)}
-                    onEdit={handleEdit}
+                  key={event.id}
+                  event={event}
+                  onDeleted={() => handleDeleted(event.id)}
+                  onEdit={handleEdit}
                 />
-                ))
+              ))
             )}
-            </div>
-
+          </div>
         </div>
       </div>
     </section>
