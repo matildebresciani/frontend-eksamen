@@ -23,9 +23,18 @@ export default async function ArtworkPageContent({ artworkId, eventId }) {
     console.error("Kunne ikke hente events:", error);
   }
 
+  // Udtræk bredde og højde fra dimensions-array
+  const heightEntry = artwork.dimensions?.find((d) => d.type === "højde");
+  const widthEntry = artwork.dimensions?.find((d) => d.type === "bredde");
+
+  const height = heightEntry ? parseInt(heightEntry.value) : null;
+  const width = widthEntry ? parseInt(widthEntry.value) : null;
+
+  const isPortrait = height && width ? height > width : true; // fallback til portrait
+
   return (
     <div>
-      <div className="flex flex-col items-center mx-3">
+      {/* <div className="flex flex-col items-center mx-3">
         <Image
           src={artwork.image_thumbnail || "/placeholder.jpg"}
           alt={artwork.title || "Artwork"}
@@ -35,6 +44,67 @@ export default async function ArtworkPageContent({ artworkId, eventId }) {
         />
 
         <SingleArtTextContent data={artwork} allEvents={events} eventId={eventId} />
+      </div> */}
+      {/* <div className="flex flex-col items-center mx-3"> */}
+      {/* portrait */}
+      {/* <div className="h-full ">
+          <Image
+            src={artwork.image_thumbnail || "/placeholder.jpg"}
+            alt={artwork.title || "Artwork"}
+            width={artwork.width || 1200}
+            height={artwork.height || 900}
+            className="w-fit object-contain"
+          />
+        </div> */}
+      {/* landscape */}
+      {/* <div className="w-full ">
+          <Image
+            src={artwork.image_thumbnail || "/placeholder.jpg"}
+            alt={artwork.title || "Artwork"}
+            width={artwork.width || 1200}
+            height={artwork.height || 900}
+            className="h-fit object-contain"
+          />
+        </div>
+        <SingleArtTextContent
+          data={artwork}
+          allEvents={events}
+          eventId={eventId}
+        />
+      </div> */}
+
+      <div className="flex flex-col items-center mx-3">
+        {isPortrait ? (
+          // Portrait: Fast højde på desktop, tilpasser bredde på mobil
+          <div className="w-auto h-[70vh] max-h-[900px] lg:h-[900px] lg:max-h-[900px]">
+            <Image
+              src={artwork.image_thumbnail || "/placeholder.jpg"}
+              alt={artwork.title || "Artwork"}
+              width={1200}
+              height={1600}
+              quality={90}
+              className="h-full w-auto object-contain mx-auto"
+            />
+          </div>
+        ) : (
+          // Landscape: Fast bredde på desktop, tilpasser på mobil
+          <div className="w-full max-w-full h-auto lg:w-[1200px]">
+            <Image
+              src={artwork.image_thumbnail || "/placeholder.jpg"}
+              alt={artwork.title || "Artwork"}
+              width={1600}
+              height={1200}
+              quality={90}
+              className="w-full h-auto object-contain mx-auto"
+            />
+          </div>
+        )}
+
+        <SingleArtTextContent
+          data={artwork}
+          allEvents={events}
+          eventId={eventId}
+        />
       </div>
 
       <RelatedArt artworkId={artworkId} />

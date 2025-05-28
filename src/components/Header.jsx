@@ -82,23 +82,19 @@ const HeaderNav = () => {
   const { openSignIn } = useClerk();
   return (
     <div className="flex items-center gap-2 md:gap-4 text-sm sm:text-xl md:text-2xl">
-
       {/* Se Events - Mobilvisning (vises under sm) */}
       <div className="block sm:hidden">
         <Link href="/events">
-          <Button variant="transparent">
-            EVENTS
-          </Button>
+          <Button variant="transparent">EVENTS</Button>
         </Link>
       </div>
 
-        {/* Se Events - Desktopvisning */}
-        <div className="hidden sm:block whitespace-nowrap">
+      {/* Se Events - Desktopvisning */}
+      <div className="hidden sm:block whitespace-nowrap">
         <Link href="/events">
           <Button variant="transparent">SE EVENTS</Button>
         </Link>
       </div>
-
 
       <SignedOut>
         <div>
@@ -110,25 +106,23 @@ const HeaderNav = () => {
 
       <SignedIn>
         <div className="flex gap-2 sm:gap-4 items-center">
-
           {/* Opret Event - Mobilvisning */}
           <Link href="/create-event" className="block sm:hidden">
-            <Button variant="CTA">
-              OPRET
-            </Button>
+            <Button variant="CTA">OPRET</Button>
           </Link>
 
           {/* Opret Event - Desktopvisning */}
-          <Link href="/create-event" className="hidden sm:block whitespace-nowrap">
+          <Link
+            href="/create-event"
+            className="hidden sm:block whitespace-nowrap"
+          >
             <Button variant="CTA">OPRET EVENT</Button>
           </Link>
 
-        <div className="flex items-center justify-center">
-          <UserButton />
+          <div className="flex items-center justify-center">
+            <UserButton />
+          </div>
         </div>
-
-        </div>
-
       </SignedIn>
     </div>
   );

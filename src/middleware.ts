@@ -6,6 +6,7 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 const isPublicRoute = createRouteMatcher([
   "/", // forside
   "/events(.*)", // event routes
+  "/artwork(.*)", //Gør related art single page tilgængelig for public
   "/sign-in(.*)",
   "/sign-up(.*)",
 ]);

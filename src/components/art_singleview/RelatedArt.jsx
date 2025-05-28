@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 const RelatedArt = ({ artworkId }) => {
   const [related, setRelated] = useState([]);
@@ -76,25 +77,24 @@ const RelatedArt = ({ artworkId }) => {
           <div className="flex overflow-x-auto">
             <div className="flex gap-4 shrink-0">
               {related.map((item) => (
-                <div
-                onClick={() => {
+                <motion.div
+                  onClick={() => {
                     window.location.href = `/artwork/${item.object_number}`;
                   }}
                   key={item.object_number}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="min-w-[160px]"
                 >
-                  <div className="min-w-[160px]">
-                    <Image
-                      src={item.image_thumbnail}
-                      alt={item.title || "related art"}
-                      width={160}
-                      height={120}
-                      className="object-cover rounded shadow"
-                    />
-                    {/* <p className="text-xs mt-1">
-                      {data.titles?.[0]?.title || "Ukendt titel"}
-                    </p> */}
-                  </div>
-                </div>
+                  <Image
+                    src={item.image_thumbnail}
+                    alt={item.title || "related art"}
+                    width={160}
+                    height={120}
+                    className="object-cover rounded shadow cursor-pointer"
+                  />
+                </motion.div>
               ))}
             </div>
           </div>
