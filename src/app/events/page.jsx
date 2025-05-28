@@ -3,7 +3,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import EventCard from "@/components/events/EventCard";
 import SelectCity from "@/components/events/SelectCity";
 import normalizeCity from "@/utils/normalizeCity";
@@ -47,6 +47,21 @@ export default function Page() {
           selectedCities.includes(normalizeCity(event.location.address))
         );
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Luk dropdown når man klikker udenfor
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <section>
       <h1 className="mb-2 sm:mb-3">Events</h1>
@@ -64,20 +79,32 @@ export default function Page() {
 
         <div className="grid sm:grid-cols-[1fr_2fr] gap-4">
           {/* Mobilversion med dropdown */}
-          <div className="block md:hidden self-start sticky top-26 bg-white pt-2 z-50">
-            <details className="w-full">
-              <summary className="text-primary-red flex justify-between items-center px-4 py-2 border-2 border-primary-red rounded cursor-pointer bg-white">
-                <span>Vælg By</span>
-                <IoIosArrowDown />
-              </summary>
-              <div className="px-4 pb-2 ">
+          <div
+            ref={dropdownRef}
+            className="block md:hidden self-start sticky top-26 bg-white pt-2 z-50"
+          >
+            <div
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              className="text-primary-red flex justify-between items-center px-4 py-2 border-2 border-primary-red rounded cursor-pointer bg-white"
+            >
+              <span>Vælg By</span>
+              <IoIosArrowDown
+                className={`transition-transform duration-300 ${
+                  isDropdownOpen ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+
+            {isDropdownOpen && (
+              <div className="px-4 pb-2">
                 <SelectCity
                   selectedCities={selectedCities}
                   setSelectedCities={setSelectedCities}
                 />
               </div>
-            </details>
+            )}
           </div>
+
           {/* Desktop version med sidefiltrering */}
           <div className="hidden md:block md:self-start md:sticky md:top-45 lg:top-55">
             <SelectCity
@@ -88,19 +115,20 @@ export default function Page() {
 
           <div className="flex flex-col gap-4">
             {filteredEvents.length === 0 ? (
-                <p className="mt-2 italic">Ingen events fundet på valgte lokation...</p>
+              <p className="mt-2 italic">
+                Ingen events fundet på valgte lokation...
+              </p>
             ) : (
-                filteredEvents.map((event) => (
+              filteredEvents.map((event) => (
                 <EventCard
-                    key={event.id}
-                    event={event}
-                    onDeleted={() => handleDeleted(event.id)}
-                    onEdit={handleEdit}
+                  key={event.id}
+                  event={event}
+                  onDeleted={() => handleDeleted(event.id)}
+                  onEdit={handleEdit}
                 />
-                ))
+              ))
             )}
-            </div>
-
+          </div>
         </div>
       </div>
     </section>
