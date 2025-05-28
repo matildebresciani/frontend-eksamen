@@ -37,9 +37,15 @@ export default function Page() {
 
   // Når form i step 1 valideres:
   const handleNextStep = (dataFromForm) => {
+    console.log("Data fra EventForm:", dataFromForm);
     setFormData(dataFromForm);
+  
+    setSelectedDate(dataFromForm.date);
+    setSelectedLocation(Number(dataFromForm.locationId));
+  
     setStep(2);
   };
+  
 
   const closePopup = () => {
     setShowPopup(false);

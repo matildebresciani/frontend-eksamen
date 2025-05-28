@@ -35,13 +35,30 @@ export const useArtworksLogic = (
     selectedArtworksPage * ITEMS_PER_PAGE
   );
 
+  console.log("selectedDate:", selectedDate);
+  console.log(
+    "events dates:",
+    events.map((e) => e.date)
+  );
+
+  // Bookede værker til valgt dato
+  // Formatér datoen, hvis den er et Date-objekt
+  const formattedDate =
+    typeof selectedDate === "string"
+      ? selectedDate
+      : selectedDate?.toISOString().split("T")[0] ?? null;
+
   // Bookede værker til valgt dato
   const bookedArtworkIds = events
-    .filter((event) => event.date === selectedDate)
-    .flatMap((event) => event.artworks);
+    .filter((event) => event.date === formattedDate)
+    .flatMap((event) => event.artworks ?? event.artworkIds ?? []);
 
-  const isArtworkBooked = (object_number) =>
-    bookedArtworkIds.includes(object_number);
+  // Funktion til at tjekke om værk er booket
+  const isArtworkBooked = (object_number) => {
+    const booked = bookedArtworkIds.includes(object_number);
+    console.log(`Check artwork ${object_number} booked:`, booked);
+    return booked;
+  };
 
   // Udtræk titler, kunstnere, teknikker, materialer alfabetisk
   const titles = Array.from(
@@ -168,20 +185,45 @@ export const useArtworksLogic = (
   //     setSelectedArtworksPage(1);
   //   };
 
+  //   const toggleSelect = (object_number) => {
+  //     setSelectedArtworks((prev) => {
+  //       console.log("Before toggle:", prev.length, prev);
+  //       if (prev.includes(object_number)) {
+  //         return prev.filter((id) => id !== object_number);
+  //       } else if (
+  //         prev.length >= (selectedLocation?.maxArtworks ?? MAX_SELECTION)
+  //       ) {
+  //         console.log("Max reached, cannot add more");
+  //         return prev;
+  //       } else {
+  //         return [...prev, object_number];
+  //       }
+  //     });
+  //     setSelectedArtworksPage(1);
+  //   };
+
   const toggleSelect = (object_number) => {
+    if (isArtworkBooked(object_number)) {
+      // Hvis værket er booket, må det ikke vælges - evt. vis en advarsel
+      console.log("Dette værk er allerede booket på denne dato.");
+      return; // Stop funktionen
+    }
+
     setSelectedArtworks((prev) => {
-      console.log("Before toggle:", prev.length, prev);
       if (prev.includes(object_number)) {
+        // Hvis allerede valgt, fjern det
         return prev.filter((id) => id !== object_number);
       } else if (
         prev.length >= (selectedLocation?.maxArtworks ?? MAX_SELECTION)
       ) {
-        console.log("Max reached, cannot add more");
+        console.log("Max antal værker nået, kan ikke tilføje flere");
         return prev;
       } else {
+        // Tilføj værket til udvalget
         return [...prev, object_number];
       }
     });
+
     setSelectedArtworksPage(1);
   };
 

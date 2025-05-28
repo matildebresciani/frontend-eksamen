@@ -74,6 +74,7 @@ const EventForm = ({
   }));
 
   const onSubmit = (data) => {
+    console.log("Form data submitted:", data);
     onNext(data);
   };
 
