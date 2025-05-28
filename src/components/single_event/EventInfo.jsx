@@ -9,7 +9,7 @@ import { formatDate } from "@/utils/formatDate";
 import { SignedIn } from "@clerk/nextjs";
 import EditIcon from "../edit_create_event/EditIcon";
 
-const Eventinfo = ({event, onEdit}) => {
+const Eventinfo = ({ event, onEdit }) => {
   // const { eventId } = useParams();
   // const [event, setEvent] = useState(null);
 
@@ -37,7 +37,6 @@ const Eventinfo = ({event, onEdit}) => {
   //   console.log("Updated event modtaget fra API:", updatedEvent);
   //   setEvent(updatedEvent);
   // };
-  
 
   const formattedDate = formatDate(event.date);
 
@@ -45,7 +44,9 @@ const Eventinfo = ({event, onEdit}) => {
     <div className="flex flex-col">
       <SignedIn>
         <div className="flex justify-center my-4">
-        <EditIcon event={event} onEdit={onEdit}>REDIGER EVENT</EditIcon>
+          <EditIcon event={event} onEdit={onEdit}>
+            <div className="text-sm md:text-lg ">REDIGER EVENT</div>
+          </EditIcon>
         </div>
       </SignedIn>
       <h1 className="text-center mb-5 first-letter:capitalize">
@@ -55,12 +56,12 @@ const Eventinfo = ({event, onEdit}) => {
         {event.description}
       </p>
 
-      <div className="grid grid-cols-3 py-20 gap-28 text-center max-w-[1000px] mx-auto ">
+      <div className="grid grid-cols-3 py-10 gap-5 sm:py-14 sm:gap-18 md:py-18 md:gap-23 lg:py-20 lg:gap-28 text-center max-w-[1000px] mx-auto">
         <div className="flex flex-col items-center">
           <FiCalendar
-            size={80}
-            className="text-primary-red "
-            strokeWidth={1.4}
+            size={50}
+            className="text-primary-red sm:w-17 md:w-20 lg:w-23 h-auto"
+            strokeWidth={1.2}
           />
           <div className="font-semibold capitalize text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             {formattedDate}
@@ -68,14 +69,22 @@ const Eventinfo = ({event, onEdit}) => {
         </div>
 
         <div className="flex flex-col items-center">
-          <LuMapPin size={80} className="text-primary-red " strokeWidth={1.4} />
+          <LuMapPin
+            size={50}
+            className="text-primary-red sm:w-17 md:w-20 lg:w-23 h-auto"
+            strokeWidth={1.2}
+          />
           <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             {event.location?.address}
           </div>
         </div>
 
         <div className="flex flex-col items-center">
-          <LuClock4 size={80} className="text-primary-red " strokeWidth={1.4} />
+          <LuClock4
+            size={50}
+            className="text-primary-red sm:w-17 md:w-20 lg:w-23 h-auto"
+            strokeWidth={1.2}
+          />
           <div className="font-semibold text-[var(--color-text-light)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             Kl. 10-14
           </div>
