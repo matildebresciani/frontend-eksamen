@@ -152,8 +152,8 @@ const ArtworkListEdit = ({
 
                   {/* Booket overlay */}
                   {isBooked && (
-                    <div className="absolute inset-0 bg-gray-700/40 flex items-center justify-center text-white font-bold text-center text-sm cursor-not-allowed">
-                      Booket
+                    <div className="absolute inset-0 bg-gray-700/60 flex items-center justify-center text-white font-semibold text-center text-xs cursor-not-allowed">
+                      Allerede booket på valgte dato
                     </div>
                   )}
                 </div>
