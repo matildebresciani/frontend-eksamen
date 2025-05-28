@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollBar from "@/components/ScrollBar";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
         <body
           className={` ${workSans.variable} ${montserrat.variable} antialiased`}
         >
+          <ScrollBar />
           <Header />
           <main className="scroll-smooth px-8 sm:px-12 md:px-20 lg:px-30">
             {children}

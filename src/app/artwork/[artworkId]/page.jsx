@@ -58,5 +58,9 @@ export default async function ArtworkPage({ params }) {
 
   if (!artworkId) return <div>Ugyldige parametre</div>;
 
-  return <ArtworkPageContent artworkId={artworkId} eventId={undefined} />;
+  return (
+    <div>
+      <ArtworkPageContent artworkId={artworkId} eventId={undefined} />
+    </div>
+  );
 }

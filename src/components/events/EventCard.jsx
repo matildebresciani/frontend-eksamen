@@ -35,14 +35,17 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
   }, [event]);
 
   const ticketsLeft = event.totalTickets - event.bookedTickets;
-  const fewTicketsLeft = ticketsLeft <= 5;  
+  const fewTicketsLeft = ticketsLeft <= 5;
 
   const handleCardClick = () => {
     router.push(`/events/${event.id}`);
   };
 
   return (
-    <div onClick={handleCardClick} className="group/card container max-w-[818px] border-b-2 border-black pb-4 my-4 [container-type:inline-size] cursor-pointer">
+    <div
+      onClick={handleCardClick}
+      className="group/card container max-w-[818px] border-b-2 border-black pb-4 my-4 [container-type:inline-size] cursor-pointer"
+    >
       <div className="flex justify-between items-center">
         <h4 className="uppercase !text-primary-red">{formattedDate}</h4>
 
@@ -58,36 +61,43 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
       </div>
 
       <div className="flex flex-row-reverse sm:flex-row cq-[min-width:640px]:grid cq-[min-width:640px]:grid-cols-[159px_1fr] gap-4 mt-2 items-start">
-      <figure className="relative w-[150px] h-[150px] shrink-0 cq-[min-width:800px]:w-[200px] cq-[min-width:800px]:h-[200px] overflow-hidden flex items-center justify-center rounded">
-        {artworkImg && (
+        <figure className="relative w-[150px] h-[150px] shrink-0 cq-[min-width:800px]:w-[200px] cq-[min-width:800px]:h-[200px] overflow-hidden flex items-center justify-center rounded">
+          {artworkImg && (
             <Image
-            src={artworkImg}
-            alt="Event billede"
-            height={150}
-            width={150}
-            className="object-cover w-full h-full"
+              src={artworkImg}
+              alt="Event billede"
+              height={150}
+              width={150}
+              className="object-cover w-full h-full"
             />
-        )}
+          )}
 
-        {fewTicketsLeft && (
+          {fewTicketsLeft && (
             <div className="absolute top-1.5 left-0.5 bg-primary-red/80 text-white text-xs font-semibold px-2 py-1 rounded-xs">
-            FÅ BILLETTER!
+              FÅ BILLETTER!
             </div>
-        )}
+          )}
         </figure>
 
-
-        <div className="flex flex-col gap-1 w-full">
-          <p className="italic font-medium capitalize">"{event.title}"</p>
+        <div className="flex flex-col gap-1 w-full ">
+          <p className="italic font-medium first-letter:capitalize before::content-['“'] after::content-['”']">
+            {event.title}
+          </p>
           <p className="font-bold">Kl. 10.00</p>
 
           <div className="flex flex-row items-center gap-1">
             <LuMapPin className="text-primary-red" />
-            <p>{event.location?.name && event.location?.address ? `${event.location.name}, ${event.location.address}` : "Lokation ikke tilgængelig"}</p>
+            <p>
+              {event.location?.name && event.location?.address
+                ? `${event.location.name}, ${event.location.address}`
+                : "Lokation ikke tilgængelig"}
+            </p>
           </div>
 
           <div className="flex justify-between gap-4">
-            <p className="line-clamp-2 flex-1 first-letter:uppercase">{event.description}</p>
+            <p className="line-clamp-2 flex-1 first-letter:uppercase">
+              {event.description}
+            </p>
             {/* <div
               className="flex md:justify-end shrink-0 items-end gap-4"
               onClick={(e) => e.stopPropagation()}
@@ -100,7 +110,10 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end shrink-0 items-end gap-4 my-3" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="flex justify-end shrink-0 items-end gap-4 my-3"
+        onClick={(e) => e.stopPropagation()}
+      >
         <SignedIn>
           <DeleteBtn eventId={event.id} onDeleted={onDeleted} />
           <EditIcon event={event} onEdit={onEdit} />
