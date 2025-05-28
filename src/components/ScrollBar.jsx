@@ -19,7 +19,7 @@ export default function ScrollBar() {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-1 z-[1000] bg-gray-200">
+    <div className="fixed top-0 left-0 w-full h-1 z-[1000] bg-transparent">
       <div
         className="h-full bg-primary-red transition-all duration-75"
         style={{ width: `${scrollProgress}%` }}
