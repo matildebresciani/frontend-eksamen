@@ -4,32 +4,32 @@
 import { useRef } from "react";
 // import ArtCart from "./ArtCart";
 import TestArtCart from "./TestArtCart";
-import { IoArrowBackCircleOutline, IoArrowForwardCircleOutline } from "react-icons/io5";
+import { IoArrowBackCircleOutline, IoArrowForwardCircleOutline, IoArrowForward, IoArrowBack } from "react-icons/io5";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
 import { motion } from "motion/react";
 
-const TestGallery = () => {
+const TestGallery = ({event, eventId}) => {
   const scrollRef = useRef();
-  const { eventId } = useParams();
-  const [event, setEvent] = useState();
+  // const { eventId } = useParams();
+  // const [event, setEvent] = useState();
 
-  useEffect(() => {
-    const fetchArtwork = async () => {
-      try {
-        const eventResponse = await fetch(`https://server-gititgirls.onrender.com/events/${eventId}`);
-        const eventData = await eventResponse.json();
-        console.log("Fetched Event Data:", eventData); // Log event data
+  // useEffect(() => {
+  //   const fetchArtwork = async () => {
+  //     try {
+  //       const eventResponse = await fetch(`https://server-gititgirls.onrender.com/events/${eventId}`);
+  //       const eventData = await eventResponse.json();
+  //       console.log("Fetched Event Data:", eventData); // Log event data
 
-        setEvent(eventData);
-      } catch (error) {
-        console.error("Error fetching artwork:", error);
-      }
-    };
+  //       setEvent(eventData);
+  //     } catch (error) {
+  //       console.error("Error fetching artwork:", error);
+  //     }
+  //   };
 
-    fetchArtwork();
-  }, [eventId]);
+  //   fetchArtwork();
+  // }, [eventId]);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -51,10 +51,10 @@ const TestGallery = () => {
 
       <div className="flex items-center space-x-8">
         <motion.button onClick={() => scroll("left")} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.1 }} className="text-gray-700 hover:text-black">
-          <IoArrowBackCircleOutline size={50} />
+          <IoArrowBack size={50} />
         </motion.button>
         <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.1 }} onClick={() => scroll("right")} className="text-gray-700 hover:text-black">
-          <IoArrowForwardCircleOutline size={50} />
+          <IoArrowForward size={50} />
         </motion.button>
       </div>
     </div>

@@ -100,7 +100,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end shrink-0 items-end gap-4 my-3" onClick={(e) => e.stopPropagation()}>
+      <div className="flex justify-end shrink-0 items-end my-3" onClick={(e) => e.stopPropagation()}>
         <SignedIn>
           <DeleteBtn eventId={event.id} onDeleted={onDeleted} />
           <EditIcon event={event} onEdit={onEdit} />
