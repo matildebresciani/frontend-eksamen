@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useEventFormLogic } from "../../../utils/eventFormsLogic"; // Din custom hook med dates, locations osv.
 import PopUpBase from "../../PopUpBaseLayout";
 import Button from "../../Button";
@@ -15,10 +15,23 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
     eventToEdit.artworkIds || []
   );
   const [selectedLocation, setSelectedLocation] = useState(eventToEdit.locationId || null);
+  const [selectedDate, setSelectedDate] = useState(eventToEdit.date || null);
 
  const maxSelection = selectedLocation
   ? locations.find(loc => loc.id === selectedLocation)?.maxArtworks ?? 0
   : 0;  
+
+  useEffect(() => {
+    console.log("eventToEdit.date ændret til:", eventToEdit.date);
+    if (eventToEdit?.date) {
+      setSelectedDate(eventToEdit.date);
+    }
+  }, [eventToEdit]);
+  
+  useEffect(() => {
+    console.log("selectedDate opdateret til:", selectedDate);
+  }, [selectedDate]);
+  
    
 
   const handleSubmit = async (formData) => {
@@ -76,12 +89,16 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         selectedLocation={selectedLocation}
         setSelectedLocation={setSelectedLocation}
         onLocationChange={setSelectedLocation}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
       <ArtworkListEdit 
         selectedArtworks={selectedArtworks}
         setSelectedArtworks={setSelectedArtworks}
-        maxSelection={maxSelection}/>
-        
+        maxSelection={maxSelection}
+        excludeEventId={eventToEdit.id}
+        selectedDate={selectedDate}
+        />
       </div>
 
 <div className="flex justify-center mt-4">

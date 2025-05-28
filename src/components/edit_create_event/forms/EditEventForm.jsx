@@ -17,6 +17,8 @@ const EditEventForm = ({
   setIsSubmitting,
   onSubmitData,
   onLocationChange,
+  selectedDate,
+  setSelectedDate,
 }) => {
   const {
     register,
@@ -34,16 +36,11 @@ const EditEventForm = ({
     },
   });
 
+  console.log("EditEventForm selectedDate prop:", selectedDate);
+
   const selectedLocation = watch("locationId");
-  const selectedDate = watch("date");
+  const watchedDate = watch("date");
 
-  useEffect(() => {
-    if (onLocationChange) {
-      onLocationChange(selectedLocation);
-    }
-  }, [selectedLocation, onLocationChange]);
-
-  // Reset form values når eventToEdit ændres
   useEffect(() => {
     if (eventToEdit) {
       reset({
@@ -54,6 +51,22 @@ const EditEventForm = ({
       });
     }
   }, [eventToEdit, reset]);
+  
+  // Synkroniser valgt lokation udad
+  useEffect(() => {
+    if (onLocationChange) {
+      onLocationChange(selectedLocation);
+    }
+  }, [selectedLocation, onLocationChange]);
+  
+  // Sync valgt dato udad, men IKKE reset form på selectedDate ændring
+  useEffect(() => {
+    if (selectedDate && watchedDate !== selectedDate) {
+      // Hvis du virkelig vil opdatere selectedDate udad, ellers drop denne sync
+      setSelectedDate(watchedDate);
+    }
+  }, [watchedDate, setSelectedDate, selectedDate]);
+  
 
   // Lav options til select med disabled baseret på optagethed og ikke den nuværende event's data
   const dateOptions = dates.map((date) => ({
