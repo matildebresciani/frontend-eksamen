@@ -35,7 +35,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
   }, [event]);
 
   const ticketsLeft = event.totalTickets - event.bookedTickets;
-  const fewTicketsLeft = ticketsLeft <= 5;
+  const fewTicketsLeft = ticketsLeft >= 1 && ticketsLeft <= 5;
   const soldOut = ticketsLeft === 0|| event.bookedTickets === null;
 
   const handleCardClick = () => {
