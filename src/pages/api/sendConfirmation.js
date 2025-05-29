@@ -1,5 +1,6 @@
 //maja
 //en extra som sender en confirmation mail til brugeren når de har booket billetter
+//Hjælp fra AI til at skabe den helt rigtige mapper og filstruktur for at sende en bekræftelsesmail til brugeren, når de har booket billetter.
 
 import nodemailer from "nodemailer";
 import { fetchEventById } from "../../api-mappe/EventsApiKald";
@@ -101,13 +102,6 @@ export default async function handler(req, res) {
   </style>
 </div>
 `,
-      attatchments: [
-        {
-          filename: "logo_mail.png",
-          path: "../../../public/imgs/logo_mail.png",
-          cid: "logo_mail", //same cid value as in the html img src
-        },
-      ],
     });
 
     res.status(200).json({ success: true });

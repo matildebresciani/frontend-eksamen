@@ -117,16 +117,16 @@ async function deleteEvent(eventId) {
 }
 
 //PUT: book billetter til et event
-async function bookTickets(eventId, updatedEventData) {
+async function bookTickets(eventId, amountOfTickets) {
   try {
-    console.log("Booking tickets for event ID:", eventId, "with data:", updatedEventData);
+    console.log("Booking tickets for event ID:", eventId, "with data:", amountOfTickets);
 
     const response = await fetch(`https://server-gititgirls.onrender.com/events/${eventId}/book`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedEventData),
+      body: JSON.stringify(amountOfTickets),
     });
     if (!response.ok) {
       throw new Error("Failed to book tickets");
