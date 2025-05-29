@@ -68,13 +68,13 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
   // });
 
   //Ændrer amerikansk til dansk dato
-  function formatDanishDate(dateStr) {
-    return new Date(dateStr).toLocaleDateString("da-DK", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  }
+  // function formatDanishDate(dateStr) {
+  //   return new Date(dateStr).toLocaleDateString("da-DK", {
+  //     day: "2-digit",
+  //     month: "long",
+  //     year: "numeric",
+  //   });
+  // }
 
   return (
     <div className="sm:grid sm:grid-cols-3 gap-3 sm:gap-5 md:gap-8">
@@ -109,13 +109,13 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
             <span className="font-semibold">Farver brugt:</span>
           </li>
         </ul>
-        <div className="flex flex-wrap py-3">
+        <div className="flex flex-wrap py-3 justify-start ml-5">
           {sortedColors.length > 0 ? (
             sortedColors.map((color, index) => (
               <div
                 key={index}
                 className={`w-10 h-10 rounded-full border border-neutral-300 ${
-                  index !== 0 ? "-ml-6" : ""
+                  index !== 0 ? "-ml-6" : "-ml-6"
                 }`}
                 style={{ backgroundColor: color }}
                 title={color}
