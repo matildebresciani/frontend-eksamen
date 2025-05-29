@@ -36,6 +36,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
 
   const ticketsLeft = event.totalTickets - event.bookedTickets;
   const fewTicketsLeft = ticketsLeft <= 5;
+  const soldOut = ticketsLeft === 0|| event.bookedTickets === null;
 
   const handleCardClick = () => {
     router.push(`/events/${event.id}`);
@@ -73,8 +74,14 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
           )}
 
           {fewTicketsLeft && (
-            <div className="absolute top-1.5 left-0.5 bg-primary-red/80 text-white text-xs font-semibold px-2 py-1 rounded-xs">
+            <div className="absolute top-1.5 left-0.5 bg-primary-red-hover text-white text-xs font-semibold px-2 py-1 rounded-xs">
               FÅ BILLETTER!
+            </div>
+          )}
+
+          {soldOut && (
+            <div className="absolute top-1.5 left-0.5 bg-primary-red/80 text-white text-xs font-semibold px-2 py-1 rounded-xs">
+              UDSOLGT
             </div>
           )}
         </figure>

@@ -4,8 +4,6 @@ import { Input, Select, Textarea } from "./FormFields"; // Sørg for at disse er
 import { EditEvent } from "@/api-mappe/EventsApiKald";
 import { formatDate } from "@/utils/formatDate";
 
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const EditEventForm = ({
   eventToEdit,
   dates,
