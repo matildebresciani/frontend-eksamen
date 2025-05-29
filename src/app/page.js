@@ -53,15 +53,27 @@ export default function Home() {
   const contentOpacity = useTransform(scrollY, [400, 800, 1300], [0, 1, 0]);
   const contentTranslateY = useTransform(scrollY, [400, 800], [50, 0]);
   const { openSignIn } = useClerk();
+
+  const MotionImage = motion(Image); //Gør at man kan bruge motion direkte på Image
+
   return (
     <div className="mt-50 mb-150">
-      <Image
+      <MotionImage
         src={imageUrl}
         alt="Tilfældigt kunstværk fra SMK's API"
         height={1033}
         width={1440}
-        className="fixed top-0 left-0 w-full h-screen object-cover z-[-1] transition-transform duration-[8000ms] ease-in-out hover:scale-110"
+        initial={{ scale: 1 }}
+        animate={{ scale: 1.1 }}
+        transition={{
+          duration: 6,
+          ease: "easeInOut",
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
+        className="fixed top-0 left-0 w-full h-screen object-cover z-[-1]"
       />
+
       <div className="flex flex-col items-center ">
         <motion.div
           style={{ opacity: topButtonOpacity, y: topButtonTranslateY }}
