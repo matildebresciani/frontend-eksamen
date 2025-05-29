@@ -74,7 +74,7 @@ const RelatedArt = ({ artworkId }) => {
             Ingen lignende værker fundet
           </p>
         ) : (
-          <div className="flex overflow-x-auto">
+          <div className="flex overflow-x-auto py-2">
             <div className="flex gap-4 shrink-0">
               {related.map((item) => (
                 <motion.div

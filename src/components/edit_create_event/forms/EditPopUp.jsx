@@ -17,6 +17,8 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   const [selectedLocation, setSelectedLocation] = useState(eventToEdit.locationId || null);
   const [selectedDate, setSelectedDate] = useState(eventToEdit.date || null);
 
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
  const maxSelection = selectedLocation
   ? locations.find(loc => loc.id === selectedLocation)?.maxArtworks ?? 0
   : 0;  
@@ -42,8 +44,9 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         ...formData,
         artworkIds: selectedArtworks,  // sørg for at artworks sendes med her, hvis api understøtter det
       };
-
-      const updatedEvent = await EditEvent(eventToEdit.id, updatedEventData);
+      
+      //Gør så loading på knappen kører i 1 sekund
+      const [updatedEvent] = await Promise.all([EditEvent(eventToEdit.id, updatedEventData), wait(1000),]);
 
       const fullLocation = locations.find(loc => loc.id === updatedEvent.locationId);
         updatedEvent.location = fullLocation || null;
