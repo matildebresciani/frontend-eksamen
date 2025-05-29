@@ -41,7 +41,13 @@ const ArtworkListEdit = ({
     titles,
     selectedTitles,
     handleSelectTitle,
-  } = useArtworksLogic(selectedDate, selectedArtworks, setSelectedArtworks);
+  } = useArtworksLogic(
+    selectedDate,
+    selectedArtworks,
+    setSelectedArtworks,
+    maxSelection,
+    excludeEventId
+  );
 
   console.log("Selected artworks in ArtworkListEdit:", selectedArtworks);
 

@@ -1,3 +1,5 @@
+//Primært Katinka, men med rettelser fra Matilde når det kom til debugging
+
 import { useEffect, useState } from "react";
 import { fetchEvents } from "@/api-mappe/EventsApiKald";
 
@@ -5,7 +7,9 @@ export const useArtworksLogic = (
   selectedDate,
   selectedArtworks,
   setSelectedArtworks,
-  selectedLocation
+  selectedLocation,
+  maxSelection,
+  excludeEventId
 ) => {
   const [artworks, setArtworks] = useState([]);
   const [events, setEvents] = useState([]);
@@ -13,7 +17,7 @@ export const useArtworksLogic = (
   const [currentPage, setCurrentPage] = useState(1);
 
   const ITEMS_PER_PAGE = 9;
-  const MAX_SELECTION = selectedLocation?.maxArtworks ?? 15;
+  const MAX_SELECTION = maxSelection ?? selectedLocation?.maxArtworks ?? 15;
 
   // Filtrering
   const [selectedTitles, setSelectedTitles] = useState([]);
@@ -67,6 +71,7 @@ export const useArtworksLogic = (
       `Check artwork ${object_number} booked (exclude: ${excludeEventId}):`,
       booked
     );
+
     return booked;
   };
 
@@ -213,23 +218,30 @@ export const useArtworksLogic = (
   //   };
 
   const toggleSelect = (object_number) => {
-    if (isArtworkBooked(object_number)) {
-      // Hvis værket er booket, må det ikke vælges - evt. vis en advarsel
-      console.log("Dette værk er allerede booket på denne dato.");
-      return; // Stop funktionen
-    }
-
     setSelectedArtworks((prev) => {
-      if (prev.includes(object_number)) {
-        // Hvis allerede valgt, fjern det
-        return prev.filter((id) => id !== object_number);
-      } else if (
-        prev.length >= (selectedLocation?.maxArtworks ?? MAX_SELECTION)
+      const isAlreadySelected = prev.includes(object_number);
+
+      // Hvis værket er booket og ikke allerede valgt, må det ikke tilføjes
+      if (
+        !isAlreadySelected &&
+        isArtworkBooked(object_number, excludeEventId)
       ) {
+        console.log(
+          "Dette værk er allerede booket på denne dato og kan ikke vælges."
+        );
+        return prev;
+      }
+
+      console.log("Trykker på:", object_number);
+      console.log("Allerede valgt:", prev);
+
+      if (isAlreadySelected) {
+        console.log("Fjerner værk:", object_number);
+        return prev.filter((id) => id !== object_number);
+      } else if (prev.length >= MAX_SELECTION) {
         console.log("Max antal værker nået, kan ikke tilføje flere");
         return prev;
       } else {
-        // Tilføj værket til udvalget
         return [...prev, object_number];
       }
     });
@@ -375,6 +387,5 @@ export const useArtworksLogic = (
     artists,
     techniques,
     materials,
-    artworks,
   };
 };
