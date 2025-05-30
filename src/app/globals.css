@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/*Katinka - General styling */
 @theme {
   --color-primary-red: #d00000;
   --color-text-header: #292828;
@@ -40,8 +41,7 @@ header {
   font-size: 1.6rem;
 }
 
-/*Katinka - General styling text-flow*/
-/* https://fluidtypography.com */
+/* text-flow https://fluidtypography.com */
 /* Font-size & line-height viewport width range 375-1920px */
 
 /*font-size range 32-40px, line-height range 1.5-1.3*/

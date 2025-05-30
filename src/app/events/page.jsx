@@ -15,7 +15,6 @@ export default function Page() {
   const [selectedCities, setSelectedCities] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const getEvents = async () => {
       try {
@@ -82,7 +81,7 @@ export default function Page() {
         <div className="border-2 border-black w-full my-6 sm:my-10 z-50 self-start sticky sm:top-37 md:top-41 lg:top-45"></div>
 
         <div className="grid sm:grid-cols-[1fr_2fr] gap-4">
-          {/* Mobilversion med dropdown */}
+          {/* Mobilversion, dropdown filtrering */}
           <div
             ref={dropdownRef}
             className="block md:hidden self-start sticky top-26 bg-white pt-2 z-50"
@@ -109,7 +108,7 @@ export default function Page() {
             )}
           </div>
 
-          {/* Desktop version med sidefiltrering */}
+          {/* Desktop version, dropdown filtrering */}
           <div className="hidden md:block md:self-start md:sticky md:top-45 lg:top-55">
             <SelectCity
               selectedCities={selectedCities}
@@ -119,20 +118,20 @@ export default function Page() {
 
           <div className="flex flex-col gap-4">
             {loading ? (
-            <p className="mt-2 italic">Indlæser events...</p>
+              <p className="mt-2 italic">Indlæser events...</p>
             ) : filteredEvents.length === 0 ? (
-            <p className="mt-2 italic">
+              <p className="mt-2 italic">
                 Ingen events fundet på den valgte lokation...
-            </p>
+              </p>
             ) : (
-            filteredEvents.map((event) => (
+              filteredEvents.map((event) => (
                 <EventCard
-                key={event.id}
-                event={event}
-                onDeleted={() => handleDeleted(event.id)}
-                onEdit={handleEdit}
+                  key={event.id}
+                  event={event}
+                  onDeleted={() => handleDeleted(event.id)}
+                  onEdit={handleEdit}
                 />
-            ))
+              ))
             )}
           </div>
         </div>

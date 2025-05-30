@@ -1,12 +1,8 @@
+//Button komponent
 //Matilde: spinner og loading funktion
 //Katinka: styling af knapper og hover animationer
 
-//varianter: primary (gennemsigtigt, rød border), CTA/secondary (rød knap), tertiary (grå)
-//primary: til log-in og opret event i header
-//CTA/secondary: bruges til log-in og opret eller bekræfte ting rundt på siden
-//tertiary: til at gemme klade
-
-//husk at lave en loading animation/tekst på knapperne
+//varianter: transparent (gennemsigtigt, rød border), CTA (rød knap), tertiary (grå), black (filtrering)
 
 //ved brug af knap i forms skal type være "submit"
 import { motion } from "motion/react";
