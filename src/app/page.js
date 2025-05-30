@@ -1,4 +1,5 @@
 //Katinka
+//Index page
 
 "use client";
 
@@ -11,7 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useScroll, useTransform, motion } from "motion/react";
 
-// Initialt billede hentes server-side
+// Random modernistisk billede hentes fra SMK's API
 async function fetchRandomImage() {
   try {
     const res = await fetch(
@@ -31,11 +32,11 @@ async function fetchRandomImage() {
     console.error("Fejl ved hentning af billede:", err);
   }
 
-  return "/imgs/index.png";
+  return "/imgs/placeholder.jpg";
 }
 
 export default function Home() {
-  const [imageUrl, setImageUrl] = useState("/imgs/index.png");
+  const [imageUrl, setImageUrl] = useState("/imgs/placeholder.jpg");
 
   useEffect(() => {
     // Hent første billede ved load
@@ -47,14 +48,17 @@ export default function Home() {
     setImageUrl(newImage);
   };
 
+  //Scroll effects
   const { scrollY } = useScroll();
   const topButtonOpacity = useTransform(scrollY, [0, 150, 350], [1, 1, 0]);
   const topButtonTranslateY = useTransform(scrollY, [0, 400], [0, -50]);
   const contentOpacity = useTransform(scrollY, [400, 800, 1300], [0, 1, 0]);
   const contentTranslateY = useTransform(scrollY, [400, 800], [50, 0]);
+
   const { openSignIn } = useClerk();
 
-  const MotionImage = motion(Image); //Gør at man kan bruge motion direkte på Image
+  //Gør at man kan bruge motion direkte på Image
+  const MotionImage = motion(Image);
 
   return (
     <div className="mt-50 mb-150">
@@ -100,7 +104,6 @@ export default function Home() {
             transition={{
               opacity: { duration: 0.4 },
               scale: {
-                delay: 0.4, // starter pulse efter opacity er færdig
                 duration: 1.5,
                 repeat: Infinity,
                 repeatType: "loop",
@@ -116,7 +119,6 @@ export default function Home() {
         </motion.div>
       </div>
       <motion.div
-        // style={{ opacity, y: translateY }}
         style={{ opacity: contentOpacity, y: contentTranslateY }}
         className="flex justify-center items-center w-full mt-20"
       >

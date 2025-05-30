@@ -1,4 +1,6 @@
 //Katinka
+//Text content til index page
+//Content lavet ved hjælp af AI
 
 const IndexTextContent = ({ children }) => {
   return (

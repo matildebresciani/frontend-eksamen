@@ -1,4 +1,5 @@
 //Katinka
+// OBS Vi fjernede denne funktion da vi ikke fik det til at fungere optimalt kombineret med filterbuttons.
 // Jeg ønsker følgende forbedringer:
 // 1. Man skal kunne klikke udenfor dropdown og dropdown lukker
 // 2. Når man vælger et værk i dropdown skal dropdown lukke

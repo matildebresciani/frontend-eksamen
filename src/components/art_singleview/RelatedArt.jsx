@@ -3,7 +3,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
 
@@ -14,7 +13,7 @@ const RelatedArt = ({ artworkId }) => {
   useEffect(() => {
     const fetchRelated = async () => {
       try {
-        // 1. Hent værk for at finde similar_images_url
+        // Henter værk for at finde similar_images_url
         const res = await fetch(
           `https://api.smk.dk/api/v1/art?object_number=${artworkId}`
         );
@@ -27,7 +26,7 @@ const RelatedArt = ({ artworkId }) => {
           return;
         }
 
-        // 2. Hent similar værker som object_numbers
+        // Henter similar værker som object_numbers
         const similarRes = await fetch(artwork.similar_images_url);
         const similarData = await similarRes.json();
 
@@ -39,18 +38,18 @@ const RelatedArt = ({ artworkId }) => {
           return;
         }
 
-        // 3. Hent data for hver similar id
+        // Henter data for hver similar id
         const allDetails = await Promise.all(
           similarIds.map(async (id) => {
             const detailRes = await fetch(
               `https://api.smk.dk/api/v1/art?object_number=${id}`
             );
             const detailData = await detailRes.json();
-            return detailData.items?.[0]; // Brug første værk
+            return detailData.items?.[0]; // Bruger første værk
           })
         );
 
-        // 4. Filtrer gyldige værker
+        // Filtrer gyldige værker
         const filtered = allDetails.filter(Boolean);
         setRelated(filtered);
         setHasResults(filtered.length > 0);
@@ -66,8 +65,6 @@ const RelatedArt = ({ artworkId }) => {
   return (
     <div className="pt-10 sm:pt-14 sm:col-[1/4]">
       <h4>Relaterede kunstværker</h4>
-      {/* <p className="text-sm text-gray-600">Hentet fra SMK's database:</p> */}
-
       <div className="mt-4">
         {!hasResults ? (
           <p className="text-sm text-gray-500 italic">

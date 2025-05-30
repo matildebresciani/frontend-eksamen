@@ -10,7 +10,7 @@ import { fetchEvents } from "@/api-mappe/EventsApiKald";
 export default async function ArtworkPageContent({ artworkId, eventId }) {
   if (!artworkId) return <div>Ugyldige parametre</div>;
 
-  // Hent kunstværk
+  // Henter kunstværk
   const res = await fetch(
     `https://api.smk.dk/api/v1/art?object_number=${artworkId}`
   );
@@ -19,7 +19,7 @@ export default async function ArtworkPageContent({ artworkId, eventId }) {
 
   if (!artwork) return <div>Kunstværk blev ikke fundet</div>;
 
-  // Hent events (bruger din API-kald funktion)
+  // Henter events (bruger API-kald funktion)
   let events = [];
   try {
     events = await fetchEvents();
@@ -27,7 +27,7 @@ export default async function ArtworkPageContent({ artworkId, eventId }) {
     console.error("Kunne ikke hente events:", error);
   }
 
-  // Udtræk bredde og højde fra dimensions-array
+  // Udtrækker bredde og højde fra dimensions-array
   const heightEntry = artwork.dimensions?.find((d) => d.type === "højde");
   const widthEntry = artwork.dimensions?.find((d) => d.type === "bredde");
 
@@ -38,45 +38,6 @@ export default async function ArtworkPageContent({ artworkId, eventId }) {
 
   return (
     <div>
-      {/* <div className="flex flex-col items-center mx-3">
-        <Image
-          src={artwork.image_thumbnail || "/placeholder.jpg"}
-          alt={artwork.title || "Artwork"}
-          width={artwork.width || 1200}
-          height={artwork.height || 900}
-          className="w-full h-auto object-contain"
-        />
-
-        <SingleArtTextContent data={artwork} allEvents={events} eventId={eventId} />
-      </div> */}
-      {/* <div className="flex flex-col items-center mx-3"> */}
-      {/* portrait */}
-      {/* <div className="h-full ">
-          <Image
-            src={artwork.image_thumbnail || "/placeholder.jpg"}
-            alt={artwork.title || "Artwork"}
-            width={artwork.width || 1200}
-            height={artwork.height || 900}
-            className="w-fit object-contain"
-          />
-        </div> */}
-      {/* landscape */}
-      {/* <div className="w-full ">
-          <Image
-            src={artwork.image_thumbnail || "/placeholder.jpg"}
-            alt={artwork.title || "Artwork"}
-            width={artwork.width || 1200}
-            height={artwork.height || 900}
-            className="h-fit object-contain"
-          />
-        </div>
-        <SingleArtTextContent
-          data={artwork}
-          allEvents={events}
-          eventId={eventId}
-        />
-      </div> */}
-
       <div className="flex flex-col items-center mx-3">
         {isPortrait ? (
           // Portrait: Fast højde på desktop, tilpasser bredde på mobil
