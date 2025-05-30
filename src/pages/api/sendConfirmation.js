@@ -6,12 +6,11 @@ import nodemailer from "nodemailer";
 import { fetchEventById } from "../../api-mappe/EventsApiKald";
 
 export default async function handler(req, res) {
-  console.log("API endpoint rammes!");
   if (req.method !== "POST") return res.status(405).end();
 
   const { email, navn, billetter, eventId } = req.body;
 
-  //hente event data til mailen
+  //hente event data til mailen så der vises information om eventet dynamisk
   let event;
   try {
     event = await fetchEventById(eventId);
@@ -19,7 +18,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ success: false, error: "Fejl ved hentning af event data" });
   }
 
-  //lavet gmail konto til at sende mails fra
+  //lavet projekt gmail konto til at sende mails fra
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -27,7 +26,6 @@ export default async function handler(req, res) {
       pass: "empnbkgrhacezvyx ",
     },
   });
-  //color:#b91c1c
 
   try {
     const info = await transporter.sendMail({
@@ -63,6 +61,7 @@ export default async function handler(req, res) {
     </div>
 
     <div style="margin:0 24px;">
+    {/* Dynamisk generering af billetter så det antal man har booket også dukker op i mailen */}
       ${Array.from({ length: billetter })
         .map(
           (_, idx) => `
@@ -103,10 +102,9 @@ export default async function handler(req, res) {
 </div>
 `,
     });
-
+    //fortæller om mailen er sendt i console enten true eller false.
     res.status(200).json({ success: true });
   } catch (err) {
-    console.error("MAIL FEJL:", err); // <-- tilføj denne linje
     res.status(500).json({ success: false, error: err.message });
   }
 }

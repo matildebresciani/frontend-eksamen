@@ -1,8 +1,8 @@
 "use client";
 
 // Maja
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+// Denne komponent viser information om et event, herunder titel, beskrivelse, dato, sted og klokkeslæt.
+// Den indeholder også redigeringsknap så den kan tilgås flere steder på hjemmesiden.
 import { LuMapPin, LuClock4 } from "react-icons/lu";
 import { FiCalendar } from "react-icons/fi";
 import { formatDate } from "@/utils/formatDate";
@@ -10,34 +10,6 @@ import { SignedIn } from "@clerk/nextjs";
 import EditIcon from "../edit_create_event/EditIcon";
 
 const Eventinfo = ({ event, onEdit }) => {
-  // const { eventId } = useParams();
-  // const [event, setEvent] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchEvent = async () => {
-  //     try {
-  //       // API'et kræver id, så vi sender eventId som id
-  //       const res = await fetch(
-  //         `https://server-gititgirls.onrender.com/events/${eventId}`
-  //       );
-  //       if (!res.ok) throw new Error("Event not found");
-  //       const data = await res.json();
-  //       setEvent(data);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-
-  //   if (eventId) fetchEvent(); // sikre, at eventId eksisterer før vi kalder fetch
-  // }, [eventId]);
-
-  // if (!event) return <div>Loading...</div>; // viser loading indtil eventet er hentet
-
-  // const handleEdit = (updatedEvent) => {
-  //   console.log("Updated event modtaget fra API:", updatedEvent);
-  //   setEvent(updatedEvent);
-  // };
-
   const formattedDate = formatDate(event.date);
 
   return (

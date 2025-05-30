@@ -1,20 +1,19 @@
 "use client";
 //Maja
-//Her skal der være en besked i toppen om billetter købt/tillykke med køb el.lign. så skal info overføres:
-//--> Det der er blevet udfyldt i formularen skal vises som en besked. som lyder:
-//------->"Kære [navn på reservation], her er dine billetter til [eventets navn], vi glæder os til at se dig/jer på [adressen] den [dato]."
-//mangler at omdanne fetch til import af api-mappen
+//Denne fil viser en reservationsbesked med personlig information som er udfyldt i signupformularen, Event information og antallet af billetter brugeren har booket.
+//Den henter også event information fra api-mappen og viser det i Ticket komponentet.
+//brugt AI til hjælp (Se prompt)
+
 import Ticket from "./Ticket";
 import Image from "next/image";
 import transferReservationInformation from "@/app/store/reservationInformation";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { formatDate } from "@/utils/formatDate";
+import { fetchEventById } from "../../api-mappe/eventsApiKald";
 
 const ReservationMessage = () => {
-  const reservation = transferReservationInformation(
-    (state) => state.reservation
-  );
+  const reservation = transferReservationInformation((state) => state.reservation);
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
 
@@ -22,11 +21,7 @@ const ReservationMessage = () => {
     const fetchEvent = async () => {
       if (!eventId) return;
       try {
-        const res = await fetch(
-          `https://server-gititgirls.onrender.com/events/${eventId}`
-        );
-        if (!res.ok) throw new Error("Event not found");
-        const data = await res.json();
+        const data = await fetchEventById(eventId);
         setEvent(data);
       } catch (err) {
         console.error(err);
@@ -41,17 +36,10 @@ const ReservationMessage = () => {
   return (
     <div>
       <div className="flex flex-col items-center pb-10">
-        <Image
-          src="/imgs/monalisa.png"
-          alt="lineart af monalisa"
-          width={100}
-          height={100}
-        />
+        <Image src="/imgs/monalisa.png" alt="lineart af monalisa" width={100} height={100} />
         <div>
           <p className="text-center">
-            Kære {reservation.navn}, her er dine billetter til{" "}
-            <b>{event.title}</b>, vi glæder os til at se dig/jer på{" "}
-            <b>{event.location?.address}</b> | <b>{formattedDate}</b>.
+            Kære {reservation.navn}, her er dine billetter til <b>{event.title}</b>, vi glæder os til at se dig/jer på <b>{event.location?.address}</b> | <b>{formattedDate}</b>.
           </p>
         </div>
       </div>
@@ -63,7 +51,7 @@ const ReservationMessage = () => {
         {/*prompt: Hvordan får jeg ticket komponentet til at vise det antal af billetter brugeren har indtastet i SignUpform? */}
         <div className="flex flex-wrap gap-6 justify-center mt-6">
           {Array.from({ length: reservation.billetter || 1 }).map((_, idx) => (
-            <Ticket key={idx} eventId={eventId} />
+            <Ticket key={idx} event={event} />
           ))}
         </div>
       </div>
