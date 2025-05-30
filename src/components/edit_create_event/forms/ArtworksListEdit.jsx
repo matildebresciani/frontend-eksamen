@@ -154,8 +154,8 @@ const ArtworkListEdit = ({
 
                   {/* Blokering hvis max er nået og billedet ikke er valgt */}
                   {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
-                    <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed">
-                      Maks nået
+                    <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed text-center p-2">
+                      Maks antal værker valgt
                     </div>
                   )}
 
