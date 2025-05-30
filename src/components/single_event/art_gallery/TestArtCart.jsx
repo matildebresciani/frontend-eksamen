@@ -1,4 +1,8 @@
 //maja
+//Denne komponent viser et kunstværk i et galleri, hvor brugeren kan klikke for at læse mere om værket.
+//Den er stylet med en tydelig hover så brugeren kan se at den er klikbar.
+//Hele billedet er et link men den har også en animeret knap med pil
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,8 +12,7 @@ import BtnWithArrow from "@/components/BtnWithArrow";
 const TestArtCart = ({ artworkId, eventId }) => {
   const [artwork, setArtwork] = useState(null);
 
-  console.log(artworkId, "artworkId in TestArtCart"); // Log artworkId prop
-
+  //henter kunstværket baseret på artworkId (hentet fra api-mappen)
   useEffect(() => {
     const fetchArtwork = async () => {
       try {
@@ -17,7 +20,6 @@ const TestArtCart = ({ artworkId, eventId }) => {
         if (data.items && data.items.length > 0) {
           setArtwork(data.items[0]);
         }
-        console.log("artwork id", artworkId); // Log fetched artwork data
       } catch (error) {
         console.error("Error fetching artwork:", error);
       }
@@ -29,14 +31,11 @@ const TestArtCart = ({ artworkId, eventId }) => {
     return <div>Loading...</div>;
   }
 
+  // Dynamisk link baseret på eventId og artwork object_number
   const linkHref = `/events/${eventId}/artwork/${artwork.object_number}`;
 
   return (
-    <Link
-      href={linkHref}
-      className="relative flex items-center justify-center overflow-hidden rounded-sm shadow-lg bg-white max-w-[420px] min-w-[250px] cursor-pointer"
-      style={{ padding: 0 }} // Sikrer ingen ekstra padding
-    >
+    <Link href={linkHref} className="relative flex items-center justify-center overflow-hidden rounded-sm shadow-lg bg-white max-w-[420px] min-w-[250px] cursor-pointer" style={{ padding: 0 }}>
       <Image
         src={artwork.image_thumbnail || "/placeholder.jpg"}
         alt={artwork.titles?.[0]?.title || "Artwork"}

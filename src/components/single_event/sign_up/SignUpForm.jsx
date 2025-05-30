@@ -1,5 +1,7 @@
 "use client";
 //Maja
+//Denne komponent viser tilmeldingsformularen for et event, hvor brugeren kan booke billetter.
+//brugt Ai til hjælp af RHF så forms blev brugt rigtigt og så det ikke blev for kompliceret
 import { useRouter, useParams } from "next/navigation";
 import { set, useForm } from "react-hook-form";
 import transferReservationInformation from "@/app/store/reservationInformation";
@@ -21,7 +23,10 @@ const SignUpForm = () => {
   const [totalTickets, setTotalTickets] = useState(null);
   const [bookedTickets, setBookedTickets] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [Event, setEvent] = useState({});
+  //const wait er funktionder der bruges til at vente 1 sekund før bekræftelsesmailen sendes, så brugeren ikke oplever en forsinkelse
+  //det er for at give brugeren en bedre oplevelse, da det kan tage lidt tid at booke billetterne
+  //Der er animation på knappen når den er i loading state, så brugeren kan se at der sker noget
+  //også for at undgå at brugeren klikker flere gange på knappen
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // Henter event data fra api-mappen
@@ -58,32 +63,27 @@ const SignUpForm = () => {
 
     try {
       // Book billetter
-      console.log("THIS IS EVENT:", Event);
-      console.log(bookedTickets, "er antal billetter der bookes");
-
       const response = await Promise.all([bookTickets(eventId, { tickets: billetter }), wait(1000)]);
       console.log("BOOK TICKETS RESPONSE:", response);
 
-      // Send bekræftelsesmail
+      // for at send bekræftelsesmail til brugeren
       await fetch("/api/sendConfirmation", {
         method: "POST",
-
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: values.email, // brugerens mail fra inputfeltet
+          email: values.email, // brugerens mail fra inputfeltet!
           navn: values.navn,
           billetter: billetter,
           eventId: eventId,
         }),
-      })
-        .then((res) => res.json())
-        .then((data) => console.log("MAIL API RESPONSE:", data));
+      }).then((res) => res.json());
 
+      // Opdaterer reservation information i zustand (store/reservationInformation.js)
+      // og navigerer til tickets siden
       setReservation(values);
       router.push(`/events/${eventId}/tickets`);
     } catch (error) {
       setShowError(true);
-      // evt. vis en fejlbesked til brugeren
     }
   };
 
@@ -91,7 +91,7 @@ const SignUpForm = () => {
     <form ref={formRef} className="bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-xl px-8 py-6 m-8 max-w-sm w-full mx-auto flex flex-col" onSubmit={handleConfirm}>
       <h3 className="font-semibold text-center text-lg mb-6">Tilmeld dig Gratis</h3>
 
-      {/*input felt der har plus og minus til billet antal fungerer lidt bedre */}
+      {/*input felt der har plus og minus til billet antal fungerer lidt bedre frem for pile op og ned*/}
       <div className="mb-4">
         <label htmlFor="billetter" className="block text-sm mb-1">
           Antal billetter:
@@ -122,7 +122,7 @@ const SignUpForm = () => {
           </button>
         </div>
       </div>
-
+      {/* inputfelt til navn som også har animation fra globals.css hvis den ikke er udfyldt rigtigt*/}
       <div className="mb-4">
         <label htmlFor="navn" className="block text-sm mb-1">
           Navn på reservation:
@@ -137,7 +137,7 @@ const SignUpForm = () => {
           }`}
         />
       </div>
-
+      {/* inputfelt til mail som også har animation fra globals.css hvis den ikke er udfyldt rigtigt*/}
       <div className="mb-4">
         <label htmlFor="email" className="block text-sm mb-1">
           Din mail:
@@ -168,17 +168,12 @@ const SignUpForm = () => {
           "Indlæser antal billetter..."
         )}
       </div>
-
-      {/* <button type="submit" className="w-full bg-primary-red text-white py-2 rounded-md hover:bg-red-700 transition block text-center">
-        Bekræft reservation
-      </button> */}
+      {/* Bekræft reservation knap */}
       <Button variant="CTA" type="submit" loading={isSubmitting} loadingText="Bekræfter reservation...">
         Bekræft reservation
       </Button>
     </form>
   );
 };
-
-//billet antal i bunden vises ikke pludselig
 
 export default SignUpForm;
