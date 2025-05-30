@@ -45,6 +45,9 @@ export const useArtworksLogic = (
     events.map((e) => e.date)
   );
 
+  //Debug prompt (Matilde): Hvordan får jeg min booked funktion til at virke, så den også fungerer når man redigerer et event
+  // (altså så man stadig kan redigere i de bookede værker på det specifikke event)
+
   // Bookede værker til valgt dato
   const formattedDate =
     typeof selectedDate === "string"
@@ -188,35 +191,8 @@ export const useArtworksLogic = (
     applyFilters(selectedTitles, selectedArtists, selectedTechniques, updated);
   };
 
-  // Toggle udvælgelse med max grænse og tjek booket
-  //   const toggleSelect = (object_number) => {
-  //     setSelectedArtworks((prev) =>
-  //       prev.includes(object_number)
-  //         ? prev.filter((id) => id !== object_number)
-  //         : prev.length < (selectedLocation?.maxArtworks ?? MAX_SELECTION)
-  //         ? [...prev, object_number]
-  //         : prev
-  //     );
-  //     setSelectedArtworksPage(1);
-  //   };
-
-  //   const toggleSelect = (object_number) => {
-  //     setSelectedArtworks((prev) => {
-  //       console.log("Before toggle:", prev.length, prev);
-  //       if (prev.includes(object_number)) {
-  //         return prev.filter((id) => id !== object_number);
-  //       } else if (
-  //         prev.length >= (selectedLocation?.maxArtworks ?? MAX_SELECTION)
-  //       ) {
-  //         console.log("Max reached, cannot add more");
-  //         return prev;
-  //       } else {
-  //         return [...prev, object_number];
-  //       }
-  //     });
-  //     setSelectedArtworksPage(1);
-  //   };
-
+  //Debug prompt (Matilde): Hvordan tilpasser jeg min toggleSelect så man ikke kan tilføje de allere bookede værker,
+  // og heller ikke tilføje flere værker end der maks er plads til på den valgte lokation
   const toggleSelect = (object_number) => {
     setSelectedArtworks((prev) => {
       const isAlreadySelected = prev.includes(object_number);
@@ -226,20 +202,12 @@ export const useArtworksLogic = (
         !isAlreadySelected &&
         isArtworkBooked(object_number, excludeEventId)
       ) {
-        console.log(
-          "Dette værk er allerede booket på denne dato og kan ikke vælges."
-        );
         return prev;
       }
 
-      console.log("Trykker på:", object_number);
-      console.log("Allerede valgt:", prev);
-
       if (isAlreadySelected) {
-        console.log("Fjerner værk:", object_number);
         return prev.filter((id) => id !== object_number);
       } else if (prev.length >= MAX_SELECTION) {
-        console.log("Max antal værker nået, kan ikke tilføje flere");
         return prev;
       } else {
         return [...prev, object_number];
@@ -307,20 +275,6 @@ export const useArtworksLogic = (
     };
     getEvents();
   }, []);
-
-  //   useEffect(() => {
-  //     const fetchEvents = async () => {
-  //       // TODO: Tilpas endpoint til events, hvis nødvendigt
-  //       try {
-  //         const res = await fetch("/api/events");
-  //         const data = await res.json();
-  //         setEvents(data);
-  //       } catch (error) {
-  //         console.error("Fejl ved hentning af events:", error);
-  //       }
-  //     };
-  //     fetchEvents();
-  //   }, []);
 
   const isSearchActive = searchResults !== null;
   const artworksToPaginate = isSearchActive ? searchResults : filteredArtworks;
