@@ -93,8 +93,8 @@ const EventForm = ({
   // hvis man har ændret i den, efter man er gået videre til næste step (vælg værker)
 
   useEffect(() => {
-    if (formRef) {
-      formRef.current = { getValues };
+    if (formRef) { //får fromRef fra page som prop
+      formRef.current = { getValues }; //formRef.current sættes som objekt via getValues, så page har adgang til det
     }
   }, [formRef, getValues]);
 

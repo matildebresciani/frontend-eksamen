@@ -15,38 +15,42 @@ export default function Page() {
   const { dates, locations, isLocationOccupied, createNewEvent } =
     useEventFormLogic();
 
+//States til form og navigation af steps
   const [selectedArtworks, setSelectedArtworks] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  //States til popup
   const [showPopup, setShowPopup] = useState(false);
   const [eventLink, setEventLink] = useState("");
 
   //Prompt: Hvordan laver jeg min opret event så den er i to steps, så man først udfylder formularen og derefter vælger artworks
-  // Midlertidigt gem data fra step 1
+  // Gemmer data fra step 1 for at kunne bruge det i step 2 og ved oprettelse
   const [formData, setFormData] = useState({});
   const [artworkError, setArtworkError] = useState("");
 
+  // Find max antal artworks baseret på valgt lokation
   const maxSelection = selectedLocation
     ? locations.find((loc) => loc.id === selectedLocation)?.maxArtworks ?? 0
     : 0;
 
+//Gør så knap loader i minimum 1 sekund
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+  // Reference til formen (for at kunne hente seneste værdier)
   const formRef = useRef(null);
 
   // Når form i step 1 valideres:
-  // Henter data fra form 
+  // Henter data fra form og går videre til step 2
   const handleNextStep = (dataFromForm) => {
-    setFormData(dataFromForm);
-    setSelectedDate(dataFromForm.date);
-    setSelectedLocation(Number(dataFromForm.locationId));
+    setFormData(dataFromForm); //Gemmer dataFromForm objekt i et state så det kan bruges i step 2
+    setSelectedDate(dataFromForm.date); //Tager den valgte dato fra form så den kan bruges i ArtworkList
+    setSelectedLocation(dataFromForm.locationId); //Tager den valgte lokation fra form så den kan bruges i ArtworkList
     setStep(2);
   };
   
-
   const closePopup = () => {
     setShowPopup(false);
   };
@@ -63,24 +67,26 @@ export default function Page() {
     setIsSubmitting(true);
 
   //Prompt: Hvordan får jeg min form til at sende den seneste data med når man opretter et event,
-  // hvis man har ændret i den, efter man er gået videre til næste step (vælg værker)
+  // hvis man har ændret i den, efter man er gået videre til næste step (vælg værker)?
+
+  // Henter den nyeste formdata i tilfælde af at brugeren har lavet ændringer efter step 1
     const latestFormData = formRef.current?.getValues?.() ?? {};
 
+    //Samler data fra form og artworks
     const eventData = {
       ...latestFormData, //Sender seneste form data med ved opret
       artworkIds: selectedArtworks, //Sender valgte artworks med ved opret
     };
 
     try {
-        //Loading effekt på knap i minimum 1 sekund
+      //Kalder createNewEvent fra eventFormsLogic filen sammen med en pause på 1 sekund (for at få loading på knap)
       const [createdEvent] = await Promise.all([
         createNewEvent(eventData),
         wait(1000),
       ]);
-      console.log("Event oprettet:", createdEvent);
 
+      //Vis popup ved oprettelse og gem link til eventet
       setEventLink(`/events/${createdEvent.id}`);
-
       setShowPopup(true);
       // evt. nulstil formular hvis ønsket
     } catch (error) {

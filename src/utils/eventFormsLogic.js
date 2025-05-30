@@ -1,4 +1,5 @@
 //Matilde
+//Prompt: Kan du flytte nogle af mine funktioner ind i en logic fil for at gøre min kode lidt mere overskuelig og ryddelig?
 
 import { useState, useEffect } from "react";
 import {
@@ -13,7 +14,7 @@ export const useEventFormLogic = () => {
   const [locations, setLocations] = useState([]);
   const [events, setEvents] = useState([]);
 
-  //Fetcher information fra databasen til at kunne bruge i forms
+  //Fetcher information fra databasen via api kald filen til at kunne bruge i forms
   useEffect(() => {
     const fetchData = async () => {
       try {
