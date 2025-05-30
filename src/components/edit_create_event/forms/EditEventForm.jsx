@@ -49,14 +49,14 @@ const EditEventForm = ({
       });
     }
   }, [eventToEdit, reset]);
-  
+
   // Synkroniser valgt lokation udad
   useEffect(() => {
     if (onLocationChange) {
       onLocationChange(selectedLocation);
     }
   }, [selectedLocation, onLocationChange]);
-  
+
   // Sync valgt dato udad, men IKKE reset form på selectedDate ændring
   useEffect(() => {
     if (selectedDate && watchedDate !== selectedDate) {
@@ -64,7 +64,6 @@ const EditEventForm = ({
       setSelectedDate(watchedDate);
     }
   }, [watchedDate, setSelectedDate, selectedDate]);
-  
 
   // Lav options til select med disabled baseret på optagethed og ikke den nuværende event's data
   const dateOptions = dates.map((date) => ({
@@ -86,30 +85,30 @@ const EditEventForm = ({
       loc.id !== eventToEdit.locationId,
   }));
 
-//   const onSubmit = async (data) => {
-//     setIsSubmitting(true);
-//     try {
-//       const [updatedEvent] = await Promise.all([
-//         EditEvent(eventToEdit.id, data),
-//         wait(1000),
-//       ]);
-//       onEditSuccess(updatedEvent);
-//     } catch (error) {
-//       console.error("Error updating event:", error);
-//     } finally {
-//       setIsSubmitting(false);
-//     }
-//   };
+  //   const onSubmit = async (data) => {
+  //     setIsSubmitting(true);
+  //     try {
+  //       const [updatedEvent] = await Promise.all([
+  //         EditEvent(eventToEdit.id, data),
+  //         wait(1000),
+  //       ]);
+  //       onEditSuccess(updatedEvent);
+  //     } catch (error) {
+  //       console.error("Error updating event:", error);
+  //     } finally {
+  //       setIsSubmitting(false);
+  //     }
+  //   };
 
-const onSubmit = (data) => {
-    onSubmitData(data);  // sender data op til popup
+  const onSubmit = (data) => {
+    onSubmitData(data); // sender data op til popup
   };
 
   return (
     <form
       id={formId}
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-full p-2"
+      className="flex flex-col gap-4 w-full p-2 pr-6"
     >
       <Controller
         name="date"

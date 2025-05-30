@@ -58,7 +58,7 @@ const SelectCity = ({ selectedCities, setSelectedCities }) => {
   const isAlleSelected = selectedCities.includes("Alle Byer");
 
   return (
-    <div className="flex flex-col gap-2 max-w-1/2 mt-2">
+    <div className="flex flex-col gap-2 max-w-1/2 mt-2 ">
       <h4 className="!text-primary-red hidden md:block">Vælg By</h4>
       <City
         city="Alle Byer"

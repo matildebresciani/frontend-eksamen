@@ -78,7 +78,7 @@ export default async function ArtworkPageContent({ artworkId, eventId }) {
           // Portrait: Fast højde på desktop, tilpasser bredde på mobil
           <div className="w-auto h-[70vh] max-h-[900px] lg:h-[900px] lg:max-h-[900px]">
             <Image
-              src={artwork.image_thumbnail || "/placeholder.jpg"}
+              src={artwork.image_thumbnail || "/imgs/placeholder.jpg"}
               alt={artwork.title || "Artwork"}
               width={1200}
               height={1600}
@@ -90,7 +90,7 @@ export default async function ArtworkPageContent({ artworkId, eventId }) {
           // Landscape: Fast bredde på desktop, tilpasser på mobil
           <div className="w-full max-w-full h-auto lg:w-[1200px]">
             <Image
-              src={artwork.image_thumbnail || "/placeholder.jpg"}
+              src={artwork.image_thumbnail || "/imgs/placeholder.jpg"}
               alt={artwork.title || "Artwork"}
               width={1600}
               height={1200}

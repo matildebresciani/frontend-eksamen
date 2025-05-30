@@ -38,7 +38,7 @@ const TestArtCart = ({ artworkId, eventId }) => {
       style={{ padding: 0 }} // Sikrer ingen ekstra padding
     >
       <Image
-        src={artwork.image_thumbnail || "/placeholder.jpg"}
+        src={artwork.image_thumbnail || "/imgs/placeholder.jpg"}
         alt={artwork.titles?.[0]?.title || "Artwork"}
         width={600}
         height={800}
