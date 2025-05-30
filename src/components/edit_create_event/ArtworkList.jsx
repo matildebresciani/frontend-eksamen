@@ -1,12 +1,15 @@
+//Katinka
+//Listen over kunstværker i create og edit event
+
 "use client";
 import Image from "next/image";
 import { IoCheckmark } from "react-icons/io5";
 import { LuTrash2 } from "react-icons/lu";
 import Button from "../Button";
 import FilterBtn from "./FilterBtn";
-import SearchBar from "./SearchBar";
 import { motion } from "motion/react";
 import { useArtworksLogic } from "@/utils/artworksLogic";
+// import SearchBar from "./SearchBar";
 
 const ArtworkList = ({
   blurred = false,
@@ -34,7 +37,7 @@ const ArtworkList = ({
     selectedTotalPages,
     displayedSelectedArtworks,
     handleClearFilters,
-    handleSearchResult,
+    // handleSearchResult,
     isArtworkBooked,
     artists,
     techniques,
@@ -60,6 +63,7 @@ const ArtworkList = ({
 
         {/* <SearchBar onLiveSearch={handleSearchResult} onSelectSuggestion={handleSearchResult} /> */}
 
+        {/* Filtrerings buttons */}
         <FilterBtn
           artists={artists}
           techniques={techniques}
@@ -156,16 +160,9 @@ const ArtworkList = ({
             );
           })}
         </div>
-
+        {/* Pagination */}
         <div className="flex justify-center mt-3 gap-3">
           {Array.from({ length: totalPages }).map((_, i) => (
-            // <button
-            //   key={i}
-            //   className={`btn btn-sm ${currentPage === i + 1 ? "btn-primary" : "btn-ghost"}`}
-            //   onClick={() => setCurrentPage(i + 1)}
-            // >
-            //   {i + 1}
-            // </button>
             <motion.button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
@@ -194,7 +191,6 @@ const ArtworkList = ({
 
         <motion.div className="columns-3 gap-2">
           {displayedSelectedArtworks.map((id) => {
-            // const artwork = artworks.find((a) => a.id === id);
             const artwork = artworks.find((a) => a.object_number === id);
 
             if (!artwork) return null;
@@ -222,6 +218,7 @@ const ArtworkList = ({
           })}
         </motion.div>
 
+        {/* Pagination */}
         {selectedTotalPages > 1 && (
           <div className="flex justify-center gap-2 my-4">
             {Array.from({ length: selectedTotalPages }, (_, i) => (

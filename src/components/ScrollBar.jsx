@@ -1,4 +1,6 @@
 //Katinka
+//Scroll bar indicator
+
 "use client";
 
 import { useEffect, useState } from "react";

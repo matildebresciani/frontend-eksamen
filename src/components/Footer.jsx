@@ -1,4 +1,6 @@
-//Katinka - Layout
+//Katinka
+//Footer
+
 import Image from "next/image";
 
 const Footer = () => {

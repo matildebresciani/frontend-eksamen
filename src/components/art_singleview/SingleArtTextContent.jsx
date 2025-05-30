@@ -1,10 +1,9 @@
 //Katinka
-
-//Lavet dynamisk med hjælp fra ChatGPT
+//Art Single View Text Content
 
 import Link from "next/link";
 
-//Rydder op i farverne :)
+//Rydder op i colors (Fået hjælp af AI)
 function hexToHSL(hex) {
   // Omregning af hex til RGB
   let r = 0,
@@ -50,7 +49,7 @@ function hexToHSL(hex) {
 }
 
 const SingleArtTextContent = ({ data, allEvents = [] }) => {
-  // Filtrér events der indeholder dette værk
+  // Filtrérer events der indeholder dette værk
   const relatedEvents = allEvents.filter((event) =>
     event.artworkIds?.includes(data.object_number)
   );
@@ -60,21 +59,6 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
     const hslB = hexToHSL(b);
     return hslA.h - hslB.h;
   });
-  //Sorterer farverne ifht lightness
-  // const sortedColors = [...data.colors].sort((a, b) => {
-  //   const hslA = hexToHSL(a);
-  //   const hslB = hexToHSL(b);
-  //   return hslA.l - hslB.l;
-  // });
-
-  //Ændrer amerikansk til dansk dato
-  // function formatDanishDate(dateStr) {
-  //   return new Date(dateStr).toLocaleDateString("da-DK", {
-  //     day: "2-digit",
-  //     month: "long",
-  //     year: "numeric",
-  //   });
-  // }
 
   return (
     <div className="sm:grid sm:grid-cols-3 gap-3 sm:gap-5 md:gap-8">
@@ -82,7 +66,6 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
         <h3 className="italic mb-4">
           {data.titles?.[0]?.title || "Ukendt titel"}
         </h3>
-        {/* <h4>{data.production?.[0].creator || "Ukendt kunstner"}</h4> */}
         <h4>{data.artist || "Ukendt kunstner"}</h4>
         <ul>
           <li>
@@ -162,6 +145,7 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
             data.exhibitions.map((exh, i) => (
               <li key={i}>
                 <span className="font-semibold">{exh.exhibition}</span> —{" "}
+                {/* Ændrer til dansk dato */}
                 {new Date(exh.date_start).toLocaleDateString("da-DK", {
                   day: "2-digit",
                   month: "long",
@@ -194,7 +178,7 @@ const SingleArtTextContent = ({ data, allEvents = [] }) => {
                 </Link>
                 <span>
                   {" "}
-                  —{" "}
+                  — {/* Ændrer til dansk dato */}
                   {new Date(event.date).toLocaleDateString("da-DK", {
                     day: "2-digit",
                     month: "long",

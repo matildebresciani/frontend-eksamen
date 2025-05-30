@@ -1,5 +1,6 @@
 //Katinka
-//Filtrere imellem kunstnere fra API?
+//Filtrerings button med dropdown til artworklist (title, artist, technique & material)
+
 import { IoFilter } from "react-icons/io5";
 import Button from "../Button";
 import { LuTrash2 } from "react-icons/lu";
@@ -70,8 +71,6 @@ const FilterBtn = ({
   onClearFilters,
 }) => {
   return (
-    // <div className="grid grid-cols-3 w-full">
-    // <div className="flex flex-col flex-1/3 max-w-[600px] lg:flex-row w-full mt-5">
     <div className="grid grid-cols-2 max-w-[600px] w-full mt-3 gap-2">
       <FilterDropdown
         title="Titel"
