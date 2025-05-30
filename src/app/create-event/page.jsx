@@ -1,4 +1,5 @@
 //Matilde og Katinka
+//Brugt AI til at koble form og artwork list sammen, samt en masse debugging
 "use client";
 import { useState, useRef } from "react";
 import { useEventFormLogic } from "@/utils/eventFormsLogic";
@@ -23,6 +24,7 @@ export default function Page() {
   const [showPopup, setShowPopup] = useState(false);
   const [eventLink, setEventLink] = useState("");
 
+  //Prompt: Hvordan laver jeg min opret event så den er i to steps, så man først udfylder formularen og derefter vælger artworks
   // Midlertidigt gem data fra step 1
   const [formData, setFormData] = useState({});
   const [artworkError, setArtworkError] = useState("");
@@ -36,13 +38,11 @@ export default function Page() {
   const formRef = useRef(null);
 
   // Når form i step 1 valideres:
+  // Henter data fra form 
   const handleNextStep = (dataFromForm) => {
-    console.log("Data fra EventForm:", dataFromForm);
     setFormData(dataFromForm);
-  
     setSelectedDate(dataFromForm.date);
     setSelectedLocation(Number(dataFromForm.locationId));
-  
     setStep(2);
   };
   
@@ -51,7 +51,7 @@ export default function Page() {
     setShowPopup(false);
   };
 
-  // Når event oprettes i step 2
+  // Når event oprettes ved tryk på "Opret event" knappen
   const handleCreateEvent = async () => {
     // Tjek om mindst ét artwork er valgt
     if (selectedArtworks.length === 0) {
@@ -59,19 +59,20 @@ export default function Page() {
       return;
     }
 
-    setArtworkError(""); // Clear error hvis ok
+    setArtworkError("");
     setIsSubmitting(true);
 
+  //Prompt: Hvordan får jeg min form til at sende den seneste data med når man opretter et event,
+  // hvis man har ændret i den, efter man er gået videre til næste step (vælg værker)
     const latestFormData = formRef.current?.getValues?.() ?? {};
 
     const eventData = {
-      ...latestFormData,
-      artworkIds: selectedArtworks,
+      ...latestFormData, //Sender seneste form data med ved opret
+      artworkIds: selectedArtworks, //Sender valgte artworks med ved opret
     };
 
-    console.log("Data sendt ved oprettelse af event:", eventData);
-
     try {
+        //Loading effekt på knap i minimum 1 sekund
       const [createdEvent] = await Promise.all([
         createNewEvent(eventData),
         wait(1000),
@@ -94,7 +95,6 @@ export default function Page() {
       <h1>Opret Events</h1>
       <div className="grid lg:grid-cols-[1fr_2fr] gap-12 pt-5">
         <div>
-          {/* <div className={`transition-opacity duration-300 ${step === 2 ? 'opacity-50 pointer-events-none' : 'opacity-100 pointer-events-auto'}`}> */}
           <EventForm
             onNext={handleNextStep}
             selectedDate={selectedDate}

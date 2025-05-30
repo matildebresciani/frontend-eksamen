@@ -1,6 +1,7 @@
 //Matilde
-//Udarbejdet ved hjælp af AI til at fetche byerne og filtrere events ud fra de byer der er valgt.
-// Derudover er det også brugt til at udarbejde "disable" funktionen ift. hvilke byer der er valgt
+//Udarbejdet ved hjælp af AI
+//Prompt: Hvordan kan jeg lave en liste over byer via fetch fra databasen, så jeg kan filtrere i dem baseret på lokationen på mine events
+//Prompt: Hvordan kan jeg give dem et disabled look, så hvis "Alle byer" er valgt, ser resten disabled ud
 
 "use client";
 

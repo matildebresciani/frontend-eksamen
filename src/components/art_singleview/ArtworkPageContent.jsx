@@ -1,5 +1,6 @@
 //Katinka
-//Art singleview (Kommer til denne page når man klikker på image i gallery i single event)
+//Debug prompt (Matilde): Hvordan kan jeg tilgå artwork singleview siden fra både event siden og artwork siden, når de har forskellig URL
+// -- Chatten foreslog at lave flere routes i filstrukturen og sætte hovedindholdet ind som et komponent
 
 import Image from "next/image";
 import RelatedArt from "@/components/art_singleview/RelatedArt";

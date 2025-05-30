@@ -1,6 +1,10 @@
 //Matilde
 //Med hjælp fra AI til at få loading effekt og til først at vise warning pop up
-//og derefter til at vise en event slettet popup
+
+//Prompt: Hvordan får jeg den til at vise en warning pop up, der spørger om man vil slette eventet
+//Prompt: Hvordan gør jeg så "Ja" knappen bliver til "Sletter event...", og "Nej" knappen forsvinder imens,
+// også så den loader i minimum 1 sekund for at brugeren kan se der sker noget.
+//Prompt: Hvordan får jeg den til at ændre indholdet i pop uppen til "Event blev slettet" efter det blev slettet succesfuldt
 
 import { deleteEvent } from "@/api-mappe/EventsApiKald";
 import PopUpBase from "../PopUpBaseLayout";
@@ -14,6 +18,7 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [hasDeleted, setHasDeleted] = useState(false);
 
+  //Gør så knappen loader i minimum 1 sekund
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleDelete = async () => {
@@ -31,7 +36,7 @@ const DeleteBtn = ({ eventId, onDeleted }) => {
   const handleClose = () => {
     setShowPopup(false);
     setHasDeleted(false);
-    if (hasDeleted && onDeleted) onDeleted(); // Kun hvis slettet
+    if (hasDeleted && onDeleted) onDeleted();
   };
 
   return (

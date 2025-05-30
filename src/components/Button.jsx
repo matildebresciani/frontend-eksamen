@@ -2,9 +2,13 @@
 //Matilde: spinner og loading funktion
 //Katinka: styling af knapper og hover animationer
 
-//varianter: transparent (gennemsigtigt, rød border), CTA (rød knap), tertiary (grå), black (filtrering)
+//varianter: primary/transparent (gennemsigtigt, rød border), CTA/secondary (rød knap), tertiary (grå)
+//primary/transparent: til log-in og opret event i header
+//CTA/secondary: bruges til log-in og opret eller bekræfte ting rundt på siden
+//tertiary: til at gemme klade
 
-//ved brug af knap i forms skal type være "submit"
+//Prompt: Hvordan kan jeg gøre så der kommer en loading tekst på min knap, mens den submitter noget
+
 import { motion } from "motion/react";
 
 const Button = ({

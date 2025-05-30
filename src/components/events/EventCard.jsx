@@ -105,15 +105,6 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
             <p className="line-clamp-2 flex-1 first-letter:uppercase">
               {event.description}
             </p>
-            {/* <div
-              className="flex md:justify-end shrink-0 items-end gap-4"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <SignedIn>
-                <DeleteBtn eventId={event.id} onDeleted={onDeleted} />
-                <EditIcon event={event} onEdit={onEdit} />
-              </SignedIn>
-            </div> */}
           </div>
         </div>
       </div>

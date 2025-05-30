@@ -1,4 +1,6 @@
 //maja
+//mappe skabt for at holde styr på alle api kald til events
+// Denne fil indeholder alle API-kald relateret til events, såsom at hente datoer, locations, events, oprette, redigere og slette events.
 
 //GET: til at hente datoer
 async function fetchDates() {

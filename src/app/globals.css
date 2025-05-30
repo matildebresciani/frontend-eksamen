@@ -101,7 +101,7 @@ button {
   cursor: pointer;
 }
 
-/* animation til input felter der SKAL udfyldes. */
+/* maja. animation til input felter der SKAL udfyldes. */
 @keyframes shake {
   0% {
     transform: translateX(0);
@@ -126,7 +126,7 @@ button {
   animation: shake 0.5s;
 }
 
-/*class til at skjule scrollbar da man ikke kan gennem tailwind styling kun*/
+/*maja. class til at skjule scrollbar da man ikke kan gennem tailwind styling kun*/
 .scrollbar-hide {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -135,12 +135,11 @@ button {
   display: none;
 }
 
-/*class til at tilføje skygge på font i gallery så tekst bliver mere synligt + højrer kontrast*/
+/*maja. class til at tilføje skygge på font i gallery så tekst bliver mere synligt + højrer kontrast*/
 .text-shadow-red {
   text-shadow: 0 2px 6px rgba(44, 40, 41, 0.8), 0 0 2px rgb(30, 28, 28);
 }
 
 .text-shadow-white {
-  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5),
-    0 0 1px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5), 0 0 1px rgba(255, 255, 255, 0.4);
 }

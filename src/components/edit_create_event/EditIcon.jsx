@@ -7,7 +7,6 @@ import { motion } from "motion/react";
 
 const EditIcon = ({ event, onEdit, children }) => {
   const [showPopup, setShowPopup] = useState(false);
-  console.log("Event:", event);
 
   const closePopup = () => {
     setShowPopup(false);
@@ -15,12 +14,6 @@ const EditIcon = ({ event, onEdit, children }) => {
 
   return (
     <>
-      {/* Knap med rød cirkel baggrund og hvidt ikon*/}
-      {/* <button onClick={setShowPopup} className="bg-primary-red hover:bg-primary-red-hover2 text-white rounded-full p-2 ease-in-out duration-200 w-10 h-10">
-      <FiEdit3 size={24}></FiEdit3>
-    </button> */}
-
-      {/* Knap med rødt ikon uden baggrund */}
       <motion.button
         onClick={setShowPopup}
         whileHover={{ scale: 1.15 }}

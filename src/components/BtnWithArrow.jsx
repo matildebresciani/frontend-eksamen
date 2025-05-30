@@ -1,6 +1,8 @@
 //Matilde
 //bruges til "se event" (på event card) og "læs mere" (på art card)
 //pilen og animationen er udarbejdet med hjælp fra AI
+//Prompt: Hvordan laver jeg en pil der går til højre, og som bliver længere når man hover over den
+//Jeg startede med at se om man kunne gøre et ikon længere, men ChatGPT foreslog at lave pilen via span
 
 const BtnWithArrow = ({ children }) => {
   return (

@@ -12,24 +12,16 @@
 // </div>
 import React, { useEffect, useState } from "react";
 import Barcode from "react-barcode";
-import { fetchEventById } from "../../api-mappe/EventsApiKald";
 import { fetchArtworkById } from "@/api-mappe/SmkApiKald";
 import { formatDate } from "@/utils/formatDate";
 
-const Ticket = ({ eventId }) => {
-  const [event, setEvent] = useState(null);
+const Ticket = ({ event }) => {
   const [artworkImg, setArtworkImg] = useState(null);
 
-  useEffect(() => {
-    fetchEventById(eventId)
-      .then(setEvent)
-      .catch(() => setEvent(null));
-  }, [eventId]);
-  console.log(eventId);
-
+  //Henter billede fra SMK API baseret på eventets artworkIds og vælger det første billede til at vise som thumbnail
   useEffect(() => {
     const getArtworkImg = async () => {
-      if (event?.artworkIds && event.artworkIds.length > 0) {
+      if (event?.artworkIds?.length > 0) {
         try {
           const data = await fetchArtworkById(event.artworkIds[0]);
           const imgUrl = data?.items?.[0]?.image_thumbnail || null;
@@ -42,13 +34,16 @@ const Ticket = ({ eventId }) => {
     getArtworkImg();
   }, [event]);
 
+  //indsat formateret dato
   const formattedDate = event ? formatDate(event.date) : "";
+
+  if (!event) return <p>Indlæser event...</p>;
 
   return (
     <div className="w-full max-w-[1000px] mx-2 mt-10 p-2 shadow-[0_0_10px_rgba(0,0,0,0.2)] rounded-sm bg-white">
-      {/* Mobile layout: billede + tekst */}
+      {/* Mobile layout: billede og tekst */}
       <div className="flex flex-col sm:flex-row md:hidden gap-4">
-        {/* Billede - kun vis på sm og op */}
+        {/* Billede kun vis på sm og op */}
         <div className="hidden sm:flex bg-primary-red aspect-square w-[30%] max-w-[120px] min-w-[60px] overflow-hidden rounded-sm items-center justify-center">
           {artworkImg ? (
             <img
@@ -61,7 +56,7 @@ const Ticket = ({ eventId }) => {
           )}
         </div>
 
-        {/* Info */}
+        {/* Info del*/}
         <div className="flex flex-col justify-center flex-1 px-2 py-2">
           {event ? (
             <>
