@@ -1,5 +1,9 @@
+//Matilde
+//Prompt: Hvordan får jeg min form og artworks list til at hænge sammen, så når man gemmer, gemmer den både data
+// fra form og artworks list, når de ligger i forskellige komponenter, og min submit knap er her i pop uppen
+
 import React, { useState, useEffect } from "react";
-import { useEventFormLogic } from "../../../utils/eventFormsLogic"; // Din custom hook med dates, locations osv.
+import { useEventFormLogic } from "../../../utils/eventFormsLogic";
 import PopUpBase from "../../PopUpBaseLayout";
 import Button from "../../Button";
 import { RxCross2 } from "react-icons/rx";
@@ -42,9 +46,9 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
       // Kombiner formData + artworks og opdater event
       const updatedEventData = {
         ...formData,
-        artworkIds: selectedArtworks,  // sørg for at artworks sendes med her, hvis api understøtter det
+        artworkIds: selectedArtworks,
       };
-      
+
       //Gør så loading på knappen kører i 1 sekund
       const [updatedEvent] = await Promise.all([EditEvent(eventToEdit.id, updatedEventData), wait(1000),]);
 

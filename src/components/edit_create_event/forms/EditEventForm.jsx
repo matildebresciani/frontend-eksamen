@@ -1,6 +1,11 @@
+//Matilde
+//Brugt AI til at sørge for form henter data og præudfylder form med det fra eventet
+//Debug prompt: Hvordan får jeg den til at vise og gemme den valgte dato og lokation fra eventet i mine select komponenter 
+// gennem value, giver det mening at bruge Controller fra RHF?
+
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Input, Select, Textarea } from "./FormFields"; // Sørg for at disse er dine egne komponenter eller udskift med dine egne inputs
+import { Input, Select, Textarea } from "./FormFields";
 import { EditEvent } from "@/api-mappe/EventsApiKald";
 import { formatDate } from "@/utils/formatDate";
 
@@ -39,6 +44,7 @@ const EditEventForm = ({
   const selectedLocation = watch("locationId");
   const watchedDate = watch("date");
 
+  //Reset sætter formularen til den seneste data fra eventet
   useEffect(() => {
     if (eventToEdit) {
       reset({
@@ -50,17 +56,14 @@ const EditEventForm = ({
     }
   }, [eventToEdit, reset]);
 
-  // Synkroniser valgt lokation udad
   useEffect(() => {
     if (onLocationChange) {
       onLocationChange(selectedLocation);
     }
   }, [selectedLocation, onLocationChange]);
 
-  // Sync valgt dato udad, men IKKE reset form på selectedDate ændring
   useEffect(() => {
     if (selectedDate && watchedDate !== selectedDate) {
-      // Hvis du virkelig vil opdatere selectedDate udad, ellers drop denne sync
       setSelectedDate(watchedDate);
     }
   }, [watchedDate, setSelectedDate, selectedDate]);

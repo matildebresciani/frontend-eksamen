@@ -1,12 +1,15 @@
 //Matilde
 //Brugt AI til at få hele formularen til at hænge sammen efter det meste fra RHF var blevet sat op
+//Prompt: Jeg har sat min RHF op således, hvordan får jeg den til at hente dato og lokation fra min database
+
 //Også gjort brug af AI til at håndtere om dato og lokation er tilgengængelig afhængigt af hinanden
-//AI til at implementere loading effekt på knap
+
+//Debug prompt: Hvordan får jeg den til at vise min placeholder som defaultValue i mine Select komponenter
 
 "use client"
 
 import React, { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";  // <-- Importer Controller
+import { useForm, Controller } from "react-hook-form";
 import { useEventFormLogic } from "../../../utils/eventFormsLogic";
 import Button from "../../Button";
 import Link from "next/link";
@@ -27,7 +30,7 @@ const EventForm = ({
   createNewEvent,
 }) => {
   const {
-    control,  // <-- Controller bruger vi her
+    control,
     register,
     handleSubmit,
     watch,
@@ -36,8 +39,8 @@ const EventForm = ({
     getValues,
   } = useForm({
     defaultValues: {
-      date: "",        // default tom værdi = placeholder vises
-      locationId: "",  // samme her
+      date: "",    
+      locationId: "", 
     },
   });
 
@@ -48,6 +51,9 @@ const EventForm = ({
   const [showPopup, setShowPopup] = useState(false);
   const [eventLink, setEventLink] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  //Prompt: Hvordan sørger jeg for at man ikke kan vælge en lokation hvis den allerede er optaget
+  //  på den valgte dato (og omvendt), så de bliver disabled 
 
   const watchedDate = watch("date");
   const watchedLocation = watch("locationId");
@@ -83,6 +89,9 @@ const EventForm = ({
   };
 
   //Henter den nyeste og opdaterede data fra formularen
+  //Prompt: Hvordan får jeg min form til at sende den seneste data med når man opretter et event,
+  // hvis man har ændret i den, efter man er gået videre til næste step (vælg værker)
+
   useEffect(() => {
     if (formRef) {
       formRef.current = { getValues };

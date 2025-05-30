@@ -13,6 +13,7 @@ export const useEventFormLogic = () => {
   const [locations, setLocations] = useState([]);
   const [events, setEvents] = useState([]);
 
+  //Fetcher information fra databasen til at kunne bruge i forms
   useEffect(() => {
     const fetchData = async () => {
       try {

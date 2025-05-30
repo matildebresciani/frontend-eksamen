@@ -19,7 +19,7 @@ export default function Page() {
   useEffect(() => {
     const getEvents = async () => {
       try {
-        const data = await fetchEvents(); // importerer events fra api mappe
+        const data = await fetchEvents(); 
         setEvents(data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -31,14 +31,15 @@ export default function Page() {
     getEvents();
   }, []);
 
+  //Sletter et event
   const handleDeleted = (deletedEventId) => {
     setEvents((prevEvents) =>
       prevEvents.filter((event) => event.id !== deletedEventId)
     );
   };
 
+  //Opdaterer card efter redigering
   const handleEdit = (updatedEvent) => {
-    console.log("Updated event modtaget fra API:", updatedEvent);
     setEvents((prevEvents) =>
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );

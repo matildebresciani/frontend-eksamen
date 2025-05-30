@@ -49,8 +49,6 @@ const ArtworkListEdit = ({
     excludeEventId
   );
 
-  console.log("Selected artworks in ArtworkListEdit:", selectedArtworks);
-
   const MAX_SELECTION = maxSelection || 15;
 
   if (artworks.length === 0) {
