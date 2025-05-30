@@ -1,5 +1,6 @@
 //Formaterring af dato så det står skrevet pænere
 //Med hjælp fra AI for at sætte det korrekt funktionelt op
+//Prompt: Hvordan får jeg den til at skrive ugedagen, d. og datoen, og så det starter med stort bogstav, så der fx står "Torsdag d. 5. maj"
 
 export const formatDate = (date) => {
   const d = new Date(date);
