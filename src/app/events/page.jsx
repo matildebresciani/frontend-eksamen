@@ -89,7 +89,7 @@ export default function Page() {
           >
             <div
               onClick={() => setIsDropdownOpen((prev) => !prev)}
-              className="text-primary-red flex justify-between items-center px-4 py-2 border-2 border-primary-red rounded cursor-pointer bg-white"
+              className="text-white bg-black flex justify-between items-center px-4 py-2 border-2 border-black rounded cursor-pointe"
             >
               <span>Vælg By</span>
               <IoIosArrowDown

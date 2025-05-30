@@ -82,7 +82,7 @@ const ArtworkList = ({
           {displayedArtworks.map((artwork) => {
             const isSelected = selectedArtworks.includes(artwork.object_number);
             const isBooked = isArtworkBooked(artwork.object_number);
-            const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
+            const imageUrl = artwork.image_thumbnail || "/imgs/placeholder.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             console.log(`Artwork ${artwork.object_number} booked?`, isBooked);
@@ -140,8 +140,8 @@ const ArtworkList = ({
 
                   {/* Blokering hvis max er nået og billedet ikke er valgt */}
                   {!isSelected && selectedArtworks.length >= MAX_SELECTION && (
-                    <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed">
-                      Maks nået
+                    <div className="absolute inset-0 bg-white/40 flex items-center justify-center text-xs text-text-p font-semibold cursor-not-allowed text-center p-2">
+                      Maks antal værker valgt
                     </div>
                   )}
 
@@ -199,7 +199,7 @@ const ArtworkList = ({
 
             if (!artwork) return null;
 
-            const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
+            const imageUrl = artwork.image_thumbnail || "/imgs/placeholder.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             return (

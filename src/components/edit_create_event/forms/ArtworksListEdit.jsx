@@ -94,8 +94,11 @@ const ArtworkListEdit = ({
 
           {displayedArtworks.map((artwork) => {
             const isSelected = selectedArtworks.includes(artwork.object_number);
-            const isBooked = isArtworkBooked(artwork.object_number, excludeEventId);
-            const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
+            const isBooked = isArtworkBooked(
+              artwork.object_number,
+              excludeEventId
+            );
+            const imageUrl = artwork.image_thumbnail || "/imgs/placeholder.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             return (
@@ -207,7 +210,7 @@ const ArtworkListEdit = ({
 
             if (!artwork) return null;
 
-            const imageUrl = artwork.image_thumbnail || "/dummy4.jpg";
+            const imageUrl = artwork.image_thumbnail || "/imgs/placeholder.jpg";
             const title = artwork.titles?.[0]?.title || "Uden titel";
 
             return (

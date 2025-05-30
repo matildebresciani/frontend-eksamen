@@ -12,7 +12,9 @@ import { useEffect, useState } from "react";
 import { formatDate } from "@/utils/formatDate";
 
 const ReservationMessage = () => {
-  const reservation = transferReservationInformation((state) => state.reservation);
+  const reservation = transferReservationInformation(
+    (state) => state.reservation
+  );
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
 
@@ -20,7 +22,9 @@ const ReservationMessage = () => {
     const fetchEvent = async () => {
       if (!eventId) return;
       try {
-        const res = await fetch(`https://server-gititgirls.onrender.com/events/${eventId}`);
+        const res = await fetch(
+          `https://server-gititgirls.onrender.com/events/${eventId}`
+        );
         if (!res.ok) throw new Error("Event not found");
         const data = await res.json();
         setEvent(data);
@@ -37,10 +41,17 @@ const ReservationMessage = () => {
   return (
     <div>
       <div className="flex flex-col items-center pb-10">
-        <Image src="/monalisa.png" alt="lineart af monalisa" width={100} height={100} />
+        <Image
+          src="/imgs/monalisa.png"
+          alt="lineart af monalisa"
+          width={100}
+          height={100}
+        />
         <div>
           <p className="text-center">
-            Kære {reservation.navn}, her er dine billetter til <b>{event.title}</b>, vi glæder os til at se dig/jer på <b>{event.location?.address}</b> | <b>{formattedDate}</b>.
+            Kære {reservation.navn}, her er dine billetter til{" "}
+            <b>{event.title}</b>, vi glæder os til at se dig/jer på{" "}
+            <b>{event.location?.address}</b> | <b>{formattedDate}</b>.
           </p>
         </div>
       </div>
