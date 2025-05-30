@@ -9,6 +9,7 @@ const isPublicRoute = createRouteMatcher([
   "/artwork(.*)", //Gør related art single page tilgængelig for public
   "/sign-in(.*)",
   "/sign-up(.*)",
+  "/api/sendConfirmation",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
