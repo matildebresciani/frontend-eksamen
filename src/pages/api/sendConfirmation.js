@@ -61,7 +61,6 @@ export default async function handler(req, res) {
     </div>
 
     <div style="margin:0 24px;">
-   { //Dynamisk generering af billetter så det antal man har booket også dukker op i mailen }
       ${Array.from({ length: billetter })
         .map(
           (_, idx) => `
