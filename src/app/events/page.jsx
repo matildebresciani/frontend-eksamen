@@ -13,6 +13,8 @@ import { IoIosArrowDown } from "react-icons/io";
 export default function Page() {
   const [events, setEvents] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const getEvents = async () => {
@@ -21,6 +23,8 @@ export default function Page() {
         setEvents(data);
       } catch (error) {
         console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -114,19 +118,21 @@ export default function Page() {
           </div>
 
           <div className="flex flex-col gap-4">
-            {filteredEvents.length === 0 ? (
-              <p className="mt-2 italic">
-                Ingen events fundet på valgte lokation...
-              </p>
+            {loading ? (
+            <p className="mt-2 italic">Indlæser events...</p>
+            ) : filteredEvents.length === 0 ? (
+            <p className="mt-2 italic">
+                Ingen events fundet på den valgte lokation...
+            </p>
             ) : (
-              filteredEvents.map((event) => (
+            filteredEvents.map((event) => (
                 <EventCard
-                  key={event.id}
-                  event={event}
-                  onDeleted={() => handleDeleted(event.id)}
-                  onEdit={handleEdit}
+                key={event.id}
+                event={event}
+                onDeleted={() => handleDeleted(event.id)}
+                onEdit={handleEdit}
                 />
-              ))
+            ))
             )}
           </div>
         </div>
