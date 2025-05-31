@@ -12,12 +12,14 @@ import { useArtworksLogic } from "@/utils/artworksLogic";
 // import SearchBar from "./SearchBar";
 
 const ArtworkList = ({
-  blurred = false,
+  blurred = false, 
   selectedArtworks,
   setSelectedArtworks,
   selectedDate,
   maxSelection,
 }) => {
+
+    //Henter alle funktioner vi skal bruge fra useArtworksLogic
   const {
     displayedArtworks,
     currentPage,
@@ -95,7 +97,7 @@ const ArtworkList = ({
               <div key={artwork.object_number}>
                 <div
                   onClick={() => {
-                    if (isBooked) return;
+                    if (isBooked) return; //ikke klikbar hvis booket på valgte dato
                     if (
                       selectedArtworks.includes(artwork.object_number) ||
                       selectedArtworks.length < MAX_SELECTION

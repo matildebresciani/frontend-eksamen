@@ -12,10 +12,6 @@ import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useEventFormLogic } from "../../../utils/eventFormsLogic";
 import Button from "../../Button";
-import Link from "next/link";
-import BtnWithArrow from "../../BtnWithArrow";
-import { RxCross2 } from "react-icons/rx";
-import PopUpBase from "../../PopUpBaseLayout";
 import { Input, Select, Textarea } from "./FormFields";
 import { formatDate } from "@/utils/formatDate";
 
@@ -38,7 +34,7 @@ const EventForm = ({
     reset,
     getValues,
   } = useForm({
-    defaultValues: {
+    defaultValues: { //Sætter default values til tomme, så placeholder tekst vises
       date: "",    
       locationId: "", 
     },
@@ -46,52 +42,46 @@ const EventForm = ({
 
   const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
 
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-  const [showPopup, setShowPopup] = useState(false);
-  const [eventLink, setEventLink] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   //Prompt: Hvordan sørger jeg for at man ikke kan vælge en lokation hvis den allerede er optaget
   //  på den valgte dato (og omvendt), så de bliver disabled 
-
   const watchedDate = watch("date");
   const watchedLocation = watch("locationId");
 
+  // Hvis dato ændres, opdater state i page
   useEffect(() => {
     setSelectedDate(watchedDate);
   }, [watchedDate, setSelectedDate]);
 
+  // Hvis lokation ændres, opdater state i page
   useEffect(() => {
     setSelectedLocation(watchedLocation);
   }, [watchedLocation, setSelectedLocation]);
 
+  //dates og locations kommer fra vores eventFormsLogic fil som states
+
+  // Laver/mapper over options til datovalg. Hvis en lokation er valgt, disables datoer der er optaget.
   const dateOptions = dates.map((date) => ({
     id: date,
     name: formatDate(date),
     disabled: selectedLocation ? isDateOccupied(date, selectedLocation) : false,
   }));
 
+  // Laver/mapper over options til lokationsvalg. Hvis en dato er valgt, disables lokationer der er optaget.
   const locationOptions = locations.map((loc) => ({
     id: loc.id,
     name: `${loc.name} (${loc.address})`,
-    maxArtworks: loc.maxArtworks,
+    maxArtworks: loc.maxArtworks, //Sørger for at maxArtworks baseres på lokation
     disabled: selectedDate ? isLocationOccupied(loc.id, selectedDate) : false,
   }));
 
+  //Kalder onNext med formdata ved submit af form
   const onSubmit = (data) => {
-    console.log("Form data submitted:", data);
     onNext(data);
-  };
-
-  const closePopup = () => {
-    setShowPopup(false);
   };
 
   //Henter den nyeste og opdaterede data fra formularen
   //Prompt: Hvordan får jeg min form til at sende den seneste data med når man opretter et event,
   // hvis man har ændret i den, efter man er gået videre til næste step (vælg værker)
-
   useEffect(() => {
     if (formRef) { //får fromRef fra page som prop
       formRef.current = { getValues }; //formRef.current sættes som objekt via getValues, så page har adgang til det
@@ -150,31 +140,10 @@ const EventForm = ({
         <Button
           variant="transparent"
           type="submit"
-          loading={isSubmitting}
-          loadingText="Næste step..."
         >
           Gå til vælg værker
         </Button>
       </form>
-
-      {showPopup && (
-        <PopUpBase>
-          <div className="flex justify-end">
-            <button
-              onClick={closePopup}
-              className="hover:text-gray-500 ease-in-out duration-300"
-            >
-              <RxCross2 />
-            </button>
-          </div>
-          <p className="text-center">Event oprettet!</p>
-          <div className="flex justify-center">
-            <Link href={eventLink}>
-              <BtnWithArrow>Gå til event</BtnWithArrow>
-            </Link>
-          </div>
-        </PopUpBase>
-      )}
     </>
   );
 };

@@ -58,8 +58,9 @@ export const useArtworksLogic = (
   const getBookedArtworkIds = (excludeEventId = null) => {
     return events
       .filter((event) => {
-        // Samme dato og ikke det event vi er ved at redigere
+        // Filtrerer kun de events, der er på den valgte dato
         const sameDate = event.date === formattedDate;
+        // Hvis excludeEventId er sat, ekskluder det event – ellers tillad alle
         const notExcluded = excludeEventId ? event.id !== excludeEventId : true;
         return sameDate && notExcluded;
       })
@@ -68,12 +69,10 @@ export const useArtworksLogic = (
 
   // Funktion til at tjekke om et værk er booket
   const isArtworkBooked = (object_number, excludeEventId = null) => {
+    // Henter alle bookede værker (uden evt. det nuværende event, hvis vi redigerer)
     const bookedArtworkIds = getBookedArtworkIds(excludeEventId);
+    // Tjekker om det angivne værk findes blandt de bookede
     const booked = bookedArtworkIds.includes(object_number);
-    console.log(
-      `Check artwork ${object_number} booked (exclude: ${excludeEventId}):`,
-      booked
-    );
 
     return booked;
   };
@@ -194,7 +193,9 @@ export const useArtworksLogic = (
   //Debug prompt (Matilde): Hvordan tilpasser jeg min toggleSelect så man ikke kan tilføje de allere bookede værker,
   // og heller ikke tilføje flere værker end der maks er plads til på den valgte lokation
   const toggleSelect = (object_number) => {
+    // Opdaterer selectedArtworks state baseret på den forrige værdi (prev)
     setSelectedArtworks((prev) => {
+      // Tjekker om værket allerede er valgt
       const isAlreadySelected = prev.includes(object_number);
 
       // Hvis værket er booket og ikke allerede valgt, må det ikke tilføjes
@@ -205,10 +206,13 @@ export const useArtworksLogic = (
         return prev;
       }
 
+      // Hvis værket allerede er valgt, så fjern det fra listen (deselect)
       if (isAlreadySelected) {
         return prev.filter((id) => id !== object_number);
+        // Hvis der allerede er valgt det maksimale antal værker, returnér uændret (fordi man kan ikke vælge det)
       } else if (prev.length >= MAX_SELECTION) {
         return prev;
+        // Ellers tilføj værket til listen af valgte værker
       } else {
         return [...prev, object_number];
       }
@@ -216,25 +220,6 @@ export const useArtworksLogic = (
 
     setSelectedArtworksPage(1);
   };
-
-  // Hent kunstværker ved mount
-  //   useEffect(() => {
-  //     const fetchArtworks = async () => {
-  //       try {
-  //         const res = await fetch(
-  //           "https://api.smk.dk/api/v1/art/search?keys=modernisme&offset=0&rows=100"
-  //         );
-  //         const data = await res.json();
-  //         const items = data.items || [];
-
-  //         setArtworks(items);
-  //         setFilteredArtworks(items);
-  //       } catch (error) {
-  //         console.error("Fejl ved hentning af billeder:", error);
-  //       }
-  //     };
-  //     fetchArtworks();
-  //   }, []);
 
   useEffect(() => {
     const fetchArtworks = async () => {

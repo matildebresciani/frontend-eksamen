@@ -1,5 +1,7 @@
 //Matilde og Katinka
 //Brugt AI til at koble form og artwork list sammen, samt en masse debugging
+//Prompt: Hvilke ting fra min form og artworks fil skal jeg flytte op i page for at få det til
+// at kunne hænge sammen ved opret?
 "use client";
 import { useState, useRef } from "react";
 import { useEventFormLogic } from "@/utils/eventFormsLogic";
@@ -36,9 +38,6 @@ export default function Page() {
     ? locations.find((loc) => loc.id === selectedLocation)?.maxArtworks ?? 0
     : 0;
 
-//Gør så knap loader i minimum 1 sekund
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
   // Reference til formen (for at kunne hente seneste værdier)
   const formRef = useRef(null);
 
@@ -51,6 +50,9 @@ export default function Page() {
     setStep(2);
   };
   
+  //Gør så knap loader i minimum 1 sekund
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const closePopup = () => {
     setShowPopup(false);
   };
@@ -79,20 +81,20 @@ export default function Page() {
     };
 
     try {
-      //Kalder createNewEvent fra eventFormsLogic filen sammen med en pause på 1 sekund (for at få loading på knap)
+      //Kalder createNewEvent (POST-request) fra eventFormsLogic filen sammen med en pause på 1 sekund (for at få loading på knap)
       const [createdEvent] = await Promise.all([
-        createNewEvent(eventData),
-        wait(1000),
+        createNewEvent(eventData), // bruger funktionen fra logic-filen
+        wait(1000), //loader knap i 1 sekund
       ]);
 
-      //Vis popup ved oprettelse og gem link til eventet
+      //Vis popup ved oprettelse med link til eventet
       setEventLink(`/events/${createdEvent.id}`);
       setShowPopup(true);
       // evt. nulstil formular hvis ønsket
     } catch (error) {
       console.error("Fejl ved oprettelse af event:", error);
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); //stopper loading på knap
     }
   };
 

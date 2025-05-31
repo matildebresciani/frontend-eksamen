@@ -10,6 +10,7 @@ import {
 } from "@/api-mappe/EventsApiKald";
 
 export const useEventFormLogic = () => {
+  //Sætter dato, lokation og events som states
   const [dates, setDates] = useState([]);
   const [locations, setLocations] = useState([]);
   const [events, setEvents] = useState([]);
@@ -20,6 +21,7 @@ export const useEventFormLogic = () => {
       try {
         const [fetchedDates, fetchedLocations, fetchedEvents] =
           await Promise.all([fetchDates(), fetchLocations(), fetchEvents()]);
+        //Sætter den fetchede info fra databasen ind i vores states
         setDates(fetchedDates);
         setLocations(fetchedLocations);
         setEvents(fetchedEvents);
@@ -31,21 +33,24 @@ export const useEventFormLogic = () => {
     fetchData();
   }, []);
 
+  // Checker om en lokation er optaget på en bestemt dato
   const isLocationOccupied = (locationId, date) => {
     return events.some(
       (event) => event.locationId === locationId && event.date === date
     );
   };
 
+  // Checker om en dato er optaget for en bestemt lokation
   const isDateOccupied = (date, locationId) => {
     return events.some(
       (event) => event.date === date && event.locationId === locationId
     );
   };
 
+  // Funktion til at oprette et nyt event i databasen
   const createNewEvent = async (data) => {
     try {
-      const result = await createEvent(data);
+      const result = await createEvent(data); // createEvent er et POST request fra API kald filen
       return result;
     } catch (error) {
       console.error("Fejl ved oprettelse:", error);
