@@ -35,7 +35,7 @@ const Eventinfo = ({ event, onEdit }) => {
             className="text-primary-red sm:w-17 md:w-20 lg:w-23 h-auto"
             strokeWidth={1.4}
           />
-          <div className="font-semibold capitalize text-[var(--color-text-p)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
+          <div className="font-semibold capitalize text-text-p mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             {formattedDate}
           </div>
         </div>
@@ -46,7 +46,7 @@ const Eventinfo = ({ event, onEdit }) => {
             className="text-primary-red sm:w-17 md:w-20 lg:w-23 h-auto"
             strokeWidth={1.4}
           />
-          <div className="font-semibold text-[var(--color-text-p)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
+          <div className="font-semibold text-text-p mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             {event.location?.address}
           </div>
         </div>
@@ -57,7 +57,7 @@ const Eventinfo = ({ event, onEdit }) => {
             className="text-primary-red sm:w-17 md:w-20 lg:w-23 h-auto"
             strokeWidth={1.4}
           />
-          <div className="font-semibold text-[var(--color-text-p)] mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
+          <div className="font-semibold text-text-p mt-5 text-sm sm:text-m md:text-lg lg:text-xl">
             Kl. 10-14
           </div>
         </div>
