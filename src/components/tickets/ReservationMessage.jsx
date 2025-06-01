@@ -10,7 +10,7 @@ import transferReservationInformation from "@/app/store/reservationInformation";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { formatDate } from "@/utils/formatDate";
-import { fetchEventById } from "../../api-mappe/eventsApiKald";
+import { fetchEventById } from "../../api-mappe/EventsApiKald";
 
 const ReservationMessage = () => {
   const reservation = transferReservationInformation((state) => state.reservation);
