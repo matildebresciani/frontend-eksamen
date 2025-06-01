@@ -29,7 +29,7 @@ export const Input = ({
   </div>
 );
 
-//Debug prompt: Når jeg har fetchet datoer og lokationer, viser den datoerne som tomme, hvor ligger problemet og hvordan kan jeg fikse det 
+//Debug prompt: Når jeg har fetchet datoer og lokationer, viser den datoerne som tomme, hvor ligger problemet og hvordan kan jeg fikse det
 //Prompt: Hvordan tilpasser jeg mit select komponent til at bruge controller fra react hook form
 export const Select = ({
   onChange,
@@ -45,6 +45,7 @@ export const Select = ({
   <div className="flex flex-col">
     <label>{label}</label>
     <select
+      aria-label={label}
       name={name}
       ref={ref}
       onChange={onChange}
