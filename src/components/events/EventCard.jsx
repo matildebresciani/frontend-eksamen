@@ -17,6 +17,8 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
 
   const [artworkImg, setArtworkImg] = useState(null);
 
+  //dette er en test til forked repository
+
   useEffect(() => {
     const getArtworkImg = async () => {
       if (event?.artworkIds && event.artworkIds.length > 0) {
