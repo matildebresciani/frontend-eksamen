@@ -6,7 +6,7 @@
 
 //Debug prompt: Hvordan får jeg den til at vise min placeholder som defaultValue i mine Select komponenter
 
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -34,16 +34,18 @@ const EventForm = ({
     reset,
     getValues,
   } = useForm({
-    defaultValues: { //Sætter default values til tomme, så placeholder tekst vises
-      date: "",    
-      locationId: "", 
+    defaultValues: {
+      //Sætter default values til tomme, så placeholder tekst vises
+      date: "",
+      locationId: "",
     },
   });
 
-  const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
+  const { dates, locations, isLocationOccupied, isDateOccupied } =
+    useEventFormLogic();
 
   //Prompt: Hvordan sørger jeg for at man ikke kan vælge en lokation hvis den allerede er optaget
-  //  på den valgte dato (og omvendt), så de bliver disabled 
+  //  på den valgte dato (og omvendt), så de bliver disabled
   const watchedDate = watch("date");
   const watchedLocation = watch("locationId");
 
@@ -83,14 +85,18 @@ const EventForm = ({
   //Prompt: Hvordan får jeg min form til at sende den seneste data med når man opretter et event,
   // hvis man har ændret i den, efter man er gået videre til næste step (vælg værker)
   useEffect(() => {
-    if (formRef) { //får fromRef fra page som prop
+    if (formRef) {
+      //får fromRef fra page som prop
       formRef.current = { getValues }; //formRef.current sættes som objekt via getValues, så page har adgang til det
     }
   }, [formRef, getValues]);
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-fit">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 w-fit"
+      >
         <Controller
           name="date"
           control={control}
@@ -137,10 +143,7 @@ const EventForm = ({
           required={{ value: true, message: "Beskrivelse skal udfyldes" }}
           error={errors.description}
         />
-        <Button
-          variant="transparent"
-          type="submit"
-        >
+        <Button variant="transparent" type="submit">
           Gå til vælg værker
         </Button>
       </form>
