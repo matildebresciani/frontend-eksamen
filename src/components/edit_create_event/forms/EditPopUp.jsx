@@ -20,6 +20,8 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   );
   const [selectedLocation, setSelectedLocation] = useState(eventToEdit.locationId || null);
   const [selectedDate, setSelectedDate] = useState(eventToEdit.date || null);
+  const [artworkError, setArtworkError] = useState(null);
+
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -41,7 +43,16 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
    
 
   const handleSubmit = async (formData) => {
+    setArtworkError(null); // ryd tidligere fejl
+
+    //Gør så man ikke kan gemme hvis værker valgt overstiger kapaciteten på lokationen
+    if (selectedArtworks.length > maxSelection) {
+      setArtworkError(`Du kan maks vælge ${maxSelection} værker til denne lokation.`);
+      return;
+    }
+  
     setIsSubmitting(true);
+
     try {
       // Kombiner formData + artworks og opdater event
       const updatedEventData = {
@@ -107,20 +118,26 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         selectedDate={selectedDate}
         />
       </div>
+      
 
-<div className="flex justify-center mt-4">
+      {artworkError && (
+        <div className="flex justify-center items-center">
+          <p className=" text-center !text-red-500 mt-2">{artworkError}</p>
+        </div>
+      )}
+       <div className="flex justify-center">
       <Button
         form="edit-event-form"
         type="submit"
         variant="CTA"
         loading={isSubmitting}
         loadingText="Gemmer ændringer..."
-        className="mt-4"
+        className="mt-2"
       >
         Gem ændringer
       </Button>
 
-</div>
+      </div>
     </PopUpBase>
   );
 };

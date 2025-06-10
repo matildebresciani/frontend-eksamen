@@ -14,7 +14,7 @@ import BtnWithArrow from "@/components/BtnWithArrow";
 import { RxCross2 } from "react-icons/rx";
 
 export default function Page() {
-  const { dates, locations, isLocationOccupied, createNewEvent } =
+  const { locations, createNewEvent } =
     useEventFormLogic();
 
 //States til form og navigation af steps
@@ -31,7 +31,7 @@ export default function Page() {
   //Prompt: Hvordan laver jeg min opret event så den er i to steps, så man først udfylder formularen og derefter vælger artworks
   // Gemmer data fra step 1 for at kunne bruge det i step 2 og ved oprettelse
   const [formData, setFormData] = useState({});
-  const [artworkError, setArtworkError] = useState("");
+  const [artworkError, setArtworkError] = useState(null);
 
   // Find max antal artworks baseret på valgt lokation
   const maxSelection = selectedLocation
@@ -65,6 +65,12 @@ export default function Page() {
       return;
     }
 
+    //Sørger for at man ikke kan gemme hvis max værker overstiger pladsen på lokationen
+    if (selectedArtworks.length > maxSelection) {
+      setArtworkError(`Du kan maks vælge ${maxSelection} værker til denne lokation.`);
+      return;
+    }
+    
     setArtworkError("");
     setIsSubmitting(true);
 
@@ -90,7 +96,15 @@ export default function Page() {
       //Vis popup ved oprettelse med link til eventet
       setEventLink(`/events/${createdEvent.id}`);
       setShowPopup(true);
-      // evt. nulstil formular hvis ønsket
+
+      //Nulstil formular og artworks
+      setSelectedArtworks([]);
+      setStep(1);
+      setFormData({});
+      setSelectedDate(null);
+      setSelectedLocation(null);
+      formRef.current?.reset();
+
     } catch (error) {
       console.error("Fejl ved oprettelse af event:", error);
     } finally {
