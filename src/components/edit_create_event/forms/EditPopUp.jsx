@@ -30,17 +30,13 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   : 0;  
 
   useEffect(() => {
-    console.log("eventToEdit.date ændret til:", eventToEdit.date);
     if (eventToEdit?.date) {
       setSelectedDate(eventToEdit.date);
     }
   }, [eventToEdit]);
   
   useEffect(() => {
-    console.log("selectedDate opdateret til:", selectedDate);
   }, [selectedDate]);
-  
-   
 
   const handleSubmit = async (formData) => {
     setArtworkError(null); // ryd tidligere fejl
@@ -75,6 +71,7 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <PopUpBase>

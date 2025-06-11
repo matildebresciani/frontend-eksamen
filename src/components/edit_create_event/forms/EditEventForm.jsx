@@ -39,8 +39,6 @@ const EditEventForm = ({
     },
   });
 
-  console.log("EditEventForm selectedDate prop:", selectedDate);
-
   const selectedLocation = watch("locationId");
   const watchedDate = watch("date");
 
