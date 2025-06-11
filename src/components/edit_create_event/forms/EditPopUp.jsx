@@ -13,31 +13,41 @@ import { EditEvent } from "@/api-mappe/EventsApiKald";
 
 
 const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
+  //Data fra useEventFormLogic hook
   const { dates, locations, isLocationOccupied, isDateOccupied } = useEventFormLogic();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  //STATES
+  const [isSubmitting, setIsSubmitting] = useState(false); //loading tilstand
+
+  // State til valgte kunstværker i listen (initialiseret med eksisterende event-data)
   const [selectedArtworks, setSelectedArtworks] = useState(
     eventToEdit.artworkIds || []
   );
+
+  // State til valgt lokation og dato (også fra eksisterende event)
   const [selectedLocation, setSelectedLocation] = useState(eventToEdit.locationId || null);
   const [selectedDate, setSelectedDate] = useState(eventToEdit.date || null);
-  const [artworkError, setArtworkError] = useState(null);
+
+  const [artworkError, setArtworkError] = useState(null); // Fejlbesked hvis man vælger for mange værker
 
   //Hjælpefunktion til loading på knap
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+  // Udregn hvor mange værker der må vælges til den valgte lokation
  const maxSelection = selectedLocation
   ? locations.find(loc => loc.id === selectedLocation)?.maxArtworks ?? 0
   : 0;  
 
+  // Hvis dato i event ændrer sig (fx hvis man åbner et andet event), opdater den
+  //Har været brugt til debug - ikke relevant længere
   useEffect(() => {
     if (eventToEdit?.date) {
       setSelectedDate(eventToEdit.date);
     }
   }, [eventToEdit]);
   
-  useEffect(() => {
-  }, [selectedDate]);
 
+  // Håndterer når der trykkes på "Gem ændringer"
   const handleSubmit = async (formData) => {
     setArtworkError(null); // ryd tidligere fejl
 
@@ -47,7 +57,7 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
       return;
     }
   
-    setIsSubmitting(true);
+    setIsSubmitting(true); //Starter loading på knap
 
     try {
       // Kombiner formData + artworks og opdater event
@@ -56,17 +66,19 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         artworkIds: selectedArtworks,
       };
 
-      //Gør så loading på knappen kører i 1 sekund
+      //Laver PATCH request og gør så loading på knappen kører i 1 sekund
       const [updatedEvent] = await Promise.all([EditEvent(eventToEdit.id, updatedEventData), wait(1000),]);
 
+      // Find og tilføj fulde lokationsoplysninger
       const fullLocation = locations.find(loc => loc.id === updatedEvent.locationId);
         updatedEvent.location = fullLocation || null;
 
+      // Kald callback med nyt event og luk popup
       onEditSuccess(updatedEvent);
       closePopup();
     } catch (error) {
       console.error("Fejl ved opdatering af event:", error);
-      // evt vis fejlbesked til bruger
+      // evt vis fejlbesked til bruger ved at lave submitError og setSubmitError
     } finally {
       setIsSubmitting(false);
     }
@@ -90,29 +102,29 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         <div className="grid lg:grid-cols-[1fr_2fr] gap-4">
       <EditEventForm
         onSubmitData={handleSubmit} 
-        eventToEdit={eventToEdit}
-        dates={dates}
-        locations={locations}
-        isDateOccupied={isDateOccupied}
-        isLocationOccupied={isLocationOccupied}
+        eventToEdit={eventToEdit} //prop fra parent (event page og single event page)
+        dates={dates} //datoer fra useEventFormLogic
+        locations={locations} //lokationer fra useEventFormLogic
+        isDateOccupied={isDateOccupied} //fra useEventFormLogic
+        isLocationOccupied={isLocationOccupied} //fra useEventFormLogic
         onEditSuccess={(updatedEvent) => {
-          onEditSuccess(updatedEvent);
+          onEditSuccess(updatedEvent); //fra parent
           closePopup();
         }}
-        formId="edit-event-form"
-        setIsSubmitting={setIsSubmitting}
-        selectedLocation={selectedLocation}
-        setSelectedLocation={setSelectedLocation}
-        onLocationChange={setSelectedLocation}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
+        formId="edit-event-form" //Connecter form med submit knap
+        setIsSubmitting={setIsSubmitting} //Lokal state, sættes i edit pop up
+        selectedLocation={selectedLocation} //Lokal state, sendes som prop
+        setSelectedLocation={setSelectedLocation} //Lokal state, sættes i edit pop up
+        onLocationChange={setSelectedLocation} //Lokal - bruges til at ændre lokation i form
+        selectedDate={selectedDate} //Lokal state
+        setSelectedDate={setSelectedDate} //Lokal state - opdaterer valgt dato
       />
       <ArtworkListEdit 
-        selectedArtworks={selectedArtworks}
-        setSelectedArtworks={setSelectedArtworks}
-        maxSelection={maxSelection}
-        excludeEventId={eventToEdit.id}
-        selectedDate={selectedDate}
+        selectedArtworks={selectedArtworks} //Lokal - Allerede valgte artworks
+        setSelectedArtworks={setSelectedArtworks} //Lokal - opdaterer valgte/nye artworks
+        maxSelection={maxSelection} //Max værker baseret på valgt lokation
+        excludeEventId={eventToEdit.id} // Sikrer at det aktuelle event ikke markerer sine egne værker som booked
+        selectedDate={selectedDate} //Lokal - Tjekker om værker er optaget andre steder på valgt dato
         />
       </div>
       
@@ -124,7 +136,7 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
       )}
        <div className="flex justify-center">
       <Button
-        form="edit-event-form"
+        form="edit-event-form" //Connecter submit knap med form
         type="submit"
         variant="CTA"
         loading={isSubmitting}
