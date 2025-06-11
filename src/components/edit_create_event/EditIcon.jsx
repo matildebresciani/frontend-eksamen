@@ -15,7 +15,9 @@ const EditIcon = ({ event, onEdit, children }) => {
   return (
     <>
       <motion.button
-        onClick={setShowPopup}
+        // onClick={setShowPopup}
+        onClick={() => setShowPopup(true)}
+
         whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.95 }}
         transition={{ duration: 0.1 }}
