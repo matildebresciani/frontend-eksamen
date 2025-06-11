@@ -22,7 +22,7 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   const [selectedDate, setSelectedDate] = useState(eventToEdit.date || null);
   const [artworkError, setArtworkError] = useState(null);
 
-
+  //Hjælpefunktion til loading på knap
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
  const maxSelection = selectedLocation

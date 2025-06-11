@@ -17,8 +17,6 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
 
   const [artworkImg, setArtworkImg] = useState(null);
 
-  //dette er en test til forked repository
-
   useEffect(() => {
     const getArtworkImg = async () => {
       if (event?.artworkIds && event.artworkIds.length > 0) {
@@ -36,8 +34,13 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
     getArtworkImg();
   }, [event]);
 
+  //Tjekker hvor mange billetter der er tilbage
   const ticketsLeft = event.totalTickets - event.bookedTickets;
+
+  //Tjekker om der er mellem 1 og 5 billetter tilbage
   const fewTicketsLeft = ticketsLeft >= 1 && ticketsLeft <= 5;
+
+  //Tjekker om event er udsolgt ved at billetter er 0 eller null (utilgængeligt)
   const soldOut = ticketsLeft === 0 || event.bookedTickets === null;
 
   const handleCardClick = () => {
