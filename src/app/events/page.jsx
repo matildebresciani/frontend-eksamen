@@ -18,15 +18,17 @@ export default function Page() {
   useEffect(() => {
     const getEvents = async () => {
       try {
-        //Gammel - sætter events ind i den rækkefølge de er oprettet
-        // const data = await fetchEvents(); 
+        //Gammel - sætter events ind i den rækkefølge de er oprettetAdd commentMore actions
+        // const data = await fetchEvents();
         // setEvents(data);
 
         //Prompt: hvordan kan jeg sortere mine events så det er efter dato??
 
         //Ny - Sorterer events efter dato
         const data = await fetchEvents();
-        const sortedData = data.sort((a, b) => new Date(a.date) - new Date(b.date));
+        const sortedData = data.sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
         setEvents(sortedData);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -78,8 +80,8 @@ export default function Page() {
     <section>
       <h1 className="mb-2 sm:mb-3">Events</h1>
       <p>
-Oplev spændende kunstevents med fokus  på modernismen – over hele Danmark.
-Vi glæder os til at byde dig velkommen!
+        Oplev spændende kunstevents med fokus på modernismen – over hele
+        Danmark. Vi glæder os til at byde dig velkommen!
       </p>
       <div>
         <div className="border-2 border-black w-full my-6 sm:my-10 z-50 self-start sticky sm:top-37 md:top-41 lg:top-45"></div>

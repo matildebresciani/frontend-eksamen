@@ -12,7 +12,7 @@ const Eventinfo = ({ event, onEdit }) => {
 
   return (
     <div className="flex flex-col">
-      <p className="mx-auto text-center first-letter:capitalize">
+      <p className="mx-auto mt-4 text-center first-letter:capitalize">
         {event.description}
       </p>
 
