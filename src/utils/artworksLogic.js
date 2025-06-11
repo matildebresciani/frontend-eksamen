@@ -7,7 +7,6 @@ export const useArtworksLogic = (
   selectedDate,
   selectedArtworks,
   setSelectedArtworks,
-  selectedLocation,
   maxSelection,
   excludeEventId
 ) => {
@@ -39,11 +38,11 @@ export const useArtworksLogic = (
     selectedArtworksPage * ITEMS_PER_PAGE
   );
 
-  console.log("selectedDate:", selectedDate);
-  console.log(
-    "events dates:",
-    events.map((e) => e.date)
-  );
+  //console.log("selectedDate:", selectedDate);
+  // console.log(
+  //   "events dates:",
+  //   events.map((e) => e.date)
+  // );
 
   //Debug prompt (Matilde): Hvordan får jeg min booked funktion til at virke, så den også fungerer når man redigerer et event
   // (altså så man stadig kan redigere i de bookede værker på det specifikke event)
@@ -68,6 +67,9 @@ export const useArtworksLogic = (
   };
 
   // Funktion til at tjekke om et værk er booket
+  //object_number er et id (unikt nummer eller streng), som repræsenterer et kunstværk.
+  //excludeEventId bruges kun ved redigering for at ignorere ét bestemt event,
+  // så man ikke "låser" de værker, som allerede hører til dette event.
   const isArtworkBooked = (object_number, excludeEventId = null) => {
     // Henter alle bookede værker (uden evt. det nuværende event, hvis vi redigerer)
     const bookedArtworkIds = getBookedArtworkIds(excludeEventId);
@@ -198,12 +200,12 @@ export const useArtworksLogic = (
       // Tjekker om værket allerede er valgt
       const isAlreadySelected = prev.includes(object_number);
 
-      // Hvis værket er booket og ikke allerede valgt, må det ikke tilføjes
+      // Hvis værket er booket (på et andet event) og ikke allerede valgt, må det ikke tilføjes
       if (
         !isAlreadySelected &&
         isArtworkBooked(object_number, excludeEventId)
       ) {
-        return prev;
+        return prev; // gør ikke noget - afviser tilføjelse
       }
 
       // Hvis værket allerede er valgt, så fjern det fra listen (deselect)
@@ -237,7 +239,7 @@ export const useArtworksLogic = (
 
         const data = await res.json();
         const items = data.items || [];
-        console.log("SMK items:", items);
+        //console.log("SMK items:", items);
 
         setArtworks(items);
         setFilteredArtworks(items);

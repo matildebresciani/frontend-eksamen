@@ -8,12 +8,11 @@ import { motion } from "motion/react";
 import { useArtworksLogic } from "@/utils/artworksLogic";
 
 const ArtworkListEdit = ({
-  blurred = false,
+  selectedDate,
   selectedArtworks,
   setSelectedArtworks,
-  selectedDate,
   maxSelection,
-  excludeEventId,
+  excludeEventId
 }) => {
   const {
     displayedArtworks,
@@ -48,7 +47,7 @@ const ArtworkListEdit = ({
     maxSelection,
     excludeEventId
   );
-
+  
   const MAX_SELECTION = maxSelection || 15;
 
   if (artworks.length === 0) {
@@ -102,15 +101,20 @@ const ArtworkListEdit = ({
             return (
               <div key={artwork.object_number}>
                 <div
-                  onClick={() => {
-                    if (isBooked) return;
-                    if (
-                      selectedArtworks.includes(artwork.object_number) ||
-                      selectedArtworks.length < MAX_SELECTION
-                    ) {
-                      toggleSelect(artwork.object_number);
-                    }
-                  }}
+                  //GAMMEL ON CLICK
+                  // onClick={() => {
+                  //   if (isBooked) return;
+                  //   if (
+                  //     selectedArtworks.includes(artwork.object_number) ||
+                  //     selectedArtworks.length < MAX_SELECTION
+                  //   ) {
+                  //     toggleSelect(artwork.object_number);
+                  //   }
+                  // }}
+
+                  //NY ONCLICK 
+                  onClick={() => toggleSelect(artwork.object_number)}
+
                   className="relative cursor-pointer group w-fit justify-center"
                 >
                   {/* Checkbox-hjørne – vises kun hvis ikke booket */}
