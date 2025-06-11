@@ -72,12 +72,12 @@ const DeleteBtn = ({ eventId, onDeleted, children }) => {
                   loadingText="Sletter event..."
                   className="transition-all duration-300 w-auto"
                 >
-                  {isDeleting ? "Sletter event..." : "JA"}
+                  {isDeleting ? "Sletter event..." : "SLET"}
                 </Button>
 
                 {!isDeleting && (
                   <Button variant="tertiary" onClick={handleClose}>
-                    NEJ
+                    ANNULLER
                   </Button>
                 )}
               </div>
