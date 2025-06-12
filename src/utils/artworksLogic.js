@@ -8,7 +8,8 @@ export const useArtworksLogic = (
   selectedArtworks,
   setSelectedArtworks,
   maxSelection,
-  excludeEventId
+  excludeEventId,
+  selectedLocation //flyttet nederst
 ) => {
   const [artworks, setArtworks] = useState([]);
   const [events, setEvents] = useState([]);

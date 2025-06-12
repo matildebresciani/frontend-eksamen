@@ -18,12 +18,10 @@ import { formatDate } from "@/utils/formatDate";
 const EventForm = ({
   formRef,
   onNext,
-  selectedArtworks,
   selectedDate,
   setSelectedDate,
   selectedLocation,
   setSelectedLocation,
-  createNewEvent,
 }) => {
   const {
     control,
