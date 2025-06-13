@@ -39,7 +39,7 @@ const EditIcon = ({ event, onEdit, children }) => {
           eventToEdit={event}
           closePopup={closePopup}
           onEditSuccess={(updatedEvent) => {
-            onEdit(updatedEvent);
+            onEdit(updatedEvent); //Giver parent besked om det opdaterede event
             closePopup();
           }}
         ></EditEventPopUp>

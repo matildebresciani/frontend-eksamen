@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 export default function Page() {
   const [events, setEvents] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); //Giver en loading besked, hvis event loades
 
   //NYT - PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,29 +23,34 @@ export default function Page() {
   useEffect(() => {
     const getEvents = async () => {
       try {
-        //Gammel - sætter events ind i den rækkefølge de er oprettetAdd commentMore actions
+        //Gammel - sætter events ind i den rækkefølge de er oprettet
         // const data = await fetchEvents();
         // setEvents(data);
 
         //Prompt: hvordan kan jeg sortere mine events så det er efter dato??
 
         //Ny - Sorterer events efter dato
-        const data = await fetchEvents();
-        const sortedData = data.sort(
-          (a, b) => new Date(a.date) - new Date(b.date)
+        const data = await fetchEvents(); //Henter events fra API (fra vores API kald fil)
+        const sortedEvents = data.sort(
+          (a, b) => new Date(a.date) - new Date(b.date)  //Konverterer dato-strengene til Date-objekter, så JS bedre kan sammenligne og sortere
         );
-        setEvents(sortedData);
+        //Opdaterer state med den sorterede event data
+        setEvents(sortedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       } finally {
+        //Sætter loading besked på siden til false, da events nu er blevet hentet
         setLoading(false);
       }
     };
 
+    // Kalder funktionen for at hente events når siden bliver vist første gang
     getEvents();
   }, []);
 
   //Sletter et event
+  // Opdaterer events state ved at filtrere det slettede event fra listen
+  // Funktionen sendes som prop til EventCard og videre til Delete btn
   const handleDeleted = (deletedEventId) => {
     setEvents((prevEvents) =>
       prevEvents.filter((event) => event.id !== deletedEventId)
@@ -53,12 +58,16 @@ export default function Page() {
   };
 
   //Opdaterer card efter redigering
+  // Går eventlisten igennem, hvis id matcher det opdaterede, erstattes det
   const handleEdit = (updatedEvent) => {
-    setEvents((prevEvents) =>
+    setEvents((prevEvents) => 
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );
   };
 
+  // Hvis "Alle Byer" er valgt eller ingen byer er valgt, vis alle events
+  // Ellers filtrer events så kun de, hvor eventets by er i selectedCities, vises
+  // normalizeCity bruges til at sikre at varianter som "kbh" og "københavn" samles under samme navn
   const filteredEvents =
     selectedCities.includes("Alle Byer") || selectedCities.length === 0
       ? events

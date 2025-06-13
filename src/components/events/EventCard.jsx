@@ -17,13 +17,15 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
 
   const [artworkImg, setArtworkImg] = useState(null);
 
+  //Henter billederne på event til at kunne give event card en thumbnail
   useEffect(() => {
     const getArtworkImg = async () => {
+      //Tjekker at event har artworks (via artworkIds og om listen er over 0)
       if (event?.artworkIds && event.artworkIds.length > 0) {
         try {
-          const data = await fetchArtworkById(event.artworkIds[0]);
-          const imgUrl = data?.items?.[0]?.image_thumbnail || null;
-          setArtworkImg(imgUrl);
+          const data = await fetchArtworkById(event.artworkIds[0]); //Henter det første artwork på event
+          const imgUrl = data?.items?.[0]?.image_thumbnail || null; //Henter værkets URL
+          setArtworkImg(imgUrl); //Sætter state til url'en
         } catch {
           setArtworkImg(null);
         }
@@ -32,7 +34,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
       }
     };
     getArtworkImg();
-  }, [event]);
+  }, [event]); //Kører hver gang et event ændrer sig(fx ved redigering af billeder)
 
   //Tjekker hvor mange billetter der er tilbage
   const ticketsLeft = event.totalTickets - event.bookedTickets;
@@ -115,7 +117,7 @@ const EventCard = ({ event, onDeleted, onEdit }) => {
       </div>
       <div
         className="flex justify-end shrink-0 items-end gap-4 my-3"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()} //Sørger for den ik navigerer videre til singleview hvis man klikker på rediger eller slet
       >
         <SignedIn>
           <DeleteBtn eventId={event.id} onDeleted={onDeleted} />

@@ -36,6 +36,8 @@ export default function Eventpage() {
         setEvent(updatedEvent);
       };
 
+      //Sletter event og går tilbage til eventlisten efter sletning
+      //Sender funktionen med ned som prop direkte til delete btn
     const handleDeleted = () => {
       router.push("/events");
   };

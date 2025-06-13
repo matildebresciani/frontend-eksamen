@@ -24,7 +24,7 @@ const TestGallery = ({ event, eventId }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-6">
-      <div   ref={scrollRef}
+      <div ref={scrollRef}
       className={`flex items-center space-x-4 overflow-x-auto px-10 snap-x w-full scrollbar-hide pb-6 ${
         event?.artworkIds?.length <= 4 ? 'justify-center' : 'justify-start'
       }`}>
@@ -33,7 +33,7 @@ const TestGallery = ({ event, eventId }) => {
           <TestArtCart key={idx} artworkId={artworkId} eventId={eventId} />
         ))}
       </div>
-      {/* NYT: Navigation knapper – vis kun hvis der er 6 eller flere artworks */}
+      {/* NYT: Navigation knapper – vis kun hvis der er 5 eller flere artworks */}
       {event?.artworkIds?.length >= 5 && (
         <div className="flex items-center space-x-8">
           {/* NYT: Venstre pil */}

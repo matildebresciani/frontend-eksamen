@@ -12,6 +12,8 @@ import PopUpBase from "@/components/PopUpBaseLayout";
 import Link from "next/link";
 import BtnWithArrow from "@/components/BtnWithArrow";
 import { RxCross2 } from "react-icons/rx";
+import { wait } from "@/utils/wait";
+
 
 export default function Page() {
   const { locations, createNewEvent } =
@@ -51,7 +53,7 @@ export default function Page() {
   };
   
   //Gør så knap loader i minimum 1 sekund
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  //const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const closePopup = () => {
     setShowPopup(false);
