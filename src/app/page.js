@@ -107,10 +107,10 @@ export default function Home() {
       </div>
 
       {/* Overskrift og boks med tekst og knap */}
-      <h1 className="!text-5xl md:!text-7xl lg:!text-8xl !font-semibold !text-white drop-shadow-lg mb-6 md:mb-8 uppercase text-left leading-none ml-4 md:ml-16 mt-16 md:mt-32">
+      <h1 className="!text-5xl md:!text-7xl lg:!text-8xl !font-semibold !text-white drop-shadow-lg uppercase text-left leading-none ml-4 mt-8">
         MODERNIA CURATORS
       </h1>
-      <div className="relative z-10 flex flex-col items-end px-4 md:px-8 py-4 md:py-8 bg-white/40 rounded-sm max-w-xs md:max-w-2xl ml-4 md:ml-16 shadow-lg backdrop-blur-lg">
+      <div className="relative z-10 flex flex-col items-end px-4 md:px-8 py-4 md:py-8 bg-white/40 rounded-sm max-w-xs md:max-w-2xl ml-4 shadow-lg backdrop-blur-lg">
         <p className="text-black !text-base md:!text-xl drop-shadow-md text-left mb-2 md:mb-4 w-full">
           Din platform til <b>modernistisk kunst</b> - tilmeld dig events med få
           klik.
