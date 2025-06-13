@@ -12,6 +12,7 @@ import Button from "../Button";
 import { LuTrash2 } from "react-icons/lu";
 import { useState } from "react";
 import { motion } from "motion/react";
+import { wait } from "@/utils/wait";
 
 const DeleteBtn = ({ eventId, onDeleted, children }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -19,7 +20,7 @@ const DeleteBtn = ({ eventId, onDeleted, children }) => {
   const [hasDeleted, setHasDeleted] = useState(false);
 
   //Gør så knappen loader i minimum 1 sekund
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  //const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleDelete = async () => {
     setIsDeleting(true); //Starter loading på knappen

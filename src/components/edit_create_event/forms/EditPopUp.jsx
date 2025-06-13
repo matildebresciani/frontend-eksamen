@@ -10,6 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 import EditEventForm from "./EditEventForm";
 import ArtworkListEdit from "./ArtworksListEdit";
 import { EditEvent } from "@/api-mappe/EventsApiKald";
+import { wait } from "@/utils/wait";
 
 
 const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
@@ -31,7 +32,7 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   const [artworkError, setArtworkError] = useState(null); // Fejlbesked hvis man vælger for mange værker
 
   //Hjælpefunktion til loading på knap
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  //const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // Udregn hvor mange værker der må vælges til den valgte lokation
  const maxSelection = selectedLocation
