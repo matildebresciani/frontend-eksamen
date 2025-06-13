@@ -13,34 +13,43 @@ import { IoIosArrowDown } from "react-icons/io";
 export default function Page() {
   const [events, setEvents] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); //Giver en loading besked, hvis event loades
 
   useEffect(() => {
     const getEvents = async () => {
       try {
-        //Gammel - sætter events ind i den rækkefølge de er oprettetAdd commentMore actions
+        //Gammel - sætter events ind i den rækkefølge de er oprettet
         // const data = await fetchEvents();
         // setEvents(data);
 
         //Prompt: hvordan kan jeg sortere mine events så det er efter dato??
 
         //Ny - Sorterer events efter dato
-        const data = await fetchEvents();
-        const sortedData = data.sort(
-          (a, b) => new Date(a.date) - new Date(b.date)
+        const data = await fetchEvents(); //Henter events fra API (fra vores API kald fil)
+        //Sammenligner datoerne på events og konverterer dem til Date objekter i stedet for tekst strings
+        //Dermed kan vi sortere dem fra ældste til nyeste dato (den sorterer ved at sammeligne to events ad gangen, a og b)
+        const sortedEvents = data.sort(
+          (a, b) => new Date(a.date) - new Date(b.date) 
         );
-        setEvents(sortedData);
+        //Opdaterer state med den sorterede event data
+        setEvents(sortedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       } finally {
+        //Sætter loading besked på siden til false, da events nu er blevet hentet
         setLoading(false);
       }
     };
 
+    // Kalder funktionen for at hente events når siden bliver vist første gang
     getEvents();
   }, []);
 
   //Sletter et event
+  // Fungerer ved at fjerne det event, hvis id matcher det slettede id
+  // setEvents opdaterer state ved at filtrere den gamle event-liste (prevEvents)
+  // og returnere en ny liste uden det slettede event
+  // Funktionen sendes som prop til EventCard og videre til Delete btn
   const handleDeleted = (deletedEventId) => {
     setEvents((prevEvents) =>
       prevEvents.filter((event) => event.id !== deletedEventId)
@@ -49,7 +58,7 @@ export default function Page() {
 
   //Opdaterer card efter redigering
   const handleEdit = (updatedEvent) => {
-    setEvents((prevEvents) =>
+    setEvents((prevEvents) => 
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );
   };

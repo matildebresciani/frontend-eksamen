@@ -22,7 +22,7 @@ const DeleteBtn = ({ eventId, onDeleted, children }) => {
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleDelete = async () => {
-    setIsDeleting(true);
+    setIsDeleting(true); //Starter loading på knappen
     try {
       await Promise.all([deleteEvent(eventId), wait(1000)]);
       setHasDeleted(true);
@@ -35,7 +35,9 @@ const DeleteBtn = ({ eventId, onDeleted, children }) => {
 
   const handleClose = () => {
     setShowPopup(false);
-    setHasDeleted(false);
+    setHasDeleted(false); //Nulstiller popup så den er klar til næste gang
+    
+    // Hvis event er slettet og den har modtaged onDeleted som prop, så kald onDeleted
     if (hasDeleted && onDeleted) onDeleted();
   };
 
@@ -68,8 +70,8 @@ const DeleteBtn = ({ eventId, onDeleted, children }) => {
                 <Button
                   variant="CTA"
                   onClick={handleDelete}
-                  loading={isDeleting}
-                  loadingText="Sletter event..."
+                  loading={isDeleting} //aktiverer loading spinner 
+                  loadingText="Sletter event..." //tekst under loading
                   className="transition-all duration-300 w-auto"
                 >
                   {isDeleting ? "Sletter event..." : "SLET"}
