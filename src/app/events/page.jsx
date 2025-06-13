@@ -9,11 +9,16 @@ import SelectCity from "@/components/events/SelectCity";
 import normalizeCity from "@/utils/normalizeCity";
 import { fetchEvents } from "../../api-mappe/EventsApiKald";
 import { IoIosArrowDown } from "react-icons/io";
+import { motion } from "framer-motion";
 
 export default function Page() {
   const [events, setEvents] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //NYT - PAGINATION
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 6; // eller 5, som du vil
 
   useEffect(() => {
     const getEvents = async () => {
@@ -76,6 +81,19 @@ export default function Page() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  //NYT - PAGINATION
+  //Udregner hvor mange sider vi skal have ved at tage total events (efter filtrering) og dividerer med det antal der må være på hver side
+  const totalPages = Math.ceil(filteredEvents.length / ITEMS_PER_PAGE);
+
+  //De events der vises på den aktuelle side
+  //slice tager en del af arrayet (for at finde ud af hvilke events der skal vises på siden man er på)
+  //vi minusser med 1 fordi currentPage starter ved 1, men arrays starter med index 0
+  const displayedEvents = filteredEvents.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE, //startindex
+    currentPage * ITEMS_PER_PAGE //slutindex
+  );
+
+
   return (
     <section>
       <h1 className="mb-2 sm:mb-3">Events</h1>
@@ -130,7 +148,7 @@ export default function Page() {
                 Ingen events fundet på den valgte lokation...
               </p>
             ) : (
-              filteredEvents.map((event) => (
+              displayedEvents.map((event) => (
                 <EventCard
                   key={event.id}
                   event={event}
@@ -139,7 +157,32 @@ export default function Page() {
                 />
               ))
             )}
+
+            <div className="flex justify-center mt-3 gap-3">
+            {/* Laver nyt array ud fra længden af totalPages */}
+            {/* _ = element, men tom fordi vi ikke bruger den */}
+            {/* i = index (positionen(nummeret) af elementet i array'et) */}
+            {/* vi plusser i med 1, for at sidetal ikke starter på 0 */}
+            {Array.from({ length: totalPages }).map((_, i) => ( 
+              <motion.button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)} 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.1 }}
+                className={`px-2 py-1 mb-5 border rounded ${
+                  currentPage === i + 1
+                    ? "bg-primary-red text-white border-primary-red"
+                    : "border-primary-red text-primary-red hover:bg-[var(--color-primary-red-hover2)] hover:border-[var(--color-primary-red-hover2)] hover:text-white"
+                }`}
+              >
+                {i + 1}
+              </motion.button>
+            ))}
           </div>
+          </div>
+
+
         </div>
       </div>
     </section>
