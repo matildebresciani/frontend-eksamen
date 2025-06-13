@@ -173,7 +173,7 @@ export default function Page() {
           <p className="text-center">Event oprettet!</p>
           <div className="flex justify-center">
             <Link href={eventLink}>
-              <BtnWithArrow>Gå til event</BtnWithArrow>
+              <BtnWithArrow>GÅ TIL EVENT</BtnWithArrow>
             </Link>
           </div>
         </PopUpBase>

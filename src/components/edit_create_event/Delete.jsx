@@ -87,7 +87,7 @@ const DeleteBtn = ({ eventId, onDeleted, children }) => {
               <p className="text-center">Event blev slettet.</p>
               <div className="flex justify-center mt-4">
                 <Button variant="tertiary" onClick={handleClose}>
-                  Luk
+                  LUK
                 </Button>
               </div>
             </>
