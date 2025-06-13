@@ -26,10 +26,8 @@ export default function Page() {
 
         //Ny - Sorterer events efter dato
         const data = await fetchEvents(); //Henter events fra API (fra vores API kald fil)
-        //Sammenligner datoerne på events og konverterer dem til Date objekter i stedet for tekst strings
-        //Dermed kan vi sortere dem fra ældste til nyeste dato (den sorterer ved at sammeligne to events ad gangen, a og b)
         const sortedEvents = data.sort(
-          (a, b) => new Date(a.date) - new Date(b.date) 
+          (a, b) => new Date(a.date) - new Date(b.date)  //Konverterer dato-strengene til Date-objekter, så JS bedre kan sammenligne og sortere
         );
         //Opdaterer state med den sorterede event data
         setEvents(sortedEvents);
@@ -46,9 +44,7 @@ export default function Page() {
   }, []);
 
   //Sletter et event
-  // Fungerer ved at fjerne det event, hvis id matcher det slettede id
-  // setEvents opdaterer state ved at filtrere den gamle event-liste (prevEvents)
-  // og returnere en ny liste uden det slettede event
+  // Opdaterer events state ved at filtrere det slettede event fra listen
   // Funktionen sendes som prop til EventCard og videre til Delete btn
   const handleDeleted = (deletedEventId) => {
     setEvents((prevEvents) =>
@@ -57,12 +53,16 @@ export default function Page() {
   };
 
   //Opdaterer card efter redigering
+  // Går eventlisten igennem, hvis id matcher det opdaterede, erstattes det
   const handleEdit = (updatedEvent) => {
     setEvents((prevEvents) => 
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );
   };
 
+  // Hvis "Alle Byer" er valgt eller ingen byer er valgt, vis alle events
+  // Ellers filtrer events så kun de, hvor eventets by er i selectedCities, vises
+  // normalizeCity bruges til at sikre at varianter som "kbh" og "københavn" samles under samme navn
   const filteredEvents =
     selectedCities.includes("Alle Byer") || selectedCities.length === 0
       ? events
