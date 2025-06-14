@@ -9,6 +9,7 @@ import { useState, useRef, useEffect } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import normalizeCity from "@/utils/normalizeCity";
 import { motion } from "motion/react";
+import { fetchLocations } from "@/api-mappe/EventsApiKald";
 
 //Komponent til enkelt by, med egen designet checkmark
 const City = ({ city, isSelected, onChange, disabled }) => (
@@ -43,6 +44,19 @@ const SelectCity = ({ selectedCities, setSelectedCities }) => {
       .then((res) => res.json())
       .then((data) => setLocations(data)); //Gemmer lokationerne i vores state
   }, []);
+
+  //Eksempel på hvis man skulle fetche det fra API mappen
+  // useEffect (() => {
+  //   const getCities = async () => {
+  //     try {
+  //       const cities = await fetchLocations();
+  //       setLocations(cities);
+  //     } catch (error) {
+  //       console.error("Error fetching cities:", error);
+  //     }
+  //   };
+  //   getCities(); 
+  //   }, []);
 
   // Udtræk unikke byer fra lokationernes adresser
   // - normalizeCity standardiserer bynavnet (fx "Kbh" -> "København")
