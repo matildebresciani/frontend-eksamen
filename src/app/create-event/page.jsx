@@ -67,7 +67,7 @@ export default function Page() {
       return;
     }
 
-    //Sørger for at man ikke kan gemme hvis max værker overstiger pladsen på lokationen
+    //NY - Sørger for at man ikke kan gemme hvis max værker overstiger pladsen på lokationen
     if (selectedArtworks.length > maxSelection) {
       setArtworkError(`Du kan maks vælge ${maxSelection} værker til denne lokation.`);
       return;
@@ -99,7 +99,7 @@ export default function Page() {
       setEventLink(`/events/${createdEvent.id}`);
       setShowPopup(true);
 
-      //Nulstil formular og artworks
+      //NY - Nulstil formular og artworks
       setSelectedArtworks([]);
       setStep(1);
       setFormData({});
