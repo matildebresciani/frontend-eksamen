@@ -29,6 +29,7 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
   const [selectedLocation, setSelectedLocation] = useState(eventToEdit.locationId || null);
   const [selectedDate, setSelectedDate] = useState(eventToEdit.date || null);
 
+  //NY - FEJLBESKED
   const [artworkError, setArtworkError] = useState(null); // Fejlbesked hvis man vælger for mange værker
 
   //Hjælpefunktion til loading på knap
@@ -50,9 +51,9 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
 
   // Håndterer når der trykkes på "Gem ændringer"
   const handleSubmit = async (formData) => {
-    setArtworkError(null); // ryd tidligere fejl
+    setArtworkError(null); // NY - ryd tidligere fejl
 
-    //Gør så man ikke kan gemme hvis værker valgt overstiger kapaciteten på lokationen
+    //NY - Gør så man ikke kan gemme hvis værker valgt overstiger kapaciteten på lokationen
     if (selectedArtworks.length > maxSelection) {
       setArtworkError(`Du kan maks vælge ${maxSelection} værker til denne lokation.`);
       return;
@@ -129,7 +130,7 @@ const EditEventPopUp = ({ eventToEdit, closePopup, onEditSuccess }) => {
         />
       </div>
       
-
+        {/* NY - FEJLBESKED */}
       {artworkError && (
         <div className="flex justify-center items-center">
           <p className=" text-center !text-red-500 mt-2">{artworkError}</p>
